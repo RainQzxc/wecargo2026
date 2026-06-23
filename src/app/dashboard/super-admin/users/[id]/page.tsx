@@ -1,3 +1,8 @@
-export default function UserDetailPage() {
-  return <div>UserDetail</div>
+import { requirePermission } from "@/features/auth";
+import { DashboardPlaceholder } from "@/components/dashboard/DashboardPlaceholder";
+
+export default async function Page({ params }: { params: Promise<{ id: string }> }) {
+  await requirePermission("users.read");
+  const { id } = await params;
+  return <DashboardPlaceholder sectionKey="users" variant="detail" detailId={id} />;
 }

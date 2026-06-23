@@ -7,6 +7,7 @@ interface AuditParams {
   entityId?: string;
   before?: unknown;
   after?: unknown;
+  metadata?: unknown;
   ipAddress?: string;
   userAgent?: string;
 }
@@ -20,6 +21,7 @@ export async function writeAuditLog(params: AuditParams) {
       entityId: params.entityId,
       beforeJson: params.before ? (params.before as object) : undefined,
       afterJson: params.after ? (params.after as object) : undefined,
+      metadata: params.metadata ? (params.metadata as object) : undefined,
       ipAddress: params.ipAddress,
       userAgent: params.userAgent,
     },
