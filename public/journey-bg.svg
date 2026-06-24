@@ -1,0 +1,64 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1920" height="1080" fill="#F7F7F7"/>
+  <g opacity="0.55">
+    <path d="M0 820C260 710 465 760 704 662C920 573 1088 407 1308 356C1516 308 1712 368 1920 238V1080H0V820Z" fill="url(#paint0_linear)"/>
+    <path d="M0 790C253 692 482 721 714 626C930 538 1082 388 1301 338C1513 290 1707 344 1920 218" stroke="#06BBB4" stroke-width="2" stroke-dasharray="12 18"/>
+  </g>
+  <g opacity="0.55" stroke="#111111" stroke-width="1">
+    <path d="M158 690H509V862H158V690Z"/>
+    <path d="M203 690V604H459V690"/>
+    <path d="M235 638H427"/>
+    <path d="M222 735H445"/>
+    <path d="M222 781H445"/>
+    <path d="M222 827H369"/>
+  </g>
+  <g opacity="0.65">
+    <path d="M1248 686H1517V790H1248V686Z" fill="white" stroke="#111111" stroke-width="2"/>
+    <path d="M1517 719H1612L1660 774V790H1517V719Z" fill="white" stroke="#111111" stroke-width="2"/>
+    <path d="M1308 836C1333.41 836 1354 815.405 1354 790C1354 764.595 1333.41 744 1308 744C1282.59 744 1262 764.595 1262 790C1262 815.405 1282.59 836 1308 836Z" fill="#111111"/>
+    <path d="M1586 836C1611.41 836 1632 815.405 1632 790C1632 764.595 1611.41 744 1586 744C1560.59 744 1540 764.595 1540 790C1540 815.405 1560.59 836 1586 836Z" fill="#111111"/>
+    <path d="M1289 790H1327" stroke="white" stroke-width="5" stroke-linecap="round"/>
+    <path d="M1567 790H1605" stroke="white" stroke-width="5" stroke-linecap="round"/>
+    <path d="M1288 722H1458" stroke="#06BBB4" stroke-width="8" stroke-linecap="round"/>
+  </g>
+  <g opacity="0.5">
+    <path d="M1062 247L1114 217L1166 247V307L1114 337L1062 307V247Z" fill="white" stroke="#06BBB4" stroke-width="3"/>
+    <path d="M1114 217V277M1062 247L1114 277L1166 247" stroke="#06BBB4" stroke-width="3"/>
+    <path d="M1114 337V277" stroke="#06BBB4" stroke-width="3"/>
+  </g>
+  <g opacity="0.12" stroke="#111111">
+    <path d="M0 120H1920"/>
+    <path d="M0 240H1920"/>
+    <path d="M0 360H1920"/>
+    <path d="M0 480H1920"/>
+    <path d="M0 600H1920"/>
+    <path d="M0 720H1920"/>
+    <path d="M0 840H1920"/>
+    <path d="M0 960H1920"/>
+    <path d="M120 0V1080"/>
+    <path d="M240 0V1080"/>
+    <path d="M360 0V1080"/>
+    <path d="M480 0V1080"/>
+    <path d="M600 0V1080"/>
+    <path d="M720 0V1080"/>
+    <path d="M840 0V1080"/>
+    <path d="M960 0V1080"/>
+    <path d="M1080 0V1080"/>
+    <path d="M1200 0V1080"/>
+    <path d="M1320 0V1080"/>
+    <path d="M1440 0V1080"/>
+    <path d="M1560 0V1080"/>
+    <path d="M1680 0V1080"/>
+    <path d="M1800 0V1080"/>
+  </g>
+  <circle cx="714" cy="626" r="9" fill="#06BBB4"/>
+  <circle cx="1301" cy="338" r="9" fill="#06BBB4"/>
+  <circle cx="1707" cy="344" r="9" fill="#FE0000"/>
+  <defs>
+    <linearGradient id="paint0_linear" x1="960" y1="238" x2="960" y2="1080" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06BBB4" stop-opacity="0.28"/>
+      <stop offset="0.55" stop-color="#06BBB4" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#FE0000" stop-opacity="0.08"/>
+    </linearGradient>
+  </defs>
+</svg>

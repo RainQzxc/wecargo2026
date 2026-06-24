@@ -1,97 +1,188 @@
 import Link from "next/link";
 
-const services = [
-  {
-    icon: (
-      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
-      </svg>
-    ),
-    title: "Эрээн–Улаанбаатар карго",
-    desc: "БНХАУ-аас Монгол Улс руу бүх төрлийн ачааг найдвартай, шуурхай тээвэрлэнэ.",
-    href: "/#services",
-    cta: "Дэлгэрэнгүй харах",
-  },
-  {
-    icon: (
-      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 15.803 7.5 7.5 0 0016.803 15.803z" />
-      </svg>
-    ),
-    title: "Ухаалаг хяналт",
-    desc: "трак код эсвэл утасны дугаараараа ачааныхаа явцыг цаг алдалгүй онлайнаар шалгаарай.",
-    href: "/track",
-    cta: "Шууд шалгах",
-  },
-  {
-    icon: (
-      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
-      </svg>
-    ),
-    title: "Линк захиалга",
-    desc: "Та барааныхаа линкийг илгээхэд л хангалттай. Бид худалдан авалтыг таны өмнөөс хийнэ.",
-    href: "/link-order",
-    cta: "Захиалга өгөх",
-  },
-  {
-    icon: (
-      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
-      </svg>
-    ),
-    title: "Хүргэлт & Хадгалалт",
-    desc: "Ирсэн ачаагаа хаягаар хүргүүлэх эсвэл манай дулаан агуулахад түр хадгалуулах боломжтой.",
-    href: "/guide",
-    cta: "Сонголтууд харах",
-  },
-];
+function MiniTimeline() {
+  const steps = ["Эрээн", "Бүртгэл", "Ачилт", "Зам", "УБ"];
+
+  return (
+    <div className="rounded-[22px] bg-white p-5 shadow-[0_18px_45px_rgba(17,17,17,0.10)]">
+      <div className="mb-5 flex items-center justify-between">
+        <p className="text-xs font-black uppercase tracking-[0.14em] text-[#666666]">
+          YT7547233338116
+        </p>
+        <span className="rounded-full bg-[#06bbb4]/10 px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.12em] text-[#06bbb4]">
+          Замд
+        </span>
+      </div>
+      <div className="flex items-center gap-2">
+        {steps.map((step, index) => (
+          <div key={step} className="min-w-0 flex-1 text-center">
+            <div
+              className={`mx-auto mb-2 grid h-8 w-8 place-items-center rounded-full text-xs font-black ${
+                index < 4 ? "bg-[#111111] text-white" : "bg-[#f2f2f2] text-[#999999]"
+              }`}
+            >
+              {index + 1}
+            </div>
+            <p className="truncate text-[10px] font-bold text-[#666666]">
+              {step}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function LinkOrderPlanner() {
+  const rows = [
+    ["09:30", "Барааны линк хүлээн авсан", "Шинэ"],
+    ["10:15", "Үнэ, өнгө, хэмжээ баталгаажсан", "OK"],
+    ["12:40", "Захиалга үүссэн", "Track"],
+  ];
+
+  return (
+    <div className="rounded-[22px] border border-white/12 bg-[#071414] p-5 text-white shadow-[0_18px_55px_rgba(7,20,20,0.35)]">
+      <div className="mb-5 flex items-center justify-between">
+        <p className="text-sm font-black">Smart link order</p>
+        <span className="rounded-full border border-white/10 px-2.5 py-1 text-[10px] font-bold text-white/55">
+          realtime
+        </span>
+      </div>
+      <div className="space-y-2">
+        {rows.map(([time, title, status]) => (
+          <div
+            key={title}
+            className="grid grid-cols-[48px_1fr_auto] items-center gap-3 rounded-xl border border-white/10 bg-white/6 px-3 py-2.5"
+          >
+            <p className="text-[10px] font-black text-white/45">{time}</p>
+            <p className="truncate text-xs font-semibold">{title}</p>
+            <p className="rounded-full bg-[#06bbb4] px-2 py-1 text-[9px] font-black text-[#061212]">
+              {status}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function PhoneCards() {
+  return (
+    <div className="absolute -bottom-10 right-6 w-[250px] rounded-[28px] border-[8px] border-[#111111] bg-white p-4 shadow-[0_24px_70px_rgba(17,17,17,0.24)]">
+      <div className="mx-auto mb-4 h-4 w-20 rounded-full bg-[#111111]" />
+      <div className="mb-4 rounded-2xl bg-[#f7f7f7] p-3">
+        <p className="text-xs font-black text-[#111111]">Өнөөдрийн ачаа</p>
+        <p className="mt-1 text-[10px] font-semibold text-[#666666]">
+          3 ачаа шинэчлэгдсэн
+        </p>
+      </div>
+      <div className="grid grid-cols-2 gap-2">
+        {["Замд", "Ирсэн", "Төлбөр", "Хадгалалт"].map((item, index) => (
+          <div
+            key={item}
+            className={`rounded-xl p-3 ${
+              index === 0
+                ? "bg-[#06bbb4]/20"
+                : index === 1
+                  ? "bg-[#fe0000]/10"
+                  : "bg-[#f2f2f2]"
+            }`}
+          >
+            <p className="text-[11px] font-black text-[#111111]">{item}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function ServicesSection() {
   return (
-    <section id="services" className="bg-white py-20 sm:py-24 md:py-32 lg:py-40">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <span className="inline-flex items-center gap-2 bg-[#06bbb4]/10 text-[#06bbb4] text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-wider mb-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#06bbb4]" />
-            Бидний үйлчилгээ
-          </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#111111] tracking-tight">
-            Танд хэрэгтэй карго үйлчилгээ{" "}
-            <span className="text-[#06bbb4]">нэг дор</span>
-          </h2>
+    <section id="services" className="relative overflow-hidden bg-white py-20 sm:py-24 md:py-32">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(6,187,180,0.08),transparent_28%)]" />
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-10 grid gap-6 lg:grid-cols-[0.9fr_1fr] lg:items-end">
+          <div>
+            <span className="mb-4 inline-flex rounded-full bg-[#f2f2f2] px-3 py-1.5 text-xs font-black uppercase tracking-[0.12em] text-[#666666]">
+              WECARGO систем
+            </span>
+            <h2 className="text-4xl font-black leading-[1.02] tracking-[-0.05em] text-[#111111] sm:text-5xl">
+              Нэг layout дотор бүх явц тодорхой.
+            </h2>
+          </div>
+          <p className="max-w-xl text-base font-semibold leading-7 text-[#666666] lg:justify-self-end">
+            Ачаа хянах, линк захиалга өгөх, үнэ тооцох, бизнесийн ачаагаа
+            удирдах бүх гол үйлдлийг нэг системд төвлөрүүлсэн.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {services.map((s) => (
-            <div
-              key={s.title}
-              className="bg-white rounded-2xl p-6 border border-[#e5e5e5] hover:border-[#06bbb4]/40 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 flex flex-col"
-            >
-              <div className="w-11 h-11 rounded-xl bg-[#06bbb4]/10 text-[#06bbb4] flex items-center justify-center mb-4">
-                {s.icon}
-              </div>
-              <h3 className="font-semibold text-[#111111] mb-2">{s.title}</h3>
-              <p className="text-[#666666] text-sm leading-relaxed flex-1 mb-5">
-                {s.desc}
+        <div className="grid gap-5 lg:grid-cols-2">
+          <article className="rounded-[26px] bg-[#f1f1f1] p-6 shadow-sm lg:min-h-[330px]">
+            <h3 className="text-lg font-black text-[#111111]">Ачааны явц нэг харахад</h3>
+            <p className="mt-2 max-w-sm text-sm font-semibold leading-6 text-[#666666]">
+              Track code эсвэл утасны дугаараар явц, төлөв, сүүлийн шинэчлэлтийг шалгана.
+            </p>
+            <div className="mt-8">
+              <MiniTimeline />
+            </div>
+          </article>
+
+          <article className="rounded-[26px] bg-[radial-gradient(circle_at_70%_20%,rgba(6,187,180,0.22),transparent_32%),#0b1815] p-6 text-white shadow-sm lg:min-h-[330px]">
+            <h3 className="text-lg font-black">Линк захиалга төлөвлөгөөтэй</h3>
+            <p className="mt-2 max-w-sm text-sm font-semibold leading-6 text-white/65">
+              Барааны линк, хэмжээ, өнгө, тоо ширхэгийг илгээж захиалгаа хурдан үүсгэнэ.
+            </p>
+            <div className="mt-7">
+              <LinkOrderPlanner />
+            </div>
+          </article>
+
+          <article className="relative min-h-[360px] overflow-hidden rounded-[26px] bg-[#101515] p-6 text-white shadow-sm lg:col-span-2">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_14%_16%,rgba(6,187,180,0.26),transparent_26%),linear-gradient(90deg,rgba(255,255,255,0.04),transparent)]" />
+            <div className="relative max-w-md">
+              <h3 className="text-2xl font-black tracking-[-0.04em]">
+                Гар утсанд бүрэн тохирсон хэрэглэгчийн систем
+              </h3>
+              <p className="mt-3 text-sm font-semibold leading-6 text-white/65">
+                Ачааны жагсаалт, төлбөр, ирсэн төлөв, хадгалалт, хүргэлтийн
+                мэдээлэл бүгд нэг дор.
               </p>
               <Link
-                href={s.href}
-                className="text-[#06bbb4] hover:text-[#06bbb4]/80 text-sm font-semibold flex items-center gap-1.5 group"
+                href="/login"
+                className="mt-7 inline-flex min-h-12 items-center rounded-full bg-white px-6 text-sm font-black text-[#111111] transition-colors hover:bg-[#06bbb4] hover:text-white"
               >
-                {s.cta}
-                <svg
-                  className="w-4 h-4 group-hover:translate-x-0.5 transition-transform"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                </svg>
+                Систем рүү нэвтрэх
               </Link>
             </div>
-          ))}
+            <PhoneCards />
+          </article>
+
+          <article className="rounded-[26px] bg-[#171717] p-6 text-white shadow-sm">
+            <h3 className="text-lg font-black">Үнэ урьдчилан ойлгомжтой</h3>
+            <p className="mt-2 text-sm font-semibold leading-6 text-white/60">
+              Жин, хэмжээ, төрөл, чиглэлээс хамаарч тооцоолно. Онцлог ачаанд тусгай нөхцөлтэй.
+            </p>
+            <div className="mt-7 grid grid-cols-3 gap-2">
+              {["Жин", "Овор", "Төрөл"].map((item) => (
+                <div key={item} className="rounded-2xl border border-white/10 bg-white/6 p-4">
+                  <p className="text-sm font-black">{item}</p>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <article className="rounded-[26px] bg-[#111111] p-6 text-white shadow-sm">
+            <h3 className="text-lg font-black">Бизнесийн ачаанд тохиромжтой</h3>
+            <p className="mt-2 text-sm font-semibold leading-6 text-white/60">
+              Онлайн дэлгүүр, reseller, байгууллагын тогтмол ачаанд хамтын ажиллагааны нөхцөл.
+            </p>
+            <Link
+              href="/cooperation"
+              className="mt-7 inline-flex min-h-12 items-center rounded-full bg-[#06bbb4] px-6 text-sm font-black text-white transition-colors hover:bg-white hover:text-[#111111]"
+            >
+              Хамтран ажиллах
+            </Link>
+          </article>
         </div>
       </div>
     </section>

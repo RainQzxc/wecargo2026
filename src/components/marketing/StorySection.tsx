@@ -17,10 +17,24 @@ const panels = [
   { no: "06", place: "Хүлээн авалт", title: "Та ачаагаа авна", last: true },
 ];
 
+function JourneyBackdrop() {
+  return (
+    <>
+      <div
+        className="pointer-events-none absolute inset-0 bg-cover bg-center opacity-80"
+        style={{ backgroundImage: "url('/journey-bg.svg')" }}
+        aria-hidden="true"
+      />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(247,247,247,0.88)_0%,rgba(247,247,247,0.68)_42%,rgba(247,247,247,0.9)_100%)]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-white to-transparent" />
+    </>
+  );
+}
+
 function Heading() {
   return (
-    <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
-      <span className="inline-flex items-center gap-2 bg-[#06bbb4]/10 text-[#06bbb4] text-xs font-semibold px-3.5 py-1.5 rounded-full uppercase tracking-wider mb-4">
+    <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
+      <span className="inline-flex items-center gap-2 rounded-full border border-[#06bbb4]/15 bg-white/85 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-[#06bbb4] shadow-sm backdrop-blur mb-4">
         <span className="w-1.5 h-1.5 rounded-full bg-[#06bbb4]" />
         Таны ачааны аялал
       </span>
@@ -39,7 +53,7 @@ function Card({
   p: (typeof panels)[number];
 }) {
   return (
-    <div className="relative h-full rounded-3xl bg-white border border-[#e5e5e5] shadow-sm p-8 lg:p-10 flex flex-col justify-between min-h-[260px] lg:min-h-[400px]">
+    <div className="relative h-full rounded-3xl border border-white/70 bg-white/82 p-8 shadow-[0_24px_70px_rgba(17,17,17,0.12)] ring-1 ring-[#e5e5e5]/70 backdrop-blur-md lg:p-10 flex flex-col justify-between min-h-[260px] lg:min-h-[400px]">
       <div className="flex items-start justify-between">
         <span
           className={`text-6xl lg:text-7xl font-bold leading-none ${
@@ -68,10 +82,11 @@ function Card({
 /* Mobile: simple vertical timeline */
 function MobileTimeline() {
   return (
-    <div className="lg:hidden bg-[#f7f7f7] py-20 sm:py-24">
+    <div className="relative isolate overflow-hidden bg-[#f7f7f7] py-20 sm:py-24 lg:hidden">
+      <JourneyBackdrop />
       <Heading />
-      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 mt-10 relative">
-        <div className="absolute left-[27px] top-4 bottom-4 w-px bg-[#e5e5e5]" />
+      <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 mt-10">
+        <div className="absolute left-[27px] top-4 bottom-4 w-px bg-[#111111]/10" />
         <div className="space-y-4">
           {panels.map((p) => (
             <motion.div
@@ -89,7 +104,7 @@ function MobileTimeline() {
               >
                 {p.no}
               </div>
-              <div className="flex-1 bg-white border border-[#e5e5e5] rounded-2xl p-5">
+              <div className="flex-1 rounded-2xl border border-white/70 bg-white/86 p-5 shadow-[0_14px_40px_rgba(17,17,17,0.08)] backdrop-blur-md">
                 <span
                   className={`text-xs font-semibold uppercase tracking-wider ${
                     p.last ? "text-[#fe0000]" : "text-[#06bbb4]"
@@ -137,9 +152,10 @@ function DesktopJourney() {
 
   if (reduced) {
     return (
-      <div className="hidden lg:block bg-[#f7f7f7] py-40">
+      <div className="relative isolate hidden overflow-hidden bg-[#f7f7f7] py-40 lg:block">
+        <JourneyBackdrop />
         <Heading />
-        <div className="max-w-7xl mx-auto px-8 mt-12 grid grid-cols-3 gap-6">
+        <div className="relative z-10 max-w-7xl mx-auto px-8 mt-12 grid grid-cols-3 gap-6">
           {panels.map((p) => (
             <Card key={p.no} p={p} />
           ))}
@@ -151,10 +167,11 @@ function DesktopJourney() {
   return (
     <div
       ref={sectionRef}
-      className="hidden lg:block relative bg-[#f7f7f7]"
+      className="relative isolate hidden overflow-hidden bg-[#f7f7f7] lg:block"
       style={{ height: "180vh" }}
     >
-      <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden pt-[120px] pb-16">
+      <JourneyBackdrop />
+      <div className="sticky top-0 z-10 h-screen flex flex-col justify-center overflow-hidden pt-[120px] pb-16">
         <div className="mb-12">
           <Heading />
         </div>
@@ -162,7 +179,7 @@ function DesktopJourney() {
         <motion.div
           ref={trackRef}
           style={{ x }}
-          className="flex gap-6 px-8 will-change-transform"
+          className="relative z-10 flex gap-6 px-8 will-change-transform"
         >
           {panels.map((p) => (
             <div key={p.no} className="shrink-0 w-[40vw] max-w-[520px]">
@@ -171,8 +188,8 @@ function DesktopJourney() {
           ))}
         </motion.div>
 
-        <div className="max-w-7xl mx-auto w-full px-8 mt-12">
-          <div className="h-0.5 bg-[#e5e5e5] rounded-full overflow-hidden max-w-xs">
+        <div className="relative z-10 max-w-7xl mx-auto w-full px-8 mt-12">
+          <div className="h-0.5 bg-[#111111]/10 rounded-full overflow-hidden max-w-xs">
             <motion.div
               className="h-full bg-[#06bbb4] rounded-full"
               style={{ width: progressW }}

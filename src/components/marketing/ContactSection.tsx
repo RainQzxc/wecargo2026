@@ -1,196 +1,210 @@
-"use client";
+import type { ReactNode } from "react";
 
-import { useState } from "react";
+const locations = [
+  {
+    city: "Улаанбаатар",
+    eyebrow: "Монгол дахь салбар",
+    accent: "teal",
+    items: [
+      {
+        label: "Утас",
+        value: "8810 4640",
+        href: "tel:88104640",
+        icon: "phone",
+      },
+      {
+        label: "Имэйл",
+        value: "info@cargoo.mn",
+        href: "mailto:info@cargoo.mn",
+        icon: "mail",
+      },
+      {
+        label: "Хаяг",
+        value: "Улаанбаатар, Монгол",
+        icon: "pin",
+      },
+    ],
+  },
+  {
+    city: "Эрээн",
+    eyebrow: "БНХАУ дахь агуулах",
+    accent: "red",
+    items: [
+      {
+        label: "Утас",
+        value: "15148615407",
+        href: "tel:15148615407",
+        icon: "phone",
+      },
+      {
+        label: "Хаяг",
+        value:
+          "内蒙古锡林郭勒盟二连浩特市环宇商贸城五号楼125号 业顺额尔敦商贸有限公司",
+        icon: "pin",
+      },
+    ],
+  },
+];
 
-function PhoneIcon() {
+function ContactIcon({ type }: { type: string }) {
+  const common = "h-5 w-5";
+
+  if (type === "mail") {
+    return (
+      <svg className={common} fill="none" viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          d="M4.75 6.75h14.5v10.5H4.75V6.75Z"
+          stroke="currentColor"
+          strokeLinejoin="round"
+          strokeWidth="1.8"
+        />
+        <path
+          d="m5.25 7.25 6.75 5 6.75-5"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.8"
+        />
+      </svg>
+    );
+  }
+
+  if (type === "pin") {
+    return (
+      <svg className={common} fill="none" viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          d="M18.25 10.5c0 5.25-6.25 9.75-6.25 9.75S5.75 15.75 5.75 10.5a6.25 6.25 0 1 1 12.5 0Z"
+          stroke="currentColor"
+          strokeLinejoin="round"
+          strokeWidth="1.8"
+        />
+        <path
+          d="M14.25 10.5a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"
+          stroke="currentColor"
+          strokeWidth="1.8"
+        />
+      </svg>
+    );
+  }
+
   return (
-    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.6}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+    <svg className={common} fill="none" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        d="M5.5 4.75h3l1.5 4-2 1.25a10.25 10.25 0 0 0 6 6l1.25-2 4 1.5v3a1.75 1.75 0 0 1-1.75 1.75A14.75 14.75 0 0 1 2.75 5.5 1.75 1.75 0 0 1 4.5 3.75h1Z"
+        stroke="currentColor"
+        strokeLinejoin="round"
+        strokeWidth="1.8"
+      />
     </svg>
   );
 }
-function MailIcon() {
-  return (
-    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.6}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-    </svg>
-  );
-}
-function PinIcon() {
-  return (
-    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.6}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-    </svg>
-  );
-}
 
-function Row({
-  icon,
-  label,
+function ValueWrap({
+  href,
   children,
 }: {
-  icon: React.ReactNode;
-  label: string;
-  children: React.ReactNode;
+  href?: string;
+  children: ReactNode;
 }) {
+  if (!href) {
+    return <p className="text-base font-bold leading-7 text-[#111111]">{children}</p>;
+  }
+
   return (
-    <div className="flex gap-4">
-      <div className="w-10 h-10 rounded-xl bg-[#06bbb4]/10 text-[#06bbb4] flex items-center justify-center shrink-0">
-        {icon}
-      </div>
-      <div className="min-w-0">
-        <p className="text-xs font-semibold text-[#666666] uppercase tracking-wider mb-1.5">
-          {label}
-        </p>
-        <div className="space-y-0.5">{children}</div>
-      </div>
-    </div>
+    <a
+      href={href}
+      className="text-base font-black leading-7 text-[#111111] transition-colors hover:text-[#06bbb4] focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/25 focus:ring-offset-2"
+    >
+      {children}
+    </a>
   );
 }
 
 export default function ContactSection() {
-  const [sent, setSent] = useState(false);
-
   return (
-    <section id="contact" className="bg-[#f7f7f7] py-20 sm:py-24 md:py-32 lg:py-40">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12 lg:mb-16">
-          <span className="inline-flex items-center gap-2 bg-[#06bbb4]/10 text-[#06bbb4] text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-wider mb-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#06bbb4]" />
+    <section
+      id="contact"
+      className="relative overflow-hidden border-y border-[#e5e5e5] bg-[#f7f7f7] py-20 sm:py-24 md:py-32"
+    >
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_12%,rgba(6,187,180,0.14),transparent_34%),radial-gradient(circle_at_86%_78%,rgba(254,0,0,0.08),transparent_32%)]" />
+
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-10 max-w-3xl lg:mb-14">
+          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#06bbb4]/15 bg-white/85 px-3.5 py-1.5 text-xs font-black uppercase tracking-[0.14em] text-[#06bbb4] shadow-sm">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#06bbb4]" />
             Холбоо барих
           </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#111111] tracking-tight">
-            Бидэнтэй <span className="text-[#06bbb4]">холбогдоорой</span>
+          <h2 className="text-4xl font-black tracking-[-0.04em] text-[#111111] sm:text-5xl">
+            Бидэнтэй холбогдоорой
           </h2>
+          <p className="mt-4 max-w-2xl text-base leading-7 text-[#666666] sm:text-lg">
+            Улаанбаатар болон Эрээн дэх салбарын утас, имэйл, хаягийн мэдээлэл.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10">
-          {/* Contact info */}
-          <div className="space-y-6">
-            <div className="bg-white rounded-3xl p-7 lg:p-8 border border-[#e5e5e5]">
-              <h3 className="text-lg font-bold text-[#111111] mb-6">
-                Улаанбаатар
-              </h3>
-              <div className="space-y-6">
-                <Row icon={<PhoneIcon />} label="Утас">
-                  <a
-                    href="tel:88104640"
-                    className="block text-[#111111] font-medium hover:text-[#06bbb4] transition-colors"
+        <div className="grid gap-4 lg:grid-cols-2 lg:gap-6">
+          {locations.map((location) => (
+            <article
+              key={location.city}
+              className="relative overflow-hidden rounded-[28px] border border-white/80 bg-white/88 p-5 shadow-[0_24px_70px_rgba(17,17,17,0.08)] ring-1 ring-[#e5e5e5]/70 backdrop-blur sm:p-7 lg:p-8"
+            >
+              <div
+                className={`absolute inset-x-0 top-0 h-1 ${
+                  location.accent === "red" ? "bg-[#fe0000]" : "bg-[#06bbb4]"
+                }`}
+              />
+              <div className="mb-7 flex items-start justify-between gap-4">
+                <div>
+                  <p
+                    className={`text-xs font-black uppercase tracking-[0.16em] ${
+                      location.accent === "red" ? "text-[#fe0000]" : "text-[#06bbb4]"
+                    }`}
                   >
-                    8810 4640
-                  </a>
-                </Row>
-                <Row icon={<MailIcon />} label="Имэйл">
-                  <a
-                    href="mailto:info@cargoo.mn"
-                    className="block text-[#111111] font-medium hover:text-[#06bbb4] transition-colors"
-                  >
-                    info@cargoo.mn
-                  </a>
-                </Row>
-                <Row icon={<PinIcon />} label="Хаяг">
-                  <p className="text-[#333333] leading-relaxed">
-                    Улаанбаатар, Монгол
+                    {location.eyebrow}
                   </p>
-                </Row>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-3xl p-7 lg:p-8 border border-[#e5e5e5]">
-              <h3 className="text-lg font-bold text-[#111111] mb-6">Эрээн</h3>
-              <div className="space-y-6">
-                <Row icon={<PhoneIcon />} label="Утас">
-                  <a
-                    href="tel:15148615407"
-                    className="block text-[#111111] font-medium hover:text-[#06bbb4] transition-colors"
-                  >
-                    15148615407
-                  </a>
-                </Row>
-                <Row icon={<PinIcon />} label="Хаяг">
-                  <p className="text-[#333333] leading-relaxed">
-                    内蒙古锡林郭勒盟二连浩特市环宇商贸城五号楼125号
-                    业顺额尔敦商贸有限公司
-                  </p>
-                </Row>
-              </div>
-            </div>
-          </div>
-
-          {/* Message form */}
-          <div className="bg-white rounded-3xl p-7 lg:p-8 border border-[#e5e5e5]">
-            <h3 className="text-xl font-bold text-[#111111] mb-6">
-              Мессеж илгээх
-            </h3>
-
-            {sent ? (
-              <div className="flex flex-col items-center justify-center text-center py-12">
-                <div className="w-14 h-14 rounded-full bg-[#06bbb4]/10 text-[#06bbb4] flex items-center justify-center mb-4">
-                  <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                  </svg>
+                  <h3 className="mt-2 text-3xl font-black tracking-[-0.04em] text-[#111111]">
+                    {location.city}
+                  </h3>
                 </div>
-                <p className="text-[#111111] font-semibold">
-                  Таны мессеж илгээгдлээ.
-                </p>
-                <p className="text-[#666666] text-sm mt-1">
-                  Бид тантай удахгүй холбогдоно.
-                </p>
-              </div>
-            ) : (
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  setSent(true);
-                }}
-                className="space-y-4"
-              >
-                <div>
-                  <label htmlFor="ct-name" className="sr-only">
-                    Таны нэр
-                  </label>
-                  <input
-                    id="ct-name"
-                    type="text"
-                    required
-                    placeholder="Таны нэр"
-                    className="w-full px-4 py-3.5 rounded-xl bg-[#f7f7f7] border border-[#e5e5e5] text-[#111111] placeholder-[#999999] focus:outline-none focus:border-[#06bbb4] focus:ring-2 focus:ring-[#06bbb4]/20 transition-all text-sm"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="ct-phone" className="sr-only">
-                    Утасны дугаар
-                  </label>
-                  <input
-                    id="ct-phone"
-                    type="tel"
-                    required
-                    placeholder="Утасны дугаар"
-                    className="w-full px-4 py-3.5 rounded-xl bg-[#f7f7f7] border border-[#e5e5e5] text-[#111111] placeholder-[#999999] focus:outline-none focus:border-[#06bbb4] focus:ring-2 focus:ring-[#06bbb4]/20 transition-all text-sm"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="ct-msg" className="sr-only">
-                    Таны асуулт, санал
-                  </label>
-                  <textarea
-                    id="ct-msg"
-                    required
-                    rows={4}
-                    placeholder="Таны асуулт, санал..."
-                    className="w-full px-4 py-3.5 rounded-xl bg-[#f7f7f7] border border-[#e5e5e5] text-[#111111] placeholder-[#999999] focus:outline-none focus:border-[#06bbb4] focus:ring-2 focus:ring-[#06bbb4]/20 transition-all text-sm resize-none"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="w-full min-h-[48px] px-6 py-3.5 bg-[#fe0000] hover:bg-[#fe0000]/90 text-white font-semibold rounded-xl transition-colors text-sm"
+                <div
+                  className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl ${
+                    location.accent === "red"
+                      ? "bg-[#fe0000]/10 text-[#fe0000]"
+                      : "bg-[#06bbb4]/10 text-[#06bbb4]"
+                  }`}
                 >
-                  Илгээх
-                </button>
-              </form>
-            )}
-          </div>
+                  <ContactIcon type="pin" />
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                {location.items.map((item) => (
+                  <div
+                    key={`${location.city}-${item.label}`}
+                    className="grid gap-3 rounded-2xl border border-[#e5e5e5] bg-white p-4 sm:grid-cols-[44px_1fr] sm:items-start"
+                  >
+                    <div
+                      className={`flex h-11 w-11 items-center justify-center rounded-xl ${
+                        location.accent === "red"
+                          ? "bg-[#fe0000]/10 text-[#fe0000]"
+                          : "bg-[#06bbb4]/10 text-[#06bbb4]"
+                      }`}
+                    >
+                      <ContactIcon type={item.icon} />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="mb-1 text-xs font-black uppercase tracking-[0.14em] text-[#666666]">
+                        {item.label}
+                      </p>
+                      <div className="break-words [overflow-wrap:anywhere]">
+                        <ValueWrap href={item.href}>{item.value}</ValueWrap>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </article>
+          ))}
         </div>
       </div>
     </section>

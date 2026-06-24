@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 import { ROUTES } from "@/constants/routes";
 
 const navLinks = [
@@ -11,23 +12,87 @@ const navLinks = [
   { href: "/contact", label: "Холбоо барих" },
 ];
 
+function TrackIcon() {
+  return (
+    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        d="M4.5 6.75h11v10.5h-11V6.75Zm11 3.5h3l2 2.35v4.65h-5V10.25Z"
+        stroke="currentColor"
+        strokeLinejoin="round"
+        strokeWidth="1.8"
+      />
+      <path
+        d="M8 19a1.75 1.75 0 1 0 0-3.5A1.75 1.75 0 0 0 8 19Zm10 0a1.75 1.75 0 1 0 0-3.5A1.75 1.75 0 0 0 18 19Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
+function LoginIcon() {
+  return (
+    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        d="M9.5 7.75V6a2 2 0 0 1 2-2h6.75v16H11.5a2 2 0 0 1-2-2v-1.75"
+        stroke="currentColor"
+        strokeLinejoin="round"
+        strokeWidth="1.8"
+      />
+      <path
+        d="M4 12h9m0 0-3-3m3 3-3 3"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.8"
+      />
+    </svg>
+  );
+}
+
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 24);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[#e5e5e5] bg-white/95 backdrop-blur-md">
-      <div className="mx-auto max-w-[1440px] px-5 sm:px-6 lg:px-16">
-        <div className="flex h-14 items-center justify-between sm:h-16 lg:h-[72px]">
+    <header className="sticky top-0 z-50 px-2 py-2 sm:px-4">
+      <div className="mx-auto max-w-[1440px] lg:relative">
+        <div
+          className={`flex items-center justify-between transition-all duration-300 ${
+            scrolled
+              ? "lg:mx-auto lg:w-fit lg:justify-center lg:gap-1"
+              : "lg:w-full lg:justify-between lg:gap-8"
+          }`}
+        >
           <Link
             href="/"
-            className="flex min-h-11 items-center gap-1.5 rounded-lg pr-2 focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30"
+            className={`flex min-h-12 items-center rounded-2xl border border-[#e5e5e5] bg-white/92 px-3 shadow-[0_12px_34px_rgba(17,17,17,0.08)] backdrop-blur transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 ${
+              scrolled ? "lg:rounded-[22px] lg:px-3" : "lg:rounded-[22px] lg:px-4"
+            }`}
           >
-            <span className="text-lg font-black tracking-[-0.02em] text-[#111111] sm:text-xl">
-              WE<span className="text-[#06bbb4]">CARGO</span>
-            </span>
+            <Image
+              src="/logo wecargo for white bg.png"
+              alt="WECARGO"
+              width={156}
+              height={48}
+              className="h-8 w-auto object-contain sm:h-9"
+              priority
+            />
           </Link>
 
-          <nav className="hidden items-center gap-7 lg:flex">
+          <nav
+            className={`hidden min-h-12 items-center rounded-2xl border border-[#e5e5e5] bg-white/92 px-7 shadow-[0_12px_34px_rgba(17,17,17,0.08)] backdrop-blur transition-all duration-300 lg:flex ${
+              scrolled
+                ? "gap-8 rounded-[22px]"
+                : "absolute left-1/2 top-0 -translate-x-1/2 gap-10 rounded-[22px]"
+            }`}
+          >
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -39,19 +104,27 @@ export default function Header() {
             ))}
           </nav>
 
-          <div className="hidden items-center gap-3 lg:flex">
+          <div className="hidden min-h-12 items-center rounded-2xl border border-[#e5e5e5] bg-white/92 p-1.5 shadow-[0_12px_34px_rgba(17,17,17,0.08)] backdrop-blur lg:flex">
+            <Link
+              href="/track"
+              aria-label="Ачаа хянах"
+              className="grid h-10 w-10 place-items-center rounded-xl bg-[#111111] text-white transition-colors hover:bg-[#06bbb4] focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 focus:ring-offset-2"
+            >
+              <TrackIcon />
+            </Link>
             <Link
               href={ROUTES.login}
-              className="rounded-xl bg-[#06bbb4] px-5 py-2.5 text-sm font-black text-white transition-colors hover:bg-[#06bbb4]/90 focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 focus:ring-offset-2"
+              aria-label="Нэвтрэх"
+              className="grid h-10 w-10 place-items-center rounded-xl bg-[#f2f2f2] text-[#111111] transition-colors hover:bg-[#06bbb4] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 focus:ring-offset-2"
             >
-              Нэвтрэх
+              <LoginIcon />
             </Link>
           </div>
 
           <button
             type="button"
             onClick={() => setOpen(true)}
-            className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-xl text-[#111111] transition-colors hover:bg-[#f2f2f2] focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/25 lg:hidden"
+            className="inline-flex min-h-12 min-w-12 items-center justify-center rounded-2xl border border-[#e5e5e5] bg-white/92 text-[#111111] shadow-[0_12px_34px_rgba(17,17,17,0.08)] backdrop-blur transition-colors hover:bg-[#f2f2f2] focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/25 lg:hidden"
             aria-label="Цэс нээх"
             aria-expanded={open}
           >
@@ -82,9 +155,13 @@ export default function Header() {
                 onClick={() => setOpen(false)}
                 className="flex min-h-11 items-center rounded-lg pr-2 focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30"
               >
-                <span className="text-xl font-black tracking-[-0.02em] text-[#111111]">
-                  WE<span className="text-[#06bbb4]">CARGO</span>
-                </span>
+                <Image
+                  src="/logo wecargo for white bg.png"
+                  alt="WECARGO"
+                  width={156}
+                  height={48}
+                  className="h-9 w-auto object-contain"
+                />
               </Link>
               <button
                 type="button"

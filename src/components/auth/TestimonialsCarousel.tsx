@@ -28,6 +28,7 @@ const testimonials = [
 
 export function TestimonialsCarousel() {
   const [active, setActive] = useState(0);
+  const [dragStart, setDragStart] = useState<number | null>(null);
   const testimonial = testimonials[active];
 
   useEffect(() => {
@@ -41,10 +42,27 @@ export function TestimonialsCarousel() {
     return () => window.clearInterval(timer);
   }, []);
 
+  const goNext = () => setActive((current) => (current + 1) % testimonials.length);
+  const goPrev = () =>
+    setActive((current) => (current === 0 ? testimonials.length - 1 : current - 1));
+
+  const finishDrag = (clientX: number) => {
+    if (dragStart === null) return;
+    const delta = clientX - dragStart;
+    if (Math.abs(delta) > 42) {
+      if (delta < 0) goNext();
+      else goPrev();
+    }
+    setDragStart(null);
+  };
+
   return (
     <section
       aria-label="Хэрэглэгчдийн сэтгэгдэл"
-      className="relative flex min-h-[520px] flex-col justify-center overflow-hidden rounded-[28px] border border-[#0f2d2b]/10 bg-[#101515] p-6 text-white shadow-[0_28px_90px_rgba(8,24,24,0.16)] sm:p-10 lg:min-h-full"
+      onPointerDown={(event) => setDragStart(event.clientX)}
+      onPointerUp={(event) => finishDrag(event.clientX)}
+      onPointerCancel={() => setDragStart(null)}
+      className="relative flex min-h-[520px] cursor-grab touch-pan-y select-none flex-col justify-center overflow-hidden rounded-[28px] border border-[#0f2d2b]/10 bg-[#101515] p-6 text-white shadow-[0_28px_90px_rgba(8,24,24,0.16)] active:cursor-grabbing sm:p-10 lg:min-h-full"
     >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_16%,rgba(6,187,180,0.22),transparent_34%),radial-gradient(circle_at_90%_90%,rgba(255,255,255,0.08),transparent_30%)]" />
 
@@ -83,30 +101,9 @@ export function TestimonialsCarousel() {
               />
             ))}
           </div>
-          <div className="flex gap-2">
-            <button
-              type="button"
-              aria-label="Өмнөх сэтгэгдэл"
-              onClick={() =>
-                setActive((current) =>
-                  current === 0 ? testimonials.length - 1 : current - 1,
-                )
-              }
-              className="grid size-11 place-items-center rounded-lg border border-white/12 bg-white/8 text-xl text-white transition-colors hover:bg-white/14 focus:outline-none focus:ring-4 focus:ring-[#06bbb4]/30"
-            >
-              <span aria-hidden="true">‹</span>
-            </button>
-            <button
-              type="button"
-              aria-label="Дараагийн сэтгэгдэл"
-              onClick={() =>
-                setActive((current) => (current + 1) % testimonials.length)
-              }
-              className="grid size-11 place-items-center rounded-lg border border-white/12 bg-white/8 text-xl text-white transition-colors hover:bg-white/14 focus:outline-none focus:ring-4 focus:ring-[#06bbb4]/30"
-            >
-              <span aria-hidden="true">›</span>
-            </button>
-          </div>
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/35">
+            Drag
+          </p>
         </div>
       </div>
     </section>

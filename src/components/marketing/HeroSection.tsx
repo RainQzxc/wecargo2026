@@ -132,35 +132,29 @@ export default function HeroSection() {
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_82%_12%,rgba(6,187,180,0.13),transparent_34%),linear-gradient(180deg,#ffffff_0%,#f7f7f7_100%)]" />
       <div className="absolute inset-x-0 bottom-0 -z-10 h-px bg-[#e5e5e5]" />
 
-      <div className="mx-auto grid w-full max-w-[1440px] grid-cols-1 content-center gap-8 px-5 pb-10 pt-8 sm:px-6 sm:pb-14 sm:pt-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16 lg:px-16 lg:py-20">
+      <div className="mx-auto grid w-full max-w-[1440px] grid-cols-1 content-start gap-8 px-5 pb-10 pt-6 sm:px-6 sm:pb-14 sm:pt-8 lg:grid-cols-[1.05fr_0.95fr] lg:content-center lg:items-center lg:gap-16 lg:px-16 lg:py-20">
         <div className="max-w-3xl">
-          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#e5e5e5] bg-white px-3.5 py-2 shadow-sm">
+          <div className="max-w-2xl rounded-[24px] border border-[#e5e5e5] bg-white/95 p-3 shadow-[0_24px_70px_rgba(17,17,17,0.08)] sm:p-4 lg:mt-0">
+            <TrackingSearch />
+          </div>
+
+          <div className="mb-4 mt-7 inline-flex items-center gap-2 rounded-full border border-[#e5e5e5] bg-white px-3.5 py-2 shadow-sm lg:mb-5 lg:mt-8">
             <span className="h-2 w-2 rounded-full bg-[#06bbb4]" />
             <span className="text-xs font-black uppercase tracking-[0.14em] text-[#06bbb4]">
               Монголын ухаалаг карго
             </span>
           </div>
 
-          <h1 className="max-w-3xl text-[2.55rem] font-black leading-[0.98] tracking-[-0.035em] text-[#111111] sm:text-6xl lg:text-[5.25rem]">
+          <h1 className="max-w-3xl text-[2.1rem] font-black leading-[1.03] tracking-[-0.035em] text-[#111111] sm:text-5xl lg:text-[5.25rem] lg:leading-[0.98]">
             Эрээнээс Улаанбаатар хүртэл ачаагаа тодорхой хяна.
           </h1>
 
-          <p className="mt-5 max-w-2xl text-[17px] leading-8 text-[#333333] sm:text-xl lg:mt-6 lg:text-2xl">
+          <p className="mt-4 max-w-2xl text-[16px] leading-7 text-[#333333] sm:text-xl lg:mt-6 lg:text-2xl lg:leading-8">
             WECARGO нь таны захиалгыг агуулахад хүлээн авахаас эхлээд салбарт
             олгоход бэлэн болох хүртэл нэг цонхоор харуулна.
           </p>
 
-          <div className="mt-7 max-w-2xl lg:mt-8">
-            <TrackingSearch />
-          </div>
-
           <div className="mt-5 grid gap-3 sm:flex">
-            <Link
-              href="/track"
-              className="inline-flex min-h-12 items-center justify-center rounded-xl bg-[#fe0000] px-6 py-3 text-sm font-black text-white transition-colors hover:bg-[#fe0000]/90 focus:outline-none focus:ring-2 focus:ring-[#fe0000]/30 focus:ring-offset-2"
-            >
-              Ачаа хянах
-            </Link>
             <Link
               href="/link-order"
               className="inline-flex min-h-12 items-center justify-center rounded-xl border border-[#e5e5e5] bg-white px-6 py-3 text-sm font-black text-[#111111] transition-colors hover:border-[#06bbb4] hover:text-[#06bbb4] focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/25 focus:ring-offset-2"
@@ -170,7 +164,7 @@ export default function HeroSection() {
           </div>
         </div>
 
-        <div className="flex justify-center lg:justify-end">
+        <div className="hidden justify-center lg:flex lg:justify-end">
           <TrackingCard />
         </div>
       </div>

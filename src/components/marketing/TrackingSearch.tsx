@@ -52,7 +52,10 @@ export default function TrackingSearch({ className = "" }: Props) {
       </div>
 
       <div className="mt-3 grid gap-2 sm:grid-cols-[1fr_auto]">
-        <label className="sr-only" htmlFor="tracking-query">
+        <label
+          className="text-sm font-black text-[#333333] sm:col-span-2"
+          htmlFor="tracking-query"
+        >
           {type === "trackcode" ? "Трак код" : "Утасны дугаар"}
         </label>
         <input

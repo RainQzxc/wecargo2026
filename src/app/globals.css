@@ -34,6 +34,88 @@ body {
   outline-offset: 3px;
 }
 
+@keyframes route-dash {
+  to {
+    stroke-dashoffset: -64;
+  }
+}
+
+@keyframes truck-east {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  8%,
+  92% {
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes truck-west {
+  0% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+  8%,
+  92% {
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+}
+
+@keyframes float-globe {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-1deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+}
+
+@keyframes click-pop {
+  0% {
+    transform: translate(-50%, -50%) scale(0.35);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.8);
+    opacity: 0;
+  }
+}
+
+.route-dash {
+  animation: route-dash 2.2s linear infinite;
+}
+
+.truck-east {
+  offset-path: path("M 120 390 C 350 250 610 245 830 360");
+  offset-rotate: auto;
+  animation: truck-east 8s ease-in-out infinite;
+}
+
+.truck-west {
+  offset-path: path("M 120 390 C 350 250 610 245 830 360");
+  offset-rotate: auto 180deg;
+  animation: truck-west 9.5s ease-in-out infinite;
+  animation-delay: -2.5s;
+}
+
+.float-globe {
+  animation: float-globe 7s ease-in-out infinite;
+}
+
+.click-pop {
+  animation: click-pop 520ms ease-out forwards;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
