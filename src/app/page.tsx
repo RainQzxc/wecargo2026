@@ -2,7 +2,6 @@ import Header from "@/components/marketing/Header";
 import Footer from "@/components/marketing/Footer";
 import HeroSection from "@/components/marketing/HeroSection";
 import TrustBar from "@/components/marketing/TrustBar";
-import PromoBanner from "@/components/marketing/PromoBanner";
 import StorySection from "@/components/marketing/StorySection";
 import ServicesSection from "@/components/marketing/ServicesSection";
 import WhyChooseSection from "@/components/marketing/WhyChooseSection";
@@ -23,7 +22,6 @@ export default function LandingPage() {
       <main className="flex-1">
         <HeroSection />
         <TrustBar />
-        <PromoBanner />
         <StorySection />
         <MotionReveal>
           <ServicesSection />

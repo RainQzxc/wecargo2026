@@ -16,19 +16,19 @@ const items = [
 export default function TrustBar() {
   return (
     <section className="border-b border-[#e5e5e5] bg-white">
-      <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-3 overflow-hidden rounded-2xl border border-[#e5e5e5] bg-[#fafafa]">
+      <div className="mx-auto max-w-[1440px] px-5 py-5 sm:px-6 lg:px-16">
+        <div className="grid grid-cols-3 overflow-hidden rounded-[20px] border border-[#e5e5e5] bg-[#f7f7f7] shadow-sm">
           {items.map((item, index) => (
             <div
               key={item.value}
-              className={`px-3 py-4 text-center ${
+              className={`px-3 py-4 text-center sm:py-5 ${
                 index > 0 ? "border-l border-[#e5e5e5]" : ""
               }`}
             >
-              <p className="text-sm font-black tracking-[-0.01em] text-[#111111] sm:text-base">
+              <p className="text-base font-black tracking-[-0.02em] text-[#111111] sm:text-xl">
                 {item.value}
               </p>
-              <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-[#666666] sm:text-xs">
+              <p className="mt-1 text-[10px] font-black uppercase tracking-[0.08em] text-[#666666] sm:text-xs">
                 {item.label}
               </p>
             </div>

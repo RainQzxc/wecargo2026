@@ -24,13 +24,13 @@ export default function TrackingSearch({ className = "" }: Props) {
   return (
     <form onSubmit={handleSubmit} className={className}>
       <div
-        className="grid grid-cols-2 gap-1 rounded-2xl bg-[#f2f2f2] p-1"
+        className="grid grid-cols-2 gap-1 rounded-2xl border border-[#e5e5e5] bg-[#f2f2f2] p-1"
         aria-label="Хайх төрөл"
       >
         <button
           type="button"
           onClick={() => setType("trackcode")}
-          className={`min-h-11 rounded-xl px-3 text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 focus:ring-offset-2 ${
+          className={`min-h-11 rounded-xl px-3 text-sm font-black transition-colors focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 focus:ring-offset-2 ${
             type === "trackcode"
               ? "bg-white text-[#111111] shadow-sm"
               : "text-[#666666] hover:text-[#111111]"
@@ -41,7 +41,7 @@ export default function TrackingSearch({ className = "" }: Props) {
         <button
           type="button"
           onClick={() => setType("phone")}
-          className={`min-h-11 rounded-xl px-3 text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 focus:ring-offset-2 ${
+          className={`min-h-11 rounded-xl px-3 text-sm font-black transition-colors focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 focus:ring-offset-2 ${
             type === "phone"
               ? "bg-white text-[#111111] shadow-sm"
               : "text-[#666666] hover:text-[#111111]"
@@ -63,11 +63,11 @@ export default function TrackingSearch({ className = "" }: Props) {
           placeholder={
             type === "trackcode" ? "Жишээ: DPK364813798571" : "Жишээ: 99110000"
           }
-          className="min-h-12 w-full rounded-xl border border-[#d8d8d8] bg-white px-4 text-base text-[#111111] placeholder:text-[#888888] transition-colors focus:border-[#06bbb4] focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/20"
+          className="min-h-13 w-full rounded-xl border border-[#e5e5e5] bg-white px-4 text-base font-semibold text-[#111111] placeholder:text-[#666666] transition-colors focus:border-[#06bbb4] focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/20"
         />
         <button
           type="submit"
-          className="min-h-12 rounded-xl bg-[#06bbb4] px-6 text-sm font-bold text-white transition-colors hover:bg-[#049c96] focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 focus:ring-offset-2"
+          className="min-h-13 rounded-xl bg-[#06bbb4] px-7 text-sm font-black text-white transition-colors hover:bg-[#06bbb4]/90 focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 focus:ring-offset-2"
         >
           Шалгах
         </button>

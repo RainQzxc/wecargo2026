@@ -15,23 +15,23 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-[#e5e5e5] bg-white/95 backdrop-blur-md">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-14 items-center justify-between sm:h-16">
+      <div className="mx-auto max-w-[1440px] px-5 sm:px-6 lg:px-16">
+        <div className="flex h-14 items-center justify-between sm:h-16 lg:h-[72px]">
           <Link
             href="/"
             className="flex min-h-11 items-center gap-1.5 rounded-lg pr-2 focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30"
           >
-            <span className="text-lg font-black tracking-[-0.02em] text-[#111111]">
+            <span className="text-lg font-black tracking-[-0.02em] text-[#111111] sm:text-xl">
               WE<span className="text-[#06bbb4]">CARGO</span>
             </span>
           </Link>
 
-          <nav className="hidden items-center gap-6 lg:flex">
+          <nav className="hidden items-center gap-7 lg:flex">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="rounded-lg px-1 py-2 text-sm font-semibold text-[#333333] transition-colors hover:text-[#06bbb4] focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/25"
+                className="rounded-lg px-1 py-2 text-sm font-bold text-[#333333] transition-colors hover:text-[#06bbb4] focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/25"
               >
                 {link.label}
               </Link>
@@ -41,7 +41,7 @@ export default function Header() {
           <div className="hidden items-center gap-3 lg:flex">
             <Link
               href="/auth/login"
-              className="rounded-xl bg-[#06bbb4] px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#049c96] focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 focus:ring-offset-2"
+              className="rounded-xl bg-[#06bbb4] px-5 py-2.5 text-sm font-black text-white transition-colors hover:bg-[#06bbb4]/90 focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 focus:ring-offset-2"
             >
               Нэвтрэх
             </Link>
@@ -126,7 +126,7 @@ export default function Header() {
                 <Link
                   href="/auth/login"
                   onClick={() => setOpen(false)}
-                  className="flex min-h-12 w-full items-center justify-center rounded-xl bg-[#06bbb4] px-4 py-3 text-sm font-black uppercase tracking-[0.03em] text-white shadow-sm transition-colors hover:bg-[#049c96] focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 focus:ring-offset-2"
+                  className="flex min-h-12 w-full items-center justify-center rounded-xl bg-[#06bbb4] px-4 py-3 text-sm font-black uppercase tracking-[0.03em] text-white shadow-sm transition-colors hover:bg-[#06bbb4]/90 focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 focus:ring-offset-2"
                 >
                   Нэвтрэх
                 </Link>

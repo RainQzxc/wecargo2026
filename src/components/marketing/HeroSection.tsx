@@ -16,58 +16,60 @@ function TrackingCard() {
 
   return (
     <motion.div
-      initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
+      initial={shouldReduceMotion ? false : { opacity: 0, y: 22 }}
       animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-      className="w-full max-w-[390px] rounded-[20px] border border-[#e5e5e5] bg-white p-4 shadow-[0_24px_70px_rgba(17,17,17,0.08)] sm:p-5"
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      className="relative w-full max-w-[440px] rounded-[22px] border border-[#e5e5e5] bg-white p-5 shadow-[0_30px_90px_rgba(17,17,17,0.10)] sm:p-6 lg:max-w-[500px] lg:p-7"
     >
-      <div className="mb-5 flex items-center justify-between">
-        <div className="flex items-center gap-2">
+      <div className="absolute -inset-px -z-10 rounded-[23px] bg-[#06bbb4]/10 blur-2xl" />
+
+      <div className="mb-6 flex items-center justify-between">
+        <div className="flex items-center gap-2.5">
           <span className="relative flex h-2.5 w-2.5">
             <span className="absolute inline-flex h-full w-full rounded-full bg-[#06bbb4] opacity-30" />
             <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#06bbb4]" />
           </span>
-          <span className="text-xs font-bold tracking-[0.18em] text-[#111111]">
+          <span className="text-xs font-black tracking-[0.2em] text-[#111111]">
             WECARGO
           </span>
         </div>
-        <span className="rounded-full border border-[#e5e5e5] px-3 py-1 text-xs font-semibold text-[#666666]">
+        <span className="rounded-full border border-[#e5e5e5] bg-[#f7f7f7] px-3 py-1 text-xs font-bold text-[#666666]">
           Хянах
         </span>
       </div>
 
-      <div className="mb-5 rounded-2xl bg-[#f7f7f7] p-4">
-        <p className="mb-1 text-xs font-medium text-[#666666]">трак код</p>
-        <p className="font-mono text-[15px] font-semibold tracking-wide text-[#111111]">
+      <div className="mb-6 rounded-[18px] border border-[#e5e5e5] bg-[#f7f7f7] p-4">
+        <p className="mb-1 text-xs font-semibold text-[#666666]">трак код</p>
+        <p className="font-mono text-base font-black tracking-wide text-[#111111]">
           DPK364813798571
         </p>
       </div>
 
-      <div className="mb-6">
-        <div className="mb-2 flex items-center justify-between text-sm">
-          <span className="font-semibold text-[#111111]">Эрээн</span>
-          <span className="font-semibold text-[#111111]">Улаанбаатар</span>
+      <div className="mb-7">
+        <div className="mb-3 flex items-center justify-between text-sm">
+          <span className="font-black text-[#111111]">Эрээн</span>
+          <span className="font-black text-[#111111]">Улаанбаатар</span>
         </div>
-        <div className="relative h-2 overflow-hidden rounded-full bg-[#e5e5e5]">
+        <div className="relative h-3 overflow-hidden rounded-full bg-[#e5e5e5]">
           <motion.div
             className="h-full rounded-full bg-[#06bbb4]"
             initial={shouldReduceMotion ? false : { width: "28%" }}
-            animate={shouldReduceMotion ? { width: "58%" } : { width: "58%" }}
-            transition={{ duration: 1, ease: "easeOut", delay: 0.15 }}
+            animate={{ width: "58%" }}
+            transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
           />
         </div>
       </div>
 
-      <div className="mb-5 space-y-3">
+      <div className="mb-6 space-y-3.5">
         {trackingSteps.map((step, index) => (
           <div key={step.label} className="flex items-center gap-3">
             <div
               className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${
                 step.active
-                  ? "bg-[#06bbb4] shadow-[0_0_0_5px_rgba(6,187,180,0.12)]"
+                  ? "bg-[#06bbb4] shadow-[0_0_0_6px_rgba(6,187,180,0.12)]"
                   : step.done
                     ? "bg-[#06bbb4]/20 text-[#06bbb4]"
-                    : "border border-[#d8d8d8] bg-white text-[#999999]"
+                    : "border border-[#e5e5e5] bg-white text-[#666666]"
               }`}
             >
               {step.done ? (
@@ -92,16 +94,16 @@ function TrackingCard() {
             <span
               className={`text-sm ${
                 step.active
-                  ? "font-semibold text-[#111111]"
+                  ? "font-black text-[#111111]"
                   : step.done
-                    ? "text-[#333333]"
-                    : "text-[#777777]"
+                    ? "font-semibold text-[#333333]"
+                    : "text-[#666666]"
               }`}
             >
               {step.label}
             </span>
             {step.active && (
-              <span className="ml-auto rounded-full bg-[#06bbb4]/10 px-2.5 py-1 text-xs font-bold text-[#047f7a]">
+              <span className="ml-auto rounded-full bg-[#06bbb4]/10 px-2.5 py-1 text-xs font-black text-[#06bbb4]">
                 Одоо
               </span>
             )}
@@ -112,8 +114,8 @@ function TrackingCard() {
         ))}
       </div>
 
-      <div className="rounded-2xl border border-[#e5e5e5] bg-white p-4">
-        <p className="text-sm font-semibold leading-6 text-[#111111]">
+      <div className="rounded-[18px] border border-[#e5e5e5] bg-white p-4 shadow-sm">
+        <p className="text-sm font-black leading-6 text-[#111111]">
           Таны ачаа Улаанбаатар руу замд явж байна.
         </p>
         <p className="mt-1 text-xs leading-5 text-[#666666]">
@@ -126,40 +128,42 @@ function TrackingCard() {
 
 export default function HeroSection() {
   return (
-    <section className="relative overflow-hidden border-b border-[#f2f2f2] bg-white">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_82%_12%,rgba(6,187,180,0.13),transparent_34%),linear-gradient(180deg,#ffffff_0%,#f7fafa_100%)]" />
-      <div className="relative mx-auto grid w-full max-w-7xl grid-cols-1 gap-9 px-4 pb-12 pt-8 sm:px-6 sm:pb-16 sm:pt-12 lg:grid-cols-[1.02fr_0.98fr] lg:items-center lg:gap-14 lg:px-8 lg:py-20">
-        <div>
-          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#06bbb4]/20 bg-white px-3.5 py-2 shadow-sm">
+    <section className="relative isolate flex min-h-[100svh] overflow-hidden border-b border-[#e5e5e5] bg-white lg:min-h-screen">
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_82%_12%,rgba(6,187,180,0.13),transparent_34%),linear-gradient(180deg,#ffffff_0%,#f7f7f7_100%)]" />
+      <div className="absolute inset-x-0 bottom-0 -z-10 h-px bg-[#e5e5e5]" />
+
+      <div className="mx-auto grid w-full max-w-[1440px] grid-cols-1 content-center gap-8 px-5 pb-10 pt-8 sm:px-6 sm:pb-14 sm:pt-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16 lg:px-16 lg:py-20">
+        <div className="max-w-3xl">
+          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#e5e5e5] bg-white px-3.5 py-2 shadow-sm">
             <span className="h-2 w-2 rounded-full bg-[#06bbb4]" />
-            <span className="text-xs font-bold uppercase tracking-[0.14em] text-[#047f7a]">
+            <span className="text-xs font-black uppercase tracking-[0.14em] text-[#06bbb4]">
               Монголын ухаалаг карго
             </span>
           </div>
 
-          <h1 className="max-w-2xl text-[2.45rem] font-bold leading-[1.04] tracking-[-0.02em] text-[#111111] sm:text-5xl lg:text-6xl">
+          <h1 className="max-w-3xl text-[2.55rem] font-black leading-[0.98] tracking-[-0.035em] text-[#111111] sm:text-6xl lg:text-[5.25rem]">
             Эрээнээс Улаанбаатар хүртэл ачаагаа тодорхой хяна.
           </h1>
 
-          <p className="mt-5 max-w-xl text-base leading-7 text-[#555555] sm:text-lg">
-            WECARGO нь таны захиалгыг агуулахад хүлээн авахаас эхлээд
-            салбарт олгоход бэлэн болох хүртэл нэг цонхоор харуулна.
+          <p className="mt-5 max-w-2xl text-[17px] leading-8 text-[#333333] sm:text-xl lg:mt-6 lg:text-2xl">
+            WECARGO нь таны захиалгыг агуулахад хүлээн авахаас эхлээд салбарт
+            олгоход бэлэн болох хүртэл нэг цонхоор харуулна.
           </p>
 
-          <div className="mt-7 max-w-xl">
+          <div className="mt-7 max-w-2xl lg:mt-8">
             <TrackingSearch />
           </div>
 
-          <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-5 grid gap-3 sm:flex">
             <Link
               href="/track"
-              className="inline-flex min-h-12 items-center justify-center rounded-xl bg-[#fe0000] px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-[#d90000] focus:outline-none focus:ring-2 focus:ring-[#fe0000]/30 focus:ring-offset-2"
+              className="inline-flex min-h-12 items-center justify-center rounded-xl bg-[#fe0000] px-6 py-3 text-sm font-black text-white transition-colors hover:bg-[#fe0000]/90 focus:outline-none focus:ring-2 focus:ring-[#fe0000]/30 focus:ring-offset-2"
             >
               Ачаа хянах
             </Link>
             <Link
               href="/link-order"
-              className="inline-flex min-h-12 items-center justify-center rounded-xl border border-[#d8d8d8] bg-white px-6 py-3 text-sm font-bold text-[#111111] transition-colors hover:border-[#06bbb4] hover:text-[#047f7a] focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/25 focus:ring-offset-2"
+              className="inline-flex min-h-12 items-center justify-center rounded-xl border border-[#e5e5e5] bg-white px-6 py-3 text-sm font-black text-[#111111] transition-colors hover:border-[#06bbb4] hover:text-[#06bbb4] focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/25 focus:ring-offset-2"
             >
               Линк захиалга өгөх
             </Link>
