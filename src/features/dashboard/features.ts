@@ -27,7 +27,11 @@ export type SectionKey =
   | "notifications"
   | "reports"
   | "audit-logs"
-  | "settings";
+  | "settings"
+  | "warehouses"
+  | "branches"
+  | "faq"
+  | "testimonials";
 
 export interface DashboardSection {
   key: SectionKey;
@@ -284,6 +288,70 @@ export const DASHBOARD_SECTIONS: Record<SectionKey, DashboardSection> = {
       update: PERMISSIONS.SETTINGS_UPDATE,
     },
     auditActions: [AUDIT_ACTIONS.SYSTEM_SETTING_UPDATED],
+  },
+  warehouses: {
+    key: "warehouses",
+    title: "Warehouses",
+    description: "Ereen/Ulaanbaatar warehouses. Create, edit, deactivate and assign staff.",
+    readPermission: PERMISSIONS.WAREHOUSES_READ,
+    actions: {
+      create: PERMISSIONS.WAREHOUSES_CREATE,
+      update: PERMISSIONS.WAREHOUSES_UPDATE,
+      delete: PERMISSIONS.WAREHOUSES_DELETE,
+    },
+    auditActions: [
+      AUDIT_ACTIONS.WAREHOUSE_CREATED,
+      AUDIT_ACTIONS.WAREHOUSE_UPDATED,
+      AUDIT_ACTIONS.WAREHOUSE_DELETED,
+    ],
+  },
+  branches: {
+    key: "branches",
+    title: "Branches",
+    description: "Pickup/delivery branches: contact, address and map location.",
+    readPermission: PERMISSIONS.BRANCHES_READ,
+    actions: {
+      create: PERMISSIONS.BRANCHES_CREATE,
+      update: PERMISSIONS.BRANCHES_UPDATE,
+      delete: PERMISSIONS.BRANCHES_DELETE,
+    },
+    auditActions: [
+      AUDIT_ACTIONS.BRANCH_CREATED,
+      AUDIT_ACTIONS.BRANCH_UPDATED,
+      AUDIT_ACTIONS.BRANCH_DELETED,
+    ],
+  },
+  faq: {
+    key: "faq",
+    title: "FAQ",
+    description: "Landing-page frequently asked questions. Editable without a developer.",
+    readPermission: PERMISSIONS.FAQ_READ,
+    actions: {
+      create: PERMISSIONS.FAQ_CREATE,
+      update: PERMISSIONS.FAQ_UPDATE,
+      delete: PERMISSIONS.FAQ_DELETE,
+    },
+    auditActions: [
+      AUDIT_ACTIONS.FAQ_CREATED,
+      AUDIT_ACTIONS.FAQ_UPDATED,
+      AUDIT_ACTIONS.FAQ_DELETED,
+    ],
+  },
+  testimonials: {
+    key: "testimonials",
+    title: "Testimonials",
+    description: "Customer testimonials shown on the landing page.",
+    readPermission: PERMISSIONS.TESTIMONIALS_READ,
+    actions: {
+      create: PERMISSIONS.TESTIMONIALS_CREATE,
+      update: PERMISSIONS.TESTIMONIALS_UPDATE,
+      delete: PERMISSIONS.TESTIMONIALS_DELETE,
+    },
+    auditActions: [
+      AUDIT_ACTIONS.TESTIMONIAL_CREATED,
+      AUDIT_ACTIONS.TESTIMONIAL_UPDATED,
+      AUDIT_ACTIONS.TESTIMONIAL_DELETED,
+    ],
   },
 };
 

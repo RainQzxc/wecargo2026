@@ -294,6 +294,10 @@ model Branch {
   name      String
   phone     String?
   address   String?
+  city      String?
+  district  String?
+  latitude  Decimal? @db.Decimal(10, 7)
+  longitude Decimal? @db.Decimal(10, 7)
   isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -671,6 +675,39 @@ model Banner {
   createdBy User? @relation("BannerCreatedBy", fields: [createdById], references: [id])
 
   @@index([placement])
+  @@index([isActive])
+  @@index([sortOrder])
+}
+
+model Faq {
+  id         String   @id @default(cuid())
+  questionMn String
+  answerMn   String
+  questionEn String?
+  answerEn   String?
+  category   String?
+  sortOrder  Int      @default(0)
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([isActive])
+  @@index([sortOrder])
+}
+
+model Testimonial {
+  id         String   @id @default(cuid())
+  authorName String
+  authorRole String?
+  avatarUrl  String?
+  quoteMn    String
+  quoteEn    String?
+  rating     Int?
+  sortOrder  Int      @default(0)
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
   @@index([isActive])
   @@index([sortOrder])
 }

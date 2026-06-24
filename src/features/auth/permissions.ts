@@ -101,6 +101,30 @@ export const PERMISSIONS = {
   // System settings
   SETTINGS_READ: "settings.read",
   SETTINGS_UPDATE: "settings.update",
+
+  // Warehouses
+  WAREHOUSES_READ: "warehouses.read",
+  WAREHOUSES_CREATE: "warehouses.create",
+  WAREHOUSES_UPDATE: "warehouses.update",
+  WAREHOUSES_DELETE: "warehouses.delete",
+
+  // Branches
+  BRANCHES_READ: "branches.read",
+  BRANCHES_CREATE: "branches.create",
+  BRANCHES_UPDATE: "branches.update",
+  BRANCHES_DELETE: "branches.delete",
+
+  // FAQ
+  FAQ_READ: "faq.read",
+  FAQ_CREATE: "faq.create",
+  FAQ_UPDATE: "faq.update",
+  FAQ_DELETE: "faq.delete",
+
+  // Testimonials
+  TESTIMONIALS_READ: "testimonials.read",
+  TESTIMONIALS_CREATE: "testimonials.create",
+  TESTIMONIALS_UPDATE: "testimonials.update",
+  TESTIMONIALS_DELETE: "testimonials.delete",
 } as const;
 
 export type Permission = (typeof PERMISSIONS)[keyof typeof PERMISSIONS];
@@ -161,6 +185,9 @@ const ADMIN_PERMISSIONS: Permission[] = [
   // Reports (basic operational only)
   PERMISSIONS.REPORTS_BASIC,
   PERMISSIONS.REPORTS_EXPORT,
+  // Warehouses & branches (read-only reference; SUPER_ADMIN manages)
+  PERMISSIONS.WAREHOUSES_READ,
+  PERMISSIONS.BRANCHES_READ,
 ];
 
 /**
