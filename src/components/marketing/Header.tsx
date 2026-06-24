@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { ROUTES } from "@/constants/routes";
 
 const navLinks = [
   { href: "/#services", label: "Үйлчилгээ" },
@@ -40,7 +41,7 @@ export default function Header() {
 
           <div className="hidden items-center gap-3 lg:flex">
             <Link
-              href="/auth/login"
+              href={ROUTES.login}
               className="rounded-xl bg-[#06bbb4] px-5 py-2.5 text-sm font-black text-white transition-colors hover:bg-[#06bbb4]/90 focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 focus:ring-offset-2"
             >
               Нэвтрэх
@@ -124,7 +125,7 @@ export default function Header() {
 
               <div className="mt-9 border-t border-[#e5e5e5] pt-6">
                 <Link
-                  href="/auth/login"
+                  href={ROUTES.login}
                   onClick={() => setOpen(false)}
                   className="flex min-h-12 w-full items-center justify-center rounded-xl bg-[#06bbb4] px-4 py-3 text-sm font-black uppercase tracking-[0.03em] text-white shadow-sm transition-colors hover:bg-[#06bbb4]/90 focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 focus:ring-offset-2"
                 >

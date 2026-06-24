@@ -6,7 +6,7 @@ export const ROUTES = {
   cooperation: "/cooperation",
   guide: "/guide",
   contact: "/contact",
-  login: "/auth/login",
+  login: "/login",
   register: "/auth/register",
   dashboard: {
     root: "/dashboard",
