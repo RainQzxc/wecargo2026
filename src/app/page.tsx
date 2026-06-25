@@ -24,6 +24,11 @@ export default function LandingPage() {
       <Header />
       <main className="flex-1">
         <HeroSection />
+        {/* gradient bridge: dark hero → light sections */}
+        <div
+          className="h-16 bg-gradient-to-b from-[#060e0e] to-[#f7f7f7]"
+          aria-hidden="true"
+        />
         <TrustBar />
         <MotionReveal>
           <RouteMotionSection />
