@@ -15,11 +15,6 @@ export interface LoginState {
   error?: string;
 }
 
-/**
- * Credential login server action (email or phone + password). Sets the session
- * cookie and redirects to the role-based dashboard root. Authorization for what
- * the user can then do is enforced per-page/action via the DAL guards.
- */
 export async function login(_state: LoginState, formData: FormData): Promise<LoginState> {
   const identifier = String(formData.get("identifier") ?? "").trim();
   const password = String(formData.get("password") ?? "");
@@ -28,54 +23,65 @@ export async function login(_state: LoginState, formData: FormData): Promise<Log
     return { error: "Нэвтрэх нэр болон нууц үг шаардлагатай." };
   }
 
-  const phoneNormalized = normalizePhone(identifier);
-  const user = await db.user.findFirst({
-    where: {
-      OR: [
-        { email: identifier.toLowerCase() },
-        { phoneNormalized },
-      ],
-    },
-    select: { id: true, role: true, status: true, passwordHash: true },
-  });
-
-  const ok = user ? verifyPassword(password, user.passwordHash) : false;
-  if (!user || !ok) {
-    await writeAuditLog({
-      action: AUDIT_ACTIONS.AUTH_LOGIN_FAILED,
-      entityType: "User",
-      entityId: user?.id,
-      metadata: { identifier },
+  try {
+    const phoneNormalized = normalizePhone(identifier);
+    const user = await db.user.findFirst({
+      where: {
+        OR: [{ email: identifier.toLowerCase() }, { phoneNormalized }],
+      },
+      select: { id: true, role: true, status: true, passwordHash: true },
     });
-    return { error: "Нэвтрэх нэр эсвэл нууц үг буруу байна." };
-  }
 
-  if (user.status === "DISABLED") {
-    return { error: "Энэ хэрэглэгчийн эрх хаагдсан байна." };
-  }
+    const ok = user ? verifyPassword(password, user.passwordHash) : false;
+    if (!user || !ok) {
+      await writeAuditLog({
+        action: AUDIT_ACTIONS.AUTH_LOGIN_FAILED,
+        entityType: "User",
+        entityId: user?.id,
+        metadata: { identifier },
+      });
+      return { error: "Нэвтрэх нэр эсвэл нууц үг буруу байна." };
+    }
 
-  await createSession(user.id, user.role as Role);
-  await db.user.update({ where: { id: user.id }, data: { lastLoginAt: new Date() } });
-  await writeAuditLog({
-    actorId: user.id,
-    action: AUDIT_ACTIONS.AUTH_LOGIN,
-    entityType: "User",
-    entityId: user.id,
-  });
+    if (user.status === "DISABLED") {
+      return { error: "Энэ хэрэглэгчийн эрх хаагдсан байна." };
+    }
+
+    await createSession(user.id, user.role as Role);
+
+    // Non-critical updates — don't block login if they fail
+    Promise.all([
+      db.user.update({ where: { id: user.id }, data: { lastLoginAt: new Date() } }),
+      writeAuditLog({
+        actorId: user.id,
+        action: AUDIT_ACTIONS.AUTH_LOGIN,
+        entityType: "User",
+        entityId: user.id,
+      }),
+    ]).catch((err) => console.error("[login] post-login tasks failed:", err));
+  } catch (err) {
+    console.error("[login] Unexpected error:", err);
+    return { error: "Системийн алдаа гарлаа. Дахин оролдоно уу." };
+  }
 
   redirect(ROUTES.dashboard.root);
 }
 
 export async function logout(): Promise<void> {
-  const user = await getCurrentUser();
-  if (user) {
-    await writeAuditLog({
-      actorId: user.id,
-      action: AUDIT_ACTIONS.AUTH_LOGOUT,
-      entityType: "User",
-      entityId: user.id,
-    });
+  try {
+    const user = await getCurrentUser();
+    if (user) {
+      await writeAuditLog({
+        actorId: user.id,
+        action: AUDIT_ACTIONS.AUTH_LOGOUT,
+        entityType: "User",
+        entityId: user.id,
+      });
+    }
+  } catch (err) {
+    console.error("[logout] Failed to write audit log:", err);
+  } finally {
+    await destroySession();
   }
-  await destroySession();
   redirect(ROUTES.login);
 }

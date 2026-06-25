@@ -12,18 +12,24 @@ interface AuditParams {
   userAgent?: string;
 }
 
-export async function writeAuditLog(params: AuditParams) {
-  return db.auditLog.create({
-    data: {
-      actorId: params.actorId,
-      action: params.action,
-      entityType: params.entityType,
-      entityId: params.entityId,
-      beforeJson: params.before ? (params.before as object) : undefined,
-      afterJson: params.after ? (params.after as object) : undefined,
-      metadata: params.metadata ? (params.metadata as object) : undefined,
-      ipAddress: params.ipAddress,
-      userAgent: params.userAgent,
-    },
-  });
+// Fire-and-forget audit write. Errors are swallowed so audit failures never
+// block the operation that triggered them.
+export async function writeAuditLog(params: AuditParams): Promise<void> {
+  try {
+    await db.auditLog.create({
+      data: {
+        actorId: params.actorId,
+        action: params.action,
+        entityType: params.entityType,
+        entityId: params.entityId,
+        beforeJson: params.before ? (params.before as object) : undefined,
+        afterJson: params.after ? (params.after as object) : undefined,
+        metadata: params.metadata ? (params.metadata as object) : undefined,
+        ipAddress: params.ipAddress,
+        userAgent: params.userAgent,
+      },
+    });
+  } catch (err) {
+    console.error("[audit] Failed to write log:", params.action, err);
+  }
 }
