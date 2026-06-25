@@ -12,43 +12,6 @@ const navLinks = [
   { href: "/contact", label: "Холбоо барих" },
 ];
 
-function TrackIcon() {
-  return (
-    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" aria-hidden="true">
-      <path
-        d="M4.5 6.75h11v10.5h-11V6.75Zm11 3.5h3l2 2.35v4.65h-5V10.25Z"
-        stroke="currentColor"
-        strokeLinejoin="round"
-        strokeWidth="1.8"
-      />
-      <path
-        d="M8 19a1.75 1.75 0 1 0 0-3.5A1.75 1.75 0 0 0 8 19Zm10 0a1.75 1.75 0 1 0 0-3.5A1.75 1.75 0 0 0 18 19Z"
-        fill="currentColor"
-      />
-    </svg>
-  );
-}
-
-function LoginIcon() {
-  return (
-    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" aria-hidden="true">
-      <path
-        d="M9.5 7.75V6a2 2 0 0 1 2-2h6.75v16H11.5a2 2 0 0 1-2-2v-1.75"
-        stroke="currentColor"
-        strokeLinejoin="round"
-        strokeWidth="1.8"
-      />
-      <path
-        d="M4 12h9m0 0-3-3m3 3-3 3"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.8"
-      />
-    </svg>
-  );
-}
-
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -106,18 +69,10 @@ export default function Header() {
 
           <div className="hidden min-h-12 items-center rounded-2xl border border-[#e5e5e5] bg-white/92 p-1.5 shadow-[0_12px_34px_rgba(17,17,17,0.08)] backdrop-blur lg:flex">
             <Link
-              href="/track"
-              aria-label="Ачаа хянах"
-              className="grid h-10 w-10 place-items-center rounded-xl bg-[#111111] text-white transition-colors hover:bg-[#06bbb4] focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 focus:ring-offset-2"
-            >
-              <TrackIcon />
-            </Link>
-            <Link
               href={ROUTES.login}
-              aria-label="Нэвтрэх"
-              className="grid h-10 w-10 place-items-center rounded-xl bg-[#f2f2f2] text-[#111111] transition-colors hover:bg-[#06bbb4] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 focus:ring-offset-2"
+              className="inline-flex h-10 items-center rounded-xl bg-[#f2f2f2] px-5 text-sm font-bold text-[#111111] transition-colors hover:bg-[#06bbb4] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 focus:ring-offset-2"
             >
-              <LoginIcon />
+              Нэвтрэх
             </Link>
           </div>
 
