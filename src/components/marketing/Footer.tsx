@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const cols = [
   {
@@ -27,10 +28,14 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 lg:gap-12">
           {/* Brand column */}
           <div className="md:col-span-2">
-            <Link href="/" className="inline-block mb-4">
-              <span className="text-white font-bold text-xl tracking-tight">
-                WE<span className="text-[#06bbb4]">CARGO</span>
-              </span>
+            <Link href="/" className="inline-block mb-4" aria-label="WECARGO">
+              <Image
+                src="/logo wecargo for black bg.png"
+                alt="WECARGO"
+                width={976}
+                height={270}
+                className="h-9 w-auto object-contain"
+              />
             </Link>
             <p className="text-white/55 text-sm leading-relaxed max-w-sm">
               2014 оноос хойш Эрээн–Улаанбаатар чиглэлд тээвэр, логистикийн

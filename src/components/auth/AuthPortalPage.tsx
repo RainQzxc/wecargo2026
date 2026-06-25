@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { LoginForm } from "@/components/auth/LoginForm";
 import { TestimonialsCarousel } from "@/components/auth/TestimonialsCarousel";
 
@@ -76,70 +77,26 @@ const variantStyles: Record<
 };
 
 function WecargoMark({
-  accentText,
   focus,
-  logoTile,
   dark = false,
 }: {
-  accentText: string;
   focus: string;
-  logoTile: string;
   dark?: boolean;
 }) {
   return (
     <Link
       href="/"
-      className={`inline-flex items-center gap-3 rounded-xl focus:outline-none focus:ring-4 ${focus}`}
+      className={`inline-flex items-center rounded-xl focus:outline-none focus:ring-4 ${focus}`}
       aria-label="WECARGO нүүр хуудас"
     >
-      <span
-        className={`grid size-11 place-items-center rounded-2xl border shadow-[0_10px_30px_rgba(8,31,31,0.08)] ${logoTile}`}
-      >
-        <svg
-          viewBox="0 0 40 40"
-          aria-hidden="true"
-          className="size-7"
-          fill="none"
-        >
-          <path
-            d="M20 4 34 12v16L20 36 6 28V12L20 4Z"
-            stroke="currentColor"
-            strokeWidth="2.2"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M20 20v16M6 12l14 8 14-8M13 8l14 8"
-            stroke="currentColor"
-            strokeWidth="2.2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M28 28h7v7h-7z"
-            fill="currentColor"
-            className={accentText}
-            stroke="currentColor"
-            strokeWidth="1.8"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </span>
-      <span className="leading-none">
-        <span
-          className={`block text-3xl font-black tracking-[-0.06em] ${
-            dark ? "text-white" : "text-[#081f1f]"
-          }`}
-        >
-          WE<span className={accentText}>CARGO</span>
-        </span>
-        <span
-          className={`mt-1 block text-[9px] font-black uppercase tracking-[0.28em] ${
-            dark ? "text-white/45" : "text-[#667574]"
-          }`}
-        >
-          Logistics Group
-        </span>
-      </span>
+      <Image
+        src={dark ? "/logo wecargo for black bg.png" : "/logo wecargo for white bg.png"}
+        alt="WECARGO"
+        width={976}
+        height={270}
+        className="h-11 w-auto object-contain"
+        priority
+      />
     </Link>
   );
 }
@@ -160,11 +117,7 @@ function PortalForm({
   return (
     <div className={styles.formWrap}>
       <div>
-        <WecargoMark
-          accentText={styles.accentText}
-          focus={styles.focus}
-          logoTile={styles.logoTile}
-        />
+        <WecargoMark focus={styles.focus} />
       </div>
 
       <div className={compact ? "mt-20" : "mt-16 sm:mt-20"}>
@@ -243,12 +196,7 @@ export function AuthPortalPage({
         <section className={styles.panel}>
           <div className={`absolute inset-0 ${styles.motif}`} />
           <div className="relative">
-            <WecargoMark
-              accentText={styles.accentText}
-              focus={styles.focus}
-              logoTile={styles.logoTile}
-              dark
-            />
+            <WecargoMark focus={styles.focus} dark />
             <div className="mt-20 max-w-xl">
               <p className="text-xs font-black uppercase tracking-[0.22em] text-white/60">
                 {badge}

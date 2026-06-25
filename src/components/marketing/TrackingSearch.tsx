@@ -1,28 +1,29 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useActionState } from "react";
+import { trackParcel, type TrackResult } from "@/features/tracking/actions";
 
 type SearchType = "trackcode" | "phone";
 
 interface Props {
   className?: string;
+  onResult?: (result: TrackResult | null, pending: boolean) => void;
 }
 
-export default function TrackingSearch({ className = "" }: Props) {
+export default function TrackingSearch({ className = "", onResult }: Props) {
   const [type, setType] = useState<SearchType>("trackcode");
-  const [query, setQuery] = useState("");
-  const router = useRouter();
+  const [state, formAction, pending] = useActionState(trackParcel, null);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const trimmed = query.trim();
-    if (!trimmed) return;
-    router.push(`/track?q=${encodeURIComponent(trimmed)}&type=${type}`);
-  };
+  // Lift the result + pending state to the parent (the hero live-tracking card).
+  useEffect(() => {
+    onResult?.(state, pending);
+  }, [state, pending, onResult]);
 
   return (
-    <form onSubmit={handleSubmit} className={className}>
+    <form action={formAction} className={className}>
+      <input type="hidden" name="type" value={type} />
+
       <div
         className="grid grid-cols-2 gap-1 rounded-2xl border border-[#e5e5e5] bg-[#f2f2f2] p-1"
         aria-label="Хайх төрөл"
@@ -60,9 +61,8 @@ export default function TrackingSearch({ className = "" }: Props) {
         </label>
         <input
           id="tracking-query"
+          name="q"
           type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
           placeholder={
             type === "trackcode" ? "Жишээ: DPK364813798571" : "Жишээ: 99110000"
           }
@@ -70,14 +70,21 @@ export default function TrackingSearch({ className = "" }: Props) {
         />
         <button
           type="submit"
-          className="min-h-13 rounded-xl bg-[#06bbb4] px-7 text-sm font-black text-white transition-colors hover:bg-[#06bbb4]/90 focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 focus:ring-offset-2"
+          disabled={pending}
+          className="min-h-13 rounded-xl bg-[#06bbb4] px-7 text-sm font-black text-white transition-colors hover:bg-[#06bbb4]/90 focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 focus:ring-offset-2 disabled:opacity-60"
         >
-          Шалгах
+          {pending ? "Хайж байна…" : "Шалгах"}
         </button>
       </div>
 
       <p className="mt-2.5 text-sm leading-6 text-[#666666]">
-        Ачааны байршил, төлөв, сүүлийн шинэчлэлтийг 24/7 шалгана.
+        {state?.searched && !state.found ? (
+          <span className="font-bold text-[#fe0000]">
+            “{state.query}” кодтой бараа олдсонгүй.
+          </span>
+        ) : (
+          "Ачааны байршил, төлөв, сүүлийн шинэчлэлтийг 24/7 шалгана."
+        )}
       </p>
     </form>
   );

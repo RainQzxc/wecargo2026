@@ -2,6 +2,8 @@
 
 import { db } from "@/server/db";
 import { requirePermission } from "@/features/auth";
+import { writeAuditLog } from "@/lib/audit";
+import { AUDIT_ACTIONS } from "@/constants/audit-actions";
 import { revalidatePath } from "next/cache";
 
 export async function assignCourier(
@@ -37,6 +39,14 @@ export async function assignCourier(
       },
     });
 
+    await writeAuditLog({
+      actorId: user.id,
+      action: AUDIT_ACTIONS.DELIVERY_ASSIGNED,
+      entityType: "DeliveryRequest",
+      entityId: deliveryId,
+      after: { courierId, status: "ASSIGNED" },
+    });
+
     revalidatePath("/dashboard/super-admin/deliveries");
     revalidatePath(`/dashboard/super-admin/deliveries/${deliveryId}`);
 
@@ -54,6 +64,11 @@ export async function updateDeliveryStatus(
   note?: string
 ): Promise<void> {
   const user = await requirePermission("deliveries.updateStatus");
+
+  const before = await db.deliveryRequest.findUnique({
+    where: { id: deliveryId },
+    select: { status: true },
+  });
 
   const data: Record<string, unknown> = { status };
 
@@ -73,6 +88,16 @@ export async function updateDeliveryStatus(
       note: note ?? null,
       createdById: user.id,
     },
+  });
+
+  await writeAuditLog({
+    actorId: user.id,
+    action: AUDIT_ACTIONS.DELIVERY_STATUS_CHANGED,
+    entityType: "DeliveryRequest",
+    entityId: deliveryId,
+    before: before ? { status: before.status } : undefined,
+    after: { status },
+    metadata: note ? { note } : undefined,
   });
 
   revalidatePath("/dashboard/super-admin/deliveries");

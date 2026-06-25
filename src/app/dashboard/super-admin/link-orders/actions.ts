@@ -3,6 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { db } from "@/server/db";
 import { requirePermission } from "@/features/auth";
+import { writeAuditLog } from "@/lib/audit";
+import { AUDIT_ACTIONS } from "@/constants/audit-actions";
 
 const VALID_STATUSES = [
   "REQUESTED",
@@ -23,15 +25,29 @@ export async function updateLinkOrderStatus(
   orderId: string,
   status: string,
 ): Promise<void> {
-  await requirePermission("linkOrders.updateStatus");
+  const user = await requirePermission("linkOrders.updateStatus");
 
   if (!VALID_STATUSES.includes(status as LinkOrderStatus)) {
     throw new Error(`Invalid status: ${status}`);
   }
 
+  const before = await db.linkOrder.findUnique({
+    where: { id: orderId },
+    select: { status: true },
+  });
+
   await db.linkOrder.update({
     where: { id: orderId },
     data: { status: status as LinkOrderStatus },
+  });
+
+  await writeAuditLog({
+    actorId: user.id,
+    action: AUDIT_ACTIONS.LINK_ORDER_STATUS_CHANGED,
+    entityType: "LinkOrder",
+    entityId: orderId,
+    before: before ? { status: before.status } : undefined,
+    after: { status },
   });
 
   revalidatePath("/dashboard/super-admin/link-orders");

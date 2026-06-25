@@ -2,7 +2,10 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { motion, useScroll, useMotionValueEvent } from "motion/react";
+
+const LAYOUT_TRANSITION = { duration: 0.5, ease: [0.22, 1, 0.36, 1] as const };
 import { ROUTES } from "@/constants/routes";
 
 const navLinks = [
@@ -15,29 +18,31 @@ const navLinks = [
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { scrollY } = useScroll();
 
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 24);
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  // Header stays fixed and visible — it never disappears. On scroll-down it
+  // COLLAPSES: the row drops `justify-between` and the three pills cluster
+  // centered (lg:w-fit + justify-center). Back at the top it EXPANDS to
+  // justify-between. motion `layout` animates the reflow smoothly because
+  // justify-content / width are not CSS-transitionable.
+  useMotionValueEvent(scrollY, "change", (y) => setScrolled(y > 24));
 
   return (
     <header className="sticky top-0 z-50 px-2 py-2 sm:px-4">
-      <div className="mx-auto max-w-[1440px] lg:relative">
-        <div
-          className={`flex items-center justify-between transition-all duration-300 ${
+      <div className="mx-auto max-w-[1440px]">
+        <motion.div
+          layout
+          transition={LAYOUT_TRANSITION}
+          className={`flex items-center justify-between gap-3 ${
             scrolled
-              ? "lg:mx-auto lg:w-fit lg:justify-center lg:gap-1"
+              ? "lg:mx-auto lg:w-fit lg:justify-center lg:gap-3"
               : "lg:w-full lg:justify-between lg:gap-8"
           }`}
         >
+          <motion.div layout transition={LAYOUT_TRANSITION}>
           <Link
             href="/"
-            className={`flex min-h-12 items-center rounded-2xl border border-[#e5e5e5] bg-white/92 px-3 shadow-[0_12px_34px_rgba(17,17,17,0.08)] backdrop-blur transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 ${
-              scrolled ? "lg:rounded-[22px] lg:px-3" : "lg:rounded-[22px] lg:px-4"
-            }`}
+            className="flex min-h-12 items-center rounded-[22px] border border-[#e5e5e5] bg-white/92 px-3 shadow-[0_12px_34px_rgba(17,17,17,0.08)] backdrop-blur transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 lg:px-4"
           >
             <Image
               src="/logo wecargo for white bg.png"
@@ -48,12 +53,13 @@ export default function Header() {
               priority
             />
           </Link>
+          </motion.div>
 
-          <nav
-            className={`hidden min-h-12 items-center rounded-2xl border border-[#e5e5e5] bg-white/92 px-7 shadow-[0_12px_34px_rgba(17,17,17,0.08)] backdrop-blur transition-all duration-300 lg:flex ${
-              scrolled
-                ? "gap-8 rounded-[22px]"
-                : "absolute left-1/2 top-0 -translate-x-1/2 gap-10 rounded-[22px]"
+          <motion.nav
+            layout
+            transition={LAYOUT_TRANSITION}
+            className={`hidden min-h-12 items-center rounded-[22px] border border-[#e5e5e5] bg-white/92 shadow-[0_12px_34px_rgba(17,17,17,0.08)] backdrop-blur transition-[gap,padding] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] lg:flex ${
+              scrolled ? "gap-6 px-5" : "gap-10 px-7"
             }`}
           >
             {navLinks.map((link) => (
@@ -65,16 +71,20 @@ export default function Header() {
                 {link.label}
               </Link>
             ))}
-          </nav>
+          </motion.nav>
 
-          <div className="hidden min-h-12 items-center rounded-2xl border border-[#e5e5e5] bg-white/92 p-1.5 shadow-[0_12px_34px_rgba(17,17,17,0.08)] backdrop-blur lg:flex">
+          <motion.div
+            layout
+            transition={LAYOUT_TRANSITION}
+            className="hidden min-h-12 items-center rounded-2xl border border-[#e5e5e5] bg-white/92 p-1.5 shadow-[0_12px_34px_rgba(17,17,17,0.08)] backdrop-blur lg:flex"
+          >
             <Link
               href={ROUTES.login}
               className="inline-flex h-10 items-center rounded-xl bg-[#f2f2f2] px-5 text-sm font-bold text-[#111111] transition-colors hover:bg-[#06bbb4] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 focus:ring-offset-2"
             >
               Нэвтрэх
             </Link>
-          </div>
+          </motion.div>
 
           <button
             type="button"
@@ -98,7 +108,7 @@ export default function Header() {
               />
             </svg>
           </button>
-        </div>
+        </motion.div>
       </div>
 
       {open && (

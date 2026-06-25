@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { logout } from "@/features/auth/actions";
 import type { CurrentUser } from "@/features/auth";
@@ -43,8 +44,15 @@ function SidebarContent({
     <div className="flex flex-col h-full select-none">
       {/* Logo */}
       <div className="px-5 py-5 border-b border-white/10 shrink-0">
-        <span className="text-brand font-black text-xl tracking-tight">WECARGO</span>
-        <p className="text-white/40 text-[10px] uppercase tracking-widest mt-0.5">{areaLabel}</p>
+        <Image
+          src="/logo wecargo for black bg.png"
+          alt="WECARGO"
+          width={976}
+          height={270}
+          className="h-7 w-auto object-contain"
+          priority
+        />
+        <p className="text-white/40 text-[10px] uppercase tracking-widest mt-1.5">{areaLabel}</p>
       </div>
 
       {/* Nav links */}
@@ -166,9 +174,13 @@ export function DashboardShell({
             </svg>
           </button>
 
-          <span className="lg:hidden font-black text-ink text-base tracking-tight">
-            WECARGO
-          </span>
+          <Image
+            src="/logo wecargo for white bg.png"
+            alt="WECARGO"
+            width={976}
+            height={270}
+            className="lg:hidden h-6 w-auto object-contain"
+          />
 
           <div className="flex-1" />
 

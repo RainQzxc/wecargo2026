@@ -2,6 +2,8 @@
 
 import { db } from "@/server/db";
 import { requirePermission } from "@/features/auth";
+import { writeAuditLog } from "@/lib/audit";
+import { AUDIT_ACTIONS } from "@/constants/audit-actions";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import type { ParcelStatus } from "@prisma/client";
@@ -105,6 +107,11 @@ export async function updateParcelStatus(
 
   const validStatus = status as ParcelStatus;
 
+  const before = await db.parcel.findUnique({
+    where: { id: parcelId },
+    select: { status: true },
+  });
+
   await db.parcel.update({
     where: { id: parcelId },
     data: { status: validStatus, updatedById: user.id },
@@ -116,6 +123,15 @@ export async function updateParcelStatus(
       status: validStatus,
       createdById: user.id,
     },
+  });
+
+  await writeAuditLog({
+    actorId: user.id,
+    action: AUDIT_ACTIONS.PARCEL_STATUS_CHANGED,
+    entityType: "Parcel",
+    entityId: parcelId,
+    before: before ? { status: before.status } : undefined,
+    after: { status: validStatus },
   });
 
   revalidatePath(`/dashboard/super-admin/parcels/${parcelId}`);

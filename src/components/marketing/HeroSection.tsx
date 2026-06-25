@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useCallback } from "react";
 import Link from "next/link";
 import {
   motion,
@@ -10,6 +10,8 @@ import {
   type MotionValue,
 } from "motion/react";
 import TrackingSearch from "./TrackingSearch";
+import { TRACK_STAGES, TRACK_STAGE_COUNT } from "@/constants/tracking-stages";
+import type { TrackResult } from "@/features/tracking/actions";
 
 /* ─── Parallax background layer ───────────────────────────────────────────── */
 function BgLayer({ yPct }: { yPct: MotionValue<string> }) {
@@ -58,18 +60,35 @@ function MidLayer({ yPct }: { yPct: MotionValue<string> }) {
 }
 
 /* ─── Dark live-tracking card ──────────────────────────────────────────────── */
-const trackingSteps = [
-  { label: "Агуулахад хүлээн авсан", done: true },
-  { label: "Тээвэрлэгдэж байна", done: true, active: true },
-  { label: "Салбарт ирсэн", done: false },
-  { label: "Олгоход бэлэн", done: false },
-];
+
+// Demo shown before any search: track code mid-journey.
+const DEMO = {
+  displayCode: "DPK364813798571",
+  stage: 1,
+  note: "Таны ачаа Улаанбаатар руу замд явж байна.",
+};
 
 function DarkTrackingCard({
   reduced,
+  result,
+  pending,
 }: {
   reduced: boolean | null | undefined;
+  result: TrackResult | null;
+  pending: boolean;
 }) {
+  const notFound = result?.searched && !result.found;
+  const found = result?.found ? result : null;
+
+  const displayCode = found?.displayCode ?? DEMO.displayCode;
+  const stage = found ? (found.stage ?? -1) : DEMO.stage;
+  const note = found?.lastMessage ?? found?.statusLabel ?? DEMO.note;
+  const updatedLabel = found?.updatedAt
+    ? `Сүүлд шинэчлэгдсэн: ${new Date(found.updatedAt).toLocaleString("mn-MN")}`
+    : "Сүүлд шинэчлэгдсэн: Өнөөдөр 09:15";
+
+  const progressPct = stage >= 0 ? ((stage + 1) / TRACK_STAGE_COUNT) * 100 : 0;
+
   return (
     <motion.div
       initial={reduced ? false : { opacity: 0, y: 32, scale: 0.97 }}
@@ -77,7 +96,6 @@ function DarkTrackingCard({
       transition={{ duration: 0.95, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
       className="relative w-full max-w-[420px] rounded-[26px] border border-white/10 bg-white/[0.055] p-6 shadow-[0_40px_100px_rgba(0,0,0,0.55)] backdrop-blur-xl xl:max-w-[460px] xl:p-7"
     >
-      {/* Card inner glow */}
       <div className="pointer-events-none absolute -inset-px rounded-[26px] bg-gradient-to-br from-[#06bbb4]/22 via-transparent to-transparent" />
 
       {/* Header */}
@@ -92,7 +110,7 @@ function DarkTrackingCard({
           </span>
         </div>
         <span className="rounded-full border border-white/10 bg-white/8 px-3 py-1 text-[10px] font-bold text-white/45">
-          Шинэчлэгдэж байна
+          {pending ? "Хайж байна…" : "Шинэчлэгдэж байна"}
         </span>
       </div>
 
@@ -102,83 +120,95 @@ function DarkTrackingCard({
           трак код
         </p>
         <p className="font-mono text-base font-black tracking-wider text-white">
-          DPK364813798571
+          {notFound ? result?.query : displayCode}
         </p>
       </div>
 
-      {/* Progress bar */}
-      <div className="mb-6">
-        <div className="mb-2.5 flex items-center justify-between text-xs font-black text-white/55">
-          <span>Эрээн</span>
-          <span>Улаанбаатар</span>
+      {notFound ? (
+        <div className="rounded-[16px] border border-[#fe0000]/20 bg-[#fe0000]/10 p-4">
+          <p className="text-sm font-black text-white">Бараа олдсонгүй.</p>
+          <p className="mt-1 text-[11px] text-white/45">
+            Трак код эсвэл утасны дугаараа шалгана уу.
+          </p>
         </div>
-        <div className="relative h-2 overflow-hidden rounded-full bg-white/10">
-          <motion.div
-            className="h-full rounded-full bg-[#06bbb4]"
-            initial={{ width: "28%" }}
-            animate={{ width: "58%" }}
-            transition={{ duration: 1.2, ease: "easeOut", delay: 0.55 }}
-          />
-        </div>
-      </div>
-
-      {/* Steps */}
-      <div className="mb-5 space-y-3.5">
-        {trackingSteps.map((step) => (
-          <div key={step.label} className="flex items-center gap-3">
-            <div
-              className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${
-                step.active
-                  ? "bg-[#06bbb4] shadow-[0_0_0_6px_rgba(6,187,180,0.18)]"
-                  : step.done
-                    ? "bg-[#06bbb4]/22"
-                    : "border border-white/15 bg-white/5"
-              }`}
-            >
-              {step.done ? (
-                <svg
-                  className={`h-2.5 w-2.5 ${step.active ? "text-white" : "text-[#06bbb4]"}`}
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={3}
-                  aria-hidden="true"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
-              ) : (
-                <span className="h-1 w-1 rounded-full bg-white/30" />
-              )}
+      ) : (
+        <>
+          {/* Progress bar */}
+          <div className="mb-6">
+            <div className="mb-2.5 flex items-center justify-between text-xs font-black text-white/55">
+              <span>Эрээн</span>
+              <span>Улаанбаатар</span>
             </div>
-            <span
-              className={`text-sm leading-none ${
-                step.active
-                  ? "font-black text-white"
-                  : step.done
-                    ? "font-semibold text-white/60"
-                    : "text-white/30"
-              }`}
-            >
-              {step.label}
-            </span>
-            {step.active && (
-              <span className="ml-auto rounded-full bg-[#06bbb4]/15 px-2.5 py-0.5 text-[10px] font-black text-[#06bbb4]">
-                Одоо
-              </span>
-            )}
+            <div className="relative h-2 overflow-hidden rounded-full bg-white/10">
+              <motion.div
+                key={progressPct}
+                className="h-full rounded-full bg-[#06bbb4]"
+                initial={{ width: 0 }}
+                animate={{ width: `${progressPct}%` }}
+                transition={{ duration: 1, ease: "easeOut" }}
+              />
+            </div>
           </div>
-        ))}
-      </div>
 
-      {/* Status note */}
-      <div className="rounded-[16px] border border-white/8 bg-white/5 p-4">
-        <p className="text-sm font-black text-white">
-          Таны ачаа Улаанбаатар руу замд явж байна.
-        </p>
-        <p className="mt-1 text-[11px] text-white/40">
-          Сүүлд шинэчлэгдсэн: Өнөөдөр 09:15
-        </p>
-      </div>
+          {/* 6 stages */}
+          <div className="mb-5 space-y-3">
+            {TRACK_STAGES.map((s, i) => {
+              const done = i < stage;
+              const active = i === stage;
+              return (
+                <div key={s.key} className="flex items-center gap-3">
+                  <div
+                    className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${
+                      active
+                        ? "bg-[#06bbb4] shadow-[0_0_0_6px_rgba(6,187,180,0.18)]"
+                        : done
+                          ? "bg-[#06bbb4]/22"
+                          : "border border-white/15 bg-white/5"
+                    }`}
+                  >
+                    {done || active ? (
+                      <svg
+                        className={`h-2.5 w-2.5 ${active ? "text-white" : "text-[#06bbb4]"}`}
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={3}
+                        aria-hidden="true"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                    ) : (
+                      <span className="h-1 w-1 rounded-full bg-white/30" />
+                    )}
+                  </div>
+                  <span
+                    className={`text-sm leading-none ${
+                      active
+                        ? "font-black text-white"
+                        : done
+                          ? "font-semibold text-white/60"
+                          : "text-white/30"
+                    }`}
+                  >
+                    {s.label}
+                  </span>
+                  {active && (
+                    <span className="ml-auto rounded-full bg-[#06bbb4]/15 px-2.5 py-0.5 text-[10px] font-black text-[#06bbb4]">
+                      Одоо
+                    </span>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Status note */}
+          <div className="rounded-[16px] border border-white/8 bg-white/5 p-4">
+            <p className="text-sm font-black text-white">{note}</p>
+            <p className="mt-1 text-[11px] text-white/40">{updatedLabel}</p>
+          </div>
+        </>
+      )}
     </motion.div>
   );
 }
@@ -187,6 +217,16 @@ function DarkTrackingCard({
 export default function HeroSection() {
   const heroRef = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
+
+  const [track, setTrack] = useState<{ result: TrackResult | null; pending: boolean }>({
+    result: null,
+    pending: false,
+  });
+  const handleResult = useCallback(
+    (result: TrackResult | null, pending: boolean) => setTrack({ result, pending }),
+    [],
+  );
+  const hasResult = Boolean(track.result?.searched);
 
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -263,7 +303,7 @@ export default function HeroSection() {
               transition={{ duration: 0.85, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
               className="mb-5 max-w-xl rounded-[22px] border border-white/15 bg-white p-3 shadow-[0_20px_60px_rgba(0,0,0,0.35)]"
             >
-              <TrackingSearch />
+              <TrackingSearch onResult={handleResult} />
             </motion.div>
 
             {/* Secondary CTA */}
@@ -288,9 +328,9 @@ export default function HeroSection() {
             </motion.div>
           </div>
 
-          {/* ── Right column – dark tracking card (desktop only) ── */}
-          <div className="hidden lg:flex lg:justify-end">
-            <DarkTrackingCard reduced={reduced} />
+          {/* ── Right column – live tracking card. Desktop always; mobile once searched. ── */}
+          <div className={`${hasResult ? "flex justify-center" : "hidden"} lg:flex lg:justify-end`}>
+            <DarkTrackingCard reduced={reduced} result={track.result} pending={track.pending} />
           </div>
         </div>
       </motion.div>
