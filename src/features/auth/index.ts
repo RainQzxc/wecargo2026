@@ -10,5 +10,15 @@ export {
   can,
   type CurrentUser,
 } from "./dal";
-export { login, logout, type LoginState } from "./actions";
+export {
+  login,
+  logout,
+  register,
+  requestPasswordReset,
+  resetPassword,
+  type LoginState,
+  type RegisterState,
+  type ForgotPasswordState,
+  type ResetPasswordState,
+} from "./actions";
 export { hashPassword, verifyPassword } from "./password";

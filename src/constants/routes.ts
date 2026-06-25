@@ -8,6 +8,8 @@ export const ROUTES = {
   contact: "/contact",
   login: "/login",
   register: "/auth/register",
+  forgotPassword: "/auth/forgot-password",
+  resetPassword: "/auth/reset-password",
   dashboard: {
     root: "/dashboard",
     superAdmin: "/dashboard/super-admin",

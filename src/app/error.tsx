@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect } from "react";
+import { reportClientError } from "@/features/observability/actions";
 
 export default function Error({
   error,
@@ -9,6 +11,16 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  useEffect(() => {
+    reportClientError({
+      message: error.message,
+      stack: error.stack,
+      digest: error.digest,
+      source: "error-boundary",
+      route: typeof window !== "undefined" ? window.location.pathname : undefined,
+    });
+  }, [error]);
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-neutral-50 px-4">
       <div className="max-w-md w-full text-center">

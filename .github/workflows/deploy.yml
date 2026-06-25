@@ -1,0 +1,56 @@
+name: Deploy (Vercel)
+
+# Deploys production on push to main, after CI passes. Requires repo secrets:
+#   VERCEL_TOKEN       — Vercel account/automation token
+#   VERCEL_ORG_ID      — from `vercel link` (.vercel/project.json) or dashboard
+#   VERCEL_PROJECT_ID  — same source
+# If the secrets are absent the job is skipped, so forks/CI-only setups don't fail.
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+
+jobs:
+  deploy:
+    name: Vercel production deploy
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    steps:
+      - name: Guard — require Vercel secrets
+        run: |
+          if [ -z "$VERCEL_TOKEN" ] || [ -z "$VERCEL_ORG_ID" ] || [ -z "$VERCEL_PROJECT_ID" ]; then
+            echo "Vercel secrets not set — skipping deploy."
+            exit 0
+          fi
+          echo "deploy=true" >> "$GITHUB_ENV"
+
+      - uses: actions/checkout@v4
+        if: env.deploy == 'true'
+
+      - uses: actions/setup-node@v4
+        if: env.deploy == 'true'
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install Vercel CLI
+        if: env.deploy == 'true'
+        run: npm install -g vercel@latest
+
+      - name: Pull Vercel env
+        if: env.deploy == 'true'
+        run: vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+
+      - name: Build
+        if: env.deploy == 'true'
+        run: vercel build --prod --token="$VERCEL_TOKEN"
+
+      - name: Deploy
+        if: env.deploy == 'true'
+        run: vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN"
