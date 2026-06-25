@@ -35,23 +35,28 @@ export interface CurrentUser {
 
 /** Returns the authenticated, enabled user or null. Memoized per request. */
 export const getCurrentUser = cache(async (): Promise<CurrentUser | null> => {
-  const session = await readSession();
-  if (!session?.userId) return null;
+  try {
+    const session = await readSession();
+    if (!session?.userId) return null;
 
-  const user = await db.user.findUnique({
-    where: { id: session.userId },
-    select: {
-      id: true,
-      role: true,
-      status: true,
-      name: true,
-      email: true,
-      phone: true,
-    },
-  });
+    const user = await db.user.findUnique({
+      where: { id: session.userId },
+      select: {
+        id: true,
+        role: true,
+        status: true,
+        name: true,
+        email: true,
+        phone: true,
+      },
+    });
 
-  if (!user || user.status === "DISABLED") return null;
-  return user as CurrentUser;
+    if (!user || user.status === "DISABLED") return null;
+    return user as CurrentUser;
+  } catch (err) {
+    console.error("[getCurrentUser] DB error:", err);
+    return null;
+  }
 });
 
 /** Authenticated user, or redirect to login. */
