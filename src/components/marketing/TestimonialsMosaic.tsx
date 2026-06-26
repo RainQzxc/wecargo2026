@@ -2,41 +2,31 @@ import Link from "next/link";
 
 const testimonials = [
   {
-    quote: "Захиалгын дугаар, ирсэн ачаа, төлбөрөө нэг дор харахад маш амар болсон.",
+    quote:
+      "Эрээнээс ирж байгаа ачаагаа алхам бүрээр нь шалгадаг болсон. Хэзээ авах нь тодорхой байдаг нь хамгийн хэрэгтэй.",
     name: "Б. Энхжин",
     role: "Онлайн худалдаа эрхлэгч",
     initials: "ЭЖ",
   },
   {
     quote:
-      "Эрээнээс ирж байгаа ачаагаа алхам бүрээр нь шалгадаг болсон. Хэзээ авах нь тодорхой байдаг нь хамгийн хэрэгтэй.",
+      "Link order өгөөд явцыг нь dashboard дээрээсээ харах нь цаг их хэмнэдэг.",
     name: "Г. Мөнх-Оргил",
     role: "Тогтмол үйлчлүүлэгч",
     initials: "МО",
   },
   {
-    quote: "Link order өгөөд явцыг нь dashboard дээрээсээ харах нь цаг их хэмнэдэг.",
+    quote: "Утасдаж лавлах зүйл багассан. Ачааны төлөв ойлгомжтой харагддаг.",
     name: "С. Номин",
     role: "Жижиг бизнес",
     initials: "Н",
   },
   {
-    quote: "Утасдаж лавлах зүйл багассан. Ачааны төлөв ойлгомжтой харагддаг.",
+    quote:
+      "Тогтмол ачаатай үед аль шатанд явааг харах нь багийн ажлыг хөнгөвчилсөн.",
     name: "Д. Тэмүүлэн",
     role: "Хувиараа бизнес эрхлэгч",
     initials: "Т",
-  },
-  {
-    quote: "Тогтмол ачаатай үед аль шатанд явааг харах нь багийн ажлыг хөнгөвчилсөн.",
-    name: "А. Сарангэрэл",
-    role: "Дэлгүүрийн менежер",
-    initials: "С",
-  },
-  {
-    quote: "Ачаа ирэхэд мэдэгдэлтэй, авахад бэлэн эсэх нь тодорхой байдаг.",
-    name: "М. Хүслэн",
-    role: "Үйлчлүүлэгч",
-    initials: "Х",
   },
 ];
 
@@ -55,34 +45,29 @@ export default function TestimonialsMosaic() {
         </div>
 
         <div className="relative">
-          <div className="grid gap-5 md:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2">
             {testimonials.map((item, index) => (
               <article
                 key={item.name}
-                className={`rounded-[22px] bg-[#ececec] p-6 shadow-sm ${
-                  index === 1 ? "md:translate-y-6" : ""
-                } ${index >= 3 ? "opacity-[0.72]" : ""}`}
+                className={`rounded-[22px] bg-[#f5f5f5] p-6 shadow-sm ${
+                  index >= 2 ? "opacity-75" : ""
+                }`}
               >
-                <p className="min-h-[96px] text-lg font-bold leading-7 tracking-[-0.02em] text-[#4a4a4a]">
+                <p className="text-base font-bold leading-7 tracking-[-0.02em] text-[#4a4a4a] sm:text-lg">
                   {item.quote}
                 </p>
-                <div className="mt-8 flex items-center justify-between gap-4">
-                  <div className="flex min-w-0 items-center gap-3">
-                    <div className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-[#06bbb4] text-sm font-black text-white">
-                      {item.initials}
-                    </div>
-                    <div className="min-w-0">
-                      <h3 className="truncate text-lg font-black text-[#111111]">
-                        {item.name}
-                      </h3>
-                      <p className="truncate text-sm font-semibold text-[#555555]">
-                        {item.role}
-                      </p>
-                    </div>
+                <div className="mt-6 flex items-center gap-3">
+                  <div className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[#06bbb4] text-sm font-black text-white">
+                    {item.initials}
                   </div>
-                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-white text-2xl font-black text-[#111111]">
-                    ×
-                  </span>
+                  <div className="min-w-0">
+                    <h3 className="truncate text-base font-black text-[#111111]">
+                      {item.name}
+                    </h3>
+                    <p className="truncate text-sm font-semibold text-[#555555]">
+                      {item.role}
+                    </p>
+                  </div>
                 </div>
               </article>
             ))}

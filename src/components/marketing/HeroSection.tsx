@@ -20,6 +20,13 @@ function BgLayer({ yPct }: { yPct: MotionValue<string> }) {
       className="pointer-events-none absolute inset-0 overflow-hidden"
       style={{ y: yPct }}
     >
+      {/* Hero background photo */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('/images/hero.png')" }}
+      />
+      {/* Dark overlay – text readability over high-contrast image */}
+      <div className="absolute inset-0 bg-[#060e0e]/72" />
       {/* Teal glow top-left */}
       <div className="absolute -left-40 -top-40 h-[600px] w-[600px] rounded-full bg-[#06bbb4]/18 blur-[110px]" />
       {/* Secondary glow bottom-right */}

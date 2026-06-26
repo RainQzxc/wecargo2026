@@ -17,16 +17,29 @@ const panels = [
   { no: "06", place: "Хүлээн авалт", title: "Та ачаагаа авна", last: true },
 ];
 
+const JOURNEY_PHOTO =
+  "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=2000&q=80";
+
 function JourneyBackdrop() {
   return (
     <>
+      {/* Photo layer */}
       <div
-        className="pointer-events-none absolute inset-0 bg-cover bg-center opacity-80"
+        className="pointer-events-none absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: `url('${JOURNEY_PHOTO}')` }}
+        aria-hidden="true"
+      />
+      {/* Brand tint */}
+      <div className="pointer-events-none absolute inset-0 bg-[#06bbb4]/15 mix-blend-multiply" />
+      {/* Readability gradient: opaque at top (heading) + bottom (progress),
+          translucent in the middle so the photo shows behind the cards */}
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(247,247,247,0.96)_0%,rgba(247,247,247,0.6)_28%,rgba(247,247,247,0.34)_55%,rgba(247,247,247,0.72)_84%,rgba(247,247,247,0.97)_100%)]" />
+      {/* Faint line-art overlay for brand texture */}
+      <div
+        className="pointer-events-none absolute inset-0 bg-cover bg-center opacity-25 mix-blend-luminosity"
         style={{ backgroundImage: "url('/journey-bg.svg')" }}
         aria-hidden="true"
       />
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(247,247,247,0.88)_0%,rgba(247,247,247,0.68)_42%,rgba(247,247,247,0.9)_100%)]" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-white to-transparent" />
     </>
   );
 }
@@ -168,7 +181,7 @@ function DesktopJourney() {
     <div
       ref={sectionRef}
       className="relative isolate hidden overflow-hidden bg-[#f7f7f7] lg:block"
-      style={{ height: "180vh" }}
+      style={{ height: `calc(100vh + ${maxX}px)` }}
     >
       <JourneyBackdrop />
       <div className="sticky top-0 z-10 h-screen flex flex-col justify-center overflow-hidden pt-[120px] pb-16">

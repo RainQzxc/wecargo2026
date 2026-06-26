@@ -1,6 +1,7 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
 
 const testimonials = [
   {
@@ -68,23 +69,34 @@ export function TestimonialsCarousel() {
 
       <div className="relative mx-auto w-full max-w-[560px]">
         <div className="text-[92px] font-black leading-none text-white/10 sm:text-[128px]">
-          “
+          {'"'}
         </div>
-        <p className="-mt-10 text-3xl font-black leading-tight tracking-[-0.045em] text-white sm:text-4xl">
-          {testimonial.quote}
-        </p>
 
-        <div className="mt-8 flex items-center gap-4">
-          <div className="grid size-12 place-items-center rounded-full bg-[#06bbb4] text-sm font-black text-[#071414]">
-            {testimonial.initials}
-          </div>
-          <div>
-            <h3 className="font-black tracking-[-0.02em]">{testimonial.name}</h3>
-            <p className="mt-1 text-sm font-semibold text-white/55">
-              {testimonial.role}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={active}
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -14 }}
+            transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <p className="-mt-10 text-3xl font-black leading-tight tracking-[-0.045em] text-white sm:text-4xl">
+              {testimonial.quote}
             </p>
-          </div>
-        </div>
+
+            <div className="mt-8 flex items-center gap-4">
+              <div className="grid size-12 place-items-center rounded-full bg-[#06bbb4] text-sm font-black text-[#071414]">
+                {testimonial.initials}
+              </div>
+              <div>
+                <h3 className="font-black tracking-[-0.02em]">{testimonial.name}</h3>
+                <p className="mt-1 text-sm font-semibold text-white/55">
+                  {testimonial.role}
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </AnimatePresence>
 
         <div className="mt-10 flex items-center justify-between gap-4">
           <div className="flex gap-2" aria-label="Сэтгэгдэл сонгох">
@@ -95,7 +107,7 @@ export function TestimonialsCarousel() {
                 aria-label={`${index + 1}-р сэтгэгдэл`}
                 aria-current={active === index}
                 onClick={() => setActive(index)}
-                className={`h-2.5 rounded-full transition-all focus:outline-none focus:ring-4 focus:ring-[#06bbb4]/30 ${
+                className={`h-2.5 rounded-full transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-[#06bbb4]/30 ${
                   active === index ? "w-9 bg-[#06bbb4]" : "w-2.5 bg-white/25"
                 }`}
               />
