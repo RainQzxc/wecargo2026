@@ -7,7 +7,27 @@ import { PrismaPg } from "@prisma/adapter-pg";
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
 
 function createPrismaClient(): PrismaClient {
-  const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
+  const raw = process.env.DATABASE_URL ?? "";
+
+  // Supabase's connection pooler serves a TLS cert that isn't in Node's trust
+  // store. Newer `pg` treats `sslmode=require` as `verify-full`, which rejects
+  // it with SELF_SIGNED_CERT_IN_CHAIN — every query throws on Vercel. Strip any
+  // sslmode from the URL (it would otherwise win over the ssl option below) and
+  // configure TLS explicitly: encrypted, but without CA verification.
+  let connectionString = raw;
+  try {
+    const u = new URL(raw);
+    u.searchParams.delete("sslmode");
+    connectionString = u.toString();
+  } catch {
+    // Not a parseable URL — use as-is.
+  }
+
+  const isSupabase = /supabase\.(co|com)/.test(raw);
+  const adapter = new PrismaPg({
+    connectionString,
+    ...(isSupabase ? { ssl: { rejectUnauthorized: false } } : {}),
+  });
   return new PrismaClient({ adapter });
 }
 

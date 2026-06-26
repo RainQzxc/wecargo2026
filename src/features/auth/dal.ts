@@ -54,6 +54,10 @@ export const getCurrentUser = cache(async (): Promise<CurrentUser | null> => {
     if (!user || user.status === "DISABLED") return null;
     return user as CurrentUser;
   } catch (err) {
+    // Next's dynamic-rendering bailout (cookies() during static prerender)
+    // surfaces here as a thrown error with a `digest`; it must propagate so the
+    // route is correctly marked dynamic — don't swallow it as a DB error.
+    if (err && typeof err === "object" && "digest" in err) throw err;
     console.error("[getCurrentUser] DB error:", err);
     return null;
   }
