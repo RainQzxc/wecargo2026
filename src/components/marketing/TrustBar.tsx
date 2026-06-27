@@ -93,7 +93,7 @@ export default function TrustBar() {
               <div
                 key={item.value}
                 className={`relative overflow-hidden rounded-[22px] border border-[#e5e5e5] bg-white px-4 py-4 transition-colors duration-200 hover:border-[#06bbb4]/35 sm:px-5 sm:py-5 ${
-                  index === 1 ? "sm:bg-[#111111] sm:text-white" : ""
+                  index === 1 ? "sm:bg-[#1d1d1f] sm:text-white" : ""
                 }`}
               >
                 <div
@@ -101,7 +101,7 @@ export default function TrustBar() {
                     item.tone === "red"
                       ? "bg-[#fe0000]"
                       : item.tone === "dark"
-                        ? "bg-[#111111]"
+                        ? "bg-[#1d1d1f]"
                         : "bg-[#06bbb4]"
                     }`}
                 />
@@ -111,7 +111,7 @@ export default function TrustBar() {
                       index === 1
                         ? "bg-[#fe0000]/10 text-[#fe0000] sm:bg-white/10 sm:text-white"
                         : item.tone === "dark"
-                          ? "bg-[#111111]/5 text-[#111111]"
+                          ? "bg-[#1d1d1f]/5 text-[#1d1d1f]"
                           : "bg-[#06bbb4]/10 text-[#06bbb4]"
                     }`}
                   >
@@ -119,19 +119,19 @@ export default function TrustBar() {
                   </span>
                   <div className="min-w-0">
                     <p
-                      className={`text-xl font-black leading-none tracking-[-0.04em] sm:text-2xl ${
+                      className={`text-xl font-semibold leading-none tracking-[-0.04em] sm:text-2xl ${
                         index === 1
-                          ? "text-[#111111] sm:text-white"
-                          : "text-[#111111]"
+                          ? "text-[#1d1d1f] sm:text-white"
+                          : "text-[#1d1d1f]"
                       }`}
                     >
                       {item.value}
                     </p>
                     <p
-                      className={`mt-1 text-[11px] font-black uppercase tracking-[0.12em] ${
+                      className={`mt-1 text-[11px] font-semibold ${
                         index === 1
-                          ? "text-[#666666] sm:text-white/65"
-                          : "text-[#666666]"
+                          ? "text-[#6e6e73] sm:text-white/65"
+                          : "text-[#6e6e73]"
                       }`}
                     >
                       {item.label}

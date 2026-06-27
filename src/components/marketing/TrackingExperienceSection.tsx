@@ -5,7 +5,7 @@ function PhoneMockup() {
       <div className="absolute -bottom-8 -right-20 h-72 w-36 rotate-[18deg] rounded-[60px] bg-[#c99473]/30 blur-[1px]" />
       <div className="absolute -bottom-14 left-1/2 h-28 w-72 -translate-x-1/2 rounded-[50%] bg-[#c99473]/25 blur-xl" />
 
-      <div className="relative bg-[#111111] rounded-[40px] p-3 shadow-[0_28px_90px_rgba(17,17,17,0.28)] border-4 border-[#111111]">
+      <div className="relative bg-[#1d1d1f] rounded-[40px] p-3 shadow-[0_28px_90px_rgba(17,17,17,0.28)] border-4 border-[#1d1d1f]">
         <div className="absolute top-3 left-1/2 z-10 h-6 w-28 -translate-x-1/2 rounded-full bg-[#050505]" />
 
         <div className="bg-white rounded-[28px] overflow-hidden pt-6 pb-4 px-4 min-h-[500px]">
@@ -13,7 +13,7 @@ function PhoneMockup() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-[10px] font-semibold text-white/50">Өнөөдөр</p>
-                <p className="text-sm font-black">WECARGO tracking</p>
+                <p className="text-sm font-semibold">WECARGO tracking</p>
               </div>
               <div className="grid h-8 w-8 place-items-center rounded-full bg-white/10">
                 <div className="h-2.5 w-2.5 rounded-full bg-[#06bbb4]" />
@@ -23,7 +23,7 @@ function PhoneMockup() {
               {["Эрээн", "Бүрт", "Ачилт", "Зам", "УБ"].map((item, index) => (
                 <div key={item}>
                   <div
-                    className={`mx-auto mb-1 grid h-6 w-6 place-items-center rounded-full text-[10px] font-black ${
+                    className={`mx-auto mb-1 grid h-6 w-6 place-items-center rounded-full text-[10px] font-semibold ${
                       index < 4 ? "bg-[#06bbb4] text-[#071414]" : "bg-white/10 text-white/35"
                     }`}
                   >
@@ -36,8 +36,8 @@ function PhoneMockup() {
           </div>
 
           <div className="bg-[#f7f7f7] border border-[#e5e5e5] rounded-xl p-3 mb-4">
-            <p className="text-[#666666] text-xs mb-0.5">трак код</p>
-            <p className="text-[#111111] font-mono text-xs font-semibold">
+            <p className="text-[#6e6e73] text-xs mb-0.5">трак код</p>
+            <p className="text-[#1d1d1f] font-mono text-xs font-semibold">
               YT7547233338116
             </p>
           </div>
@@ -84,9 +84,9 @@ function PhoneMockup() {
                 <span
                   className={`text-xs ${
                     step.active
-                      ? "text-[#111111] font-semibold"
+                      ? "text-[#1d1d1f] font-semibold"
                       : step.done
-                      ? "text-[#666666]"
+                      ? "text-[#6e6e73]"
                       : "text-[#999999]"
                   }`}
                 >
@@ -97,10 +97,10 @@ function PhoneMockup() {
           </div>
 
           <div className="bg-[#06bbb4]/10 rounded-xl p-3 mb-3">
-            <p className="text-[#111111] text-xs font-medium leading-snug">
+            <p className="text-[#1d1d1f] text-xs font-medium leading-snug">
               Таны ачаа Улаанбаатар хотод ирсэн байна.
             </p>
-            <p className="text-[#666666] text-xs mt-1">
+            <p className="text-[#6e6e73] text-xs mt-1">
               Төв агуулахад ангилалт хийгдэж байна.
             </p>
           </div>
@@ -127,25 +127,25 @@ export default function TrackingExperienceSection() {
 
       <div className="relative mx-auto grid min-h-[680px] max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-[1fr_auto_1fr] lg:px-8">
         <div className="text-center lg:pb-16 lg:text-left">
-          <span className="mb-4 inline-flex items-center gap-2 rounded-full bg-[#06bbb4]/10 px-3 py-1.5 text-xs font-black uppercase tracking-[0.14em] text-[#06bbb4]">
+          <span className="mb-4 inline-flex items-center gap-2 rounded-full bg-[#06bbb4]/10 px-3 py-1.5 text-xs font-semibold text-[#06bbb4]">
             <span className="h-1.5 w-1.5 rounded-full bg-[#06bbb4]" />
             Хэрэглэгчийн систем
           </span>
-          <h2 className="text-4xl font-black leading-[1.02] tracking-[-0.05em] text-[#111111] sm:text-5xl">
+          <h2 className="text-4xl font-semibold leading-[1.02] tracking-[-0.05em] text-[#1d1d1f] sm:text-5xl">
             Ачаагаа хэзээ ч, хаанаас ч хяна.
           </h2>
-          <p className="mt-4 text-base leading-7 text-[#666666] sm:text-lg">
+          <p className="mt-4 text-base leading-7 text-[#6e6e73] sm:text-lg">
             Гар утсанд бүрэн тохирсон, ойлгомжтой, хэрэглэхэд хялбар систем.
           </p>
           <a
             href="/track"
-            className="mt-7 inline-flex min-h-12 items-center rounded-full bg-[#111111] px-7 text-sm font-black text-white shadow-[0_14px_34px_rgba(17,17,17,0.24)] transition-colors hover:bg-[#06bbb4] focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 focus:ring-offset-2"
+            className="mt-7 inline-flex min-h-12 items-center rounded-full bg-[#1d1d1f] px-7 text-sm font-semibold text-white shadow-[0_14px_34px_rgba(17,17,17,0.24)] transition-colors hover:bg-[#06bbb4] focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 focus:ring-offset-2"
           >
             Track code-оор шалгах
           </a>
           <a
             href="/guide"
-            className="mx-auto mt-3 flex min-h-12 w-fit items-center rounded-full bg-[#f0f0f0] px-7 text-sm font-black text-[#111111] transition-colors hover:bg-[#e5e5e5] focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 lg:mx-0"
+            className="mx-auto mt-3 flex min-h-12 w-fit items-center rounded-full bg-[#f0f0f0] px-7 text-sm font-semibold text-[#1d1d1f] transition-colors hover:bg-[#e5e5e5] focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 lg:mx-0"
           >
             Заавар харах
           </a>
@@ -157,7 +157,7 @@ export default function TrackingExperienceSection() {
         </div>
 
         <div className="text-center lg:pb-16 lg:text-left">
-          <h3 className="text-4xl font-black leading-[1.02] tracking-[-0.05em] text-[#111111]">
+          <h3 className="text-4xl font-semibold leading-[1.02] tracking-[-0.05em] text-[#1d1d1f]">
             QR болон track code-оор төлөвөө шууд хараарай
           </h3>
           <div className="mx-auto mt-7 w-full max-w-[220px] rounded-[28px] border-[10px] border-white bg-[#f5f5f5] p-4 shadow-[0_20px_60px_rgba(17,17,17,0.12)] lg:mx-0">
@@ -167,7 +167,7 @@ export default function TrackingExperienceSection() {
                   key={index}
                   className={`aspect-square rounded-sm ${
                     [0, 1, 5, 6, 18, 19, 23, 24, 12].includes(index)
-                      ? "bg-[#111111]"
+                      ? "bg-[#1d1d1f]"
                       : index % 3 === 0
                         ? "bg-[#06bbb4]"
                         : "bg-[#d9d9d9]"
@@ -176,7 +176,7 @@ export default function TrackingExperienceSection() {
               ))}
             </div>
           </div>
-          <p className="mt-4 text-sm font-semibold leading-6 text-[#666666]">
+          <p className="mt-4 text-sm font-semibold leading-6 text-[#6e6e73]">
             Ачааны байршил, төлөв, сүүлийн шинэчлэлтийг гар утаснаасаа хянана.
           </p>
         </div>

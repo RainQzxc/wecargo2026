@@ -56,11 +56,11 @@ export default function TestimonialsMosaic({ items }: { items?: TestimonialItem[
     <section className="relative overflow-hidden bg-white py-20 sm:py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-10 max-w-3xl">
-          <span className="mb-4 inline-flex items-center gap-2 rounded-full bg-[#06bbb4]/10 px-3.5 py-1.5 text-xs font-black uppercase tracking-[0.14em] text-[#06bbb4]">
+          <span className="mb-4 inline-flex items-center gap-2 rounded-full bg-[#06bbb4]/10 px-3.5 py-1.5 text-xs font-semibold text-[#06bbb4]">
             <span className="h-1.5 w-1.5 rounded-full bg-[#06bbb4]" />
             Сэтгэгдэл
           </span>
-          <h2 className="text-4xl font-black tracking-[-0.05em] text-[#111111] sm:text-5xl">
+          <h2 className="text-4xl font-semibold tracking-[-0.05em] text-[#1d1d1f] sm:text-5xl">
             Хэрэглэгчид WECARGO-г ингэж ашиглаж байна.
           </h2>
         </div>
@@ -79,11 +79,11 @@ export default function TestimonialsMosaic({ items }: { items?: TestimonialItem[
                 </p>
                 <div className="mt-8 flex items-center justify-between gap-4">
                   <div className="flex min-w-0 items-center gap-3">
-                    <div className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-[#06bbb4] text-sm font-black text-white">
+                    <div className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-[#06bbb4] text-sm font-semibold text-white">
                       {item.initials}
                     </div>
                     <div className="min-w-0">
-                      <h3 className="truncate text-lg font-black text-[#111111]">
+                      <h3 className="truncate text-lg font-semibold text-[#1d1d1f]">
                         {item.name}
                       </h3>
                       <p className="truncate text-sm font-semibold text-[#555555]">
@@ -91,7 +91,7 @@ export default function TestimonialsMosaic({ items }: { items?: TestimonialItem[
                       </p>
                     </div>
                   </div>
-                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-white text-2xl font-black text-[#111111]">
+                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-white text-2xl font-semibold text-[#1d1d1f]">
                     ×
                   </span>
                 </div>
@@ -103,7 +103,7 @@ export default function TestimonialsMosaic({ items }: { items?: TestimonialItem[
           <div className="absolute inset-x-0 bottom-9 flex justify-center">
             <Link
               href="/contact"
-              className="pointer-events-auto inline-flex min-h-14 items-center justify-center rounded-full bg-[#111111] px-8 text-sm font-black text-white shadow-[0_16px_34px_rgba(17,17,17,0.28)] transition-colors hover:bg-[#06bbb4] focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 focus:ring-offset-2"
+              className="pointer-events-auto inline-flex min-h-14 items-center justify-center rounded-full bg-[#1d1d1f] px-8 text-sm font-semibold text-white shadow-[0_16px_34px_rgba(17,17,17,0.28)] transition-colors hover:bg-[#06bbb4] focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 focus:ring-offset-2"
             >
               Бидэнтэй холбогдох
             </Link>

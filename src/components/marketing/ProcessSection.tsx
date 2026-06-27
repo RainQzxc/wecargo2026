@@ -51,13 +51,13 @@ export default function ProcessSection() {
     <section className="bg-[#f7f7f7] py-20 sm:py-24 md:py-32 lg:py-40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-4">
-          <span className="inline-flex items-center gap-2 bg-[#06bbb4]/10 text-[#06bbb4] text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-wider">
+          <span className="inline-flex items-center gap-2 bg-[#06bbb4]/10 text-[#06bbb4] text-xs font-semibold px-3 py-1.5 rounded-full tracking-wider">
             <span className="w-1.5 h-1.5 rounded-full bg-[#06bbb4]" />
             Зааварчилгаа
           </span>
         </div>
         <div className="text-center mb-14">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#111111] tracking-tight">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#1d1d1f] tracking-tight">
             Ачаагаа хүлээн авахад ердөө{" "}
             <span className="text-[#06bbb4]">дөрвөн алхам.</span>
           </h2>
@@ -111,10 +111,10 @@ export default function ProcessSection() {
                 </div>
 
                 <div>
-                  <h3 className="font-semibold text-[#111111] mb-1.5 leading-snug">
+                  <h3 className="font-semibold text-[#1d1d1f] mb-1.5 leading-snug">
                     {step.title}
                   </h3>
-                  <p className="text-[#666666] text-sm leading-relaxed">
+                  <p className="text-[#6e6e73] text-sm leading-relaxed">
                     {step.desc}
                   </p>
                 </div>

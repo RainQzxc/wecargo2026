@@ -34,11 +34,11 @@ function JourneyBackdrop() {
 function Heading() {
   return (
     <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
-      <span className="inline-flex items-center gap-2 rounded-full border border-[#06bbb4]/15 bg-white/85 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-[#06bbb4] shadow-sm backdrop-blur mb-4">
+      <span className="inline-flex items-center gap-2 rounded-full border border-[#06bbb4]/15 bg-white/85 px-3.5 py-1.5 text-xs font-semibold tracking-wider text-[#06bbb4] shadow-sm backdrop-blur mb-4">
         <span className="w-1.5 h-1.5 rounded-full bg-[#06bbb4]" />
         Таны ачааны аялал
       </span>
-      <h2 className="text-3xl md:text-5xl font-bold text-[#111111] tracking-tight leading-tight">
+      <h2 className="text-3xl md:text-5xl font-bold text-[#1d1d1f] tracking-tight leading-tight">
         Эрээнээс гэрийн босго хүртэл
         <br className="hidden sm:block" />
         <span className="text-[#06bbb4]"> алхам бүр тодорхой.</span>
@@ -63,7 +63,7 @@ function Card({
           {p.no}
         </span>
         <span
-          className={`text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider ${
+          className={`text-xs font-semibold px-3 py-1 rounded-full tracking-wider ${
             p.last
               ? "text-[#fe0000] bg-[#fe0000]/10"
               : "text-[#06bbb4] bg-[#06bbb4]/10"
@@ -72,7 +72,7 @@ function Card({
           {p.place}
         </span>
       </div>
-      <h3 className="text-2xl lg:text-3xl font-bold text-[#111111] tracking-tight mt-8">
+      <h3 className="text-2xl lg:text-3xl font-bold text-[#1d1d1f] tracking-tight mt-8">
         {p.title}
       </h3>
     </div>
@@ -86,7 +86,7 @@ function MobileTimeline() {
       <JourneyBackdrop />
       <Heading />
       <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 mt-10">
-        <div className="absolute left-[27px] top-4 bottom-4 w-px bg-[#111111]/10" />
+        <div className="absolute left-[27px] top-4 bottom-4 w-px bg-[#1d1d1f]/10" />
         <div className="space-y-4">
           {panels.map((p) => (
             <motion.div
@@ -106,13 +106,13 @@ function MobileTimeline() {
               </div>
               <div className="flex-1 rounded-2xl border border-white/70 bg-white/86 p-5 shadow-[0_14px_40px_rgba(17,17,17,0.08)] backdrop-blur-md">
                 <span
-                  className={`text-xs font-semibold uppercase tracking-wider ${
+                  className={`text-xs font-semibold tracking-wider ${
                     p.last ? "text-[#fe0000]" : "text-[#06bbb4]"
                   }`}
                 >
                   {p.place}
                 </span>
-                <h3 className="text-lg font-bold text-[#111111] mt-1">
+                <h3 className="text-lg font-bold text-[#1d1d1f] mt-1">
                   {p.title}
                 </h3>
               </div>
@@ -189,7 +189,7 @@ function DesktopJourney() {
         </motion.div>
 
         <div className="relative z-10 max-w-7xl mx-auto w-full px-8 mt-12">
-          <div className="h-0.5 bg-[#111111]/10 rounded-full overflow-hidden max-w-xs">
+          <div className="h-0.5 bg-[#1d1d1f]/10 rounded-full overflow-hidden max-w-xs">
             <motion.div
               className="h-full bg-[#06bbb4] rounded-full"
               style={{ width: progressW }}
