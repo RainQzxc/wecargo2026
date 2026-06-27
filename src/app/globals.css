@@ -2,6 +2,9 @@
 
 @theme {
   --color-brand: #06bbb4;
+  /* Darker teal for small TEXT on white — passes WCAG AA (~5.4:1), unlike the
+     bright brand teal (~2.4:1). Use for hovered links and small accent text. */
+  --color-brand-ink: #04766f;
   --color-brand-red: #fe0000;
   --color-neutral-50: #f7f7f7;
   --color-neutral-100: #f2f2f2;

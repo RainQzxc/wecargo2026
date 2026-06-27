@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ROUTES } from "@/constants/routes";
 
 const navLinks = [
@@ -52,6 +52,7 @@ function LoginIcon() {
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 24);
@@ -59,6 +60,48 @@ export default function Header() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Accessible mobile-menu dialog: lock body scroll, trap focus, Escape to close,
+  // and restore focus to the trigger on close.
+  useEffect(() => {
+    if (!open) return;
+    const restoreTo = document.activeElement as HTMLElement | null;
+    document.body.style.overflow = "hidden";
+
+    const focusables = () =>
+      Array.from(
+        panelRef.current?.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled])',
+        ) ?? [],
+      );
+    focusables()[0]?.focus();
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const items = focusables();
+      if (items.length === 0) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = "";
+      restoreTo?.focus?.();
+    };
+  }, [open]);
 
   return (
     <header className="sticky top-0 z-50 px-2 py-2 sm:px-4">
@@ -97,7 +140,7 @@ export default function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="rounded-lg px-1 py-2 text-sm font-medium text-[#333333] transition-colors hover:text-[#06bbb4] focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/25"
+                className="rounded-lg px-1 py-2 text-sm font-medium text-[#333333] transition-colors hover:text-brand-ink focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/25"
               >
                 {link.label}
               </Link>
@@ -147,8 +190,18 @@ export default function Header() {
       </div>
 
       {open && (
-        <div className="fixed inset-0 z-[60] bg-[#1d1d1f]/35 lg:hidden">
-          <div className="ml-auto h-dvh w-[90vw] max-w-[390px] bg-white shadow-2xl">
+        <div
+          className="fixed inset-0 z-[60] bg-[#1d1d1f]/35 lg:hidden"
+          onClick={() => setOpen(false)}
+        >
+          <div
+            ref={panelRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Цэс"
+            onClick={(e) => e.stopPropagation()}
+            className="ml-auto h-dvh w-[90vw] max-w-[390px] bg-white shadow-2xl"
+          >
             <div className="flex items-center justify-between px-5 pt-4">
               <Link
                 href="/"
