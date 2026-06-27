@@ -13,6 +13,9 @@ function hashPassword(password: string): string {
   return `scrypt$${salt.toString("hex")}$${derived.toString("hex")}`;
 }
 
+// Single shared seed password for every demo account. Override with SEED_PASSWORD.
+const SEED_PASSWORD = process.env.SEED_PASSWORD ?? "Testwe123";
+
 async function main() {
   // ── Warehouses ──────────────────────────────────────────────────────────────
   await db.warehouse.upsert({
@@ -43,12 +46,15 @@ async function main() {
   // ── SUPER ADMIN ─────────────────────────────────────────────────────────────
   const superAdminEmail =
     process.env.SEED_SUPER_ADMIN_EMAIL ?? "superadmin@wecargo.mn";
-  const superAdminPassword =
-    process.env.SEED_SUPER_ADMIN_PASSWORD ?? "SuperAdmin@2026";
+  const superAdminPassword = SEED_PASSWORD;
 
   await db.user.upsert({
     where: { email: superAdminEmail },
-    update: { role: "SUPER_ADMIN", status: "ACTIVE" },
+    update: {
+      role: "SUPER_ADMIN",
+      status: "ACTIVE",
+      passwordHash: hashPassword(superAdminPassword),
+    },
     create: {
       email: superAdminEmail,
       name: "Super Admin",
@@ -61,11 +67,15 @@ async function main() {
 
   // ── ADMIN ────────────────────────────────────────────────────────────────────
   const adminEmail = process.env.SEED_ADMIN_EMAIL ?? "admin@wecargo.mn";
-  const adminPassword = process.env.SEED_ADMIN_PASSWORD ?? "Admin@2026";
+  const adminPassword = SEED_PASSWORD;
 
   await db.user.upsert({
     where: { email: adminEmail },
-    update: { role: "ADMIN", status: "ACTIVE" },
+    update: {
+      role: "ADMIN",
+      status: "ACTIVE",
+      passwordHash: hashPassword(adminPassword),
+    },
     create: {
       email: adminEmail,
       name: "Admin",
@@ -78,11 +88,15 @@ async function main() {
 
   // ── WAREHOUSE STAFF (Other) ───────────────────────────────────────────────
   const staffEmail = process.env.SEED_STAFF_EMAIL ?? "staff@wecargo.mn";
-  const staffPassword = process.env.SEED_STAFF_PASSWORD ?? "Staff@2026";
+  const staffPassword = SEED_PASSWORD;
 
   await db.user.upsert({
     where: { email: staffEmail },
-    update: { role: "WAREHOUSE_STAFF", status: "ACTIVE" },
+    update: {
+      role: "WAREHOUSE_STAFF",
+      status: "ACTIVE",
+      passwordHash: hashPassword(staffPassword),
+    },
     create: {
       email: staffEmail,
       name: "Warehouse Staff",
@@ -99,11 +113,15 @@ async function main() {
 
   // ── COURIER ───────────────────────────────────────────────────────────────
   const courierEmail = process.env.SEED_COURIER_EMAIL ?? "courier@wecargo.mn";
-  const courierPassword = process.env.SEED_COURIER_PASSWORD ?? "Courier@2026";
+  const courierPassword = SEED_PASSWORD;
 
   await db.user.upsert({
     where: { email: courierEmail },
-    update: { role: "COURIER", status: "ACTIVE" },
+    update: {
+      role: "COURIER",
+      status: "ACTIVE",
+      passwordHash: hashPassword(courierPassword),
+    },
     create: {
       email: courierEmail,
       name: "Courier",
@@ -117,12 +135,15 @@ async function main() {
   // ── CUSTOMER ──────────────────────────────────────────────────────────────
   const customerEmail =
     process.env.SEED_CUSTOMER_EMAIL ?? "customer@wecargo.mn";
-  const customerPassword =
-    process.env.SEED_CUSTOMER_PASSWORD ?? "Customer@2026";
+  const customerPassword = SEED_PASSWORD;
 
   await db.user.upsert({
     where: { email: customerEmail },
-    update: { role: "CUSTOMER", status: "ACTIVE" },
+    update: {
+      role: "CUSTOMER",
+      status: "ACTIVE",
+      passwordHash: hashPassword(customerPassword),
+    },
     create: {
       email: customerEmail,
       name: "Customer",

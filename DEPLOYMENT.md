@@ -36,6 +36,25 @@ production branch then deploys automatically.
    Re-run `db:push` after any schema change (e.g. the SiteContent model). If you
    later adopt migration history, switch to `prisma migrate deploy` in the build.
 
+   **Default login credentials.** `db:seed` creates one account per role, all
+   with the password **`Testwe123`** (override with `SEED_PASSWORD`):
+
+   | Role | Email |
+   |------|-------|
+   | SUPER_ADMIN | `superadmin@wecargo.mn` |
+   | ADMIN | `admin@wecargo.mn` |
+   | WAREHOUSE_STAFF | `staff@wecargo.mn` |
+   | COURIER | `courier@wecargo.mn` |
+   | CUSTOMER | `customer@wecargo.mn` |
+
+   To reset **every** existing user's password to `Testwe123` (dev/test only):
+
+   ```bash
+   npm run db:reset-passwords
+   # or a different value:
+   RESET_PASSWORD='Other123' npm run db:reset-passwords
+   ```
+
 ## Build
 
 Vercel runs `npm install` (which triggers `postinstall: prisma generate`) then
