@@ -22,6 +22,7 @@ import { logger } from "@/lib/logger";
 export const CONTENT_CACHE_TAGS = {
   testimonials: "content:testimonials",
   faqs: "content:faqs",
+  site: "content:site",
 } as const;
 
 const REVALIDATE_SECONDS = 300;
@@ -94,5 +95,29 @@ export const getActiveTestimonials = unstable_cache(
 
 export const getActiveFaqs = unstable_cache(fetchActiveFaqs, ["content:faqs"], {
   tags: [CONTENT_CACHE_TAGS.faqs],
+  revalidate: REVALIDATE_SECONDS,
+});
+
+/**
+ * Editable marketing copy as a raw `key -> valueMn` map (only non-empty values).
+ * Callers merge this over defaults via `resolveSiteContent`. Tolerates DB
+ * errors by returning `{}` so pages fall back to built-in copy.
+ */
+export async function fetchSiteContent(): Promise<Record<string, string>> {
+  try {
+    const rows = await db.siteContent.findMany({ select: { key: true, valueMn: true } });
+    const map: Record<string, string> = {};
+    for (const row of rows) {
+      if (row.valueMn) map[row.key] = row.valueMn;
+    }
+    return map;
+  } catch (err) {
+    logger.captureException("content.site", err);
+    return {};
+  }
+}
+
+export const getSiteContent = unstable_cache(fetchSiteContent, ["content:site"], {
+  tags: [CONTENT_CACHE_TAGS.site],
   revalidate: REVALIDATE_SECONDS,
 });

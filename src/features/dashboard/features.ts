@@ -31,7 +31,8 @@ export type SectionKey =
   | "warehouses"
   | "branches"
   | "faq"
-  | "testimonials";
+  | "testimonials"
+  | "content";
 
 export interface DashboardSection {
   key: SectionKey;
@@ -352,6 +353,16 @@ export const DASHBOARD_SECTIONS: Record<SectionKey, DashboardSection> = {
       AUDIT_ACTIONS.TESTIMONIAL_UPDATED,
       AUDIT_ACTIONS.TESTIMONIAL_DELETED,
     ],
+  },
+  content: {
+    key: "content",
+    title: "Landing Content",
+    description: "Editable landing-page copy (hero text, CTAs). Edit without a developer.",
+    readPermission: PERMISSIONS.CONTENT_READ,
+    actions: {
+      update: PERMISSIONS.CONTENT_UPDATE,
+    },
+    auditActions: [AUDIT_ACTIONS.CONTENT_UPDATED],
   },
 };
 

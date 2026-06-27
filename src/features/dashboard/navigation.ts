@@ -44,6 +44,7 @@ export const SUPER_ADMIN_NAV: NavItem[] = [
   item("branches", SUPER_ADMIN_BASE),
   item("tariffs", SUPER_ADMIN_BASE),
   item("banners", SUPER_ADMIN_BASE),
+  item("content", SUPER_ADMIN_BASE),
   item("faq", SUPER_ADMIN_BASE),
   item("testimonials", SUPER_ADMIN_BASE),
   item("notifications", SUPER_ADMIN_BASE),

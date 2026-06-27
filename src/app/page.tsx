@@ -17,15 +17,29 @@ import FinalCTA from "@/components/marketing/FinalCTA";
 import MotionReveal from "@/components/marketing/MotionReveal";
 import ScrollToTop from "@/components/marketing/ScrollToTop";
 import ClickPopEffect from "@/components/marketing/ClickPopEffect";
-import { getActiveTestimonials } from "@/features/content/dal";
+import { getActiveTestimonials, getSiteContent } from "@/features/content/dal";
+import { resolveSiteContent } from "@/features/content/site-content";
 
 export default async function LandingPage() {
-  const testimonials = await getActiveTestimonials();
+  const [testimonials, siteContentRaw] = await Promise.all([
+    getActiveTestimonials(),
+    getSiteContent(),
+  ]);
+  const c = resolveSiteContent(siteContentRaw);
+  const hero = {
+    badge: c["home.hero.badge"],
+    titleLine1: c["home.hero.titleLine1"],
+    titleHighlight: c["home.hero.titleHighlight"],
+    titleLine3: c["home.hero.titleLine3"],
+    description: c["home.hero.description"],
+    ctaPrimary: c["home.hero.ctaPrimary"],
+    ctaSecondary: c["home.hero.ctaSecondary"],
+  };
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1">
-        <HeroSection />
+        <HeroSection content={hero} />
         {/* gradient bridge: dark hero → light sections */}
         <div
           className="h-16 bg-gradient-to-b from-[#060e0e] to-[#f7f7f7]"

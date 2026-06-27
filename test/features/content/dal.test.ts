@@ -4,6 +4,7 @@ const { dbMock } = vi.hoisted(() => ({
   dbMock: {
     testimonial: { findMany: vi.fn() },
     faq: { findMany: vi.fn() },
+    siteContent: { findMany: vi.fn() },
   },
 }));
 vi.mock("@/server/db", () => ({ db: dbMock }));
@@ -16,6 +17,7 @@ vi.mock("next/cache", () => ({
 import {
   fetchActiveFaqs,
   fetchActiveTestimonials,
+  fetchSiteContent,
   toInitials,
 } from "@/features/content/dal";
 
@@ -86,5 +88,20 @@ describe("fetchActiveFaqs", () => {
   it("returns [] (no throw) when the DB errors", async () => {
     dbMock.faq.findMany.mockRejectedValue(new Error("db down"));
     await expect(fetchActiveFaqs()).resolves.toEqual([]);
+  });
+});
+
+describe("fetchSiteContent", () => {
+  it("builds a key -> valueMn map and skips empty values", async () => {
+    dbMock.siteContent.findMany.mockResolvedValue([
+      { key: "home.hero.badge", valueMn: "Шинэ" },
+      { key: "home.hero.titleLine1", valueMn: "" }, // empty skipped
+    ]);
+    await expect(fetchSiteContent()).resolves.toEqual({ "home.hero.badge": "Шинэ" });
+  });
+
+  it("returns {} (no throw) when the DB errors", async () => {
+    dbMock.siteContent.findMany.mockRejectedValue(new Error("db down"));
+    await expect(fetchSiteContent()).resolves.toEqual({});
   });
 });
