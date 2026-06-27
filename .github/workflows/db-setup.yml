@@ -1,0 +1,52 @@
+name: DB Setup
+
+# Manually-triggered database setup: push the Prisma schema and seed the demo
+# accounts (all with password Testwe123). Runs on a GitHub runner, which can
+# reach the database — unlike local sandboxes with restricted egress.
+#
+# Prerequisite: add a repository secret DATABASE_URL
+#   (Settings -> Secrets and variables -> Actions -> New repository secret).
+# Never hardcode the connection string here.
+
+on:
+  workflow_dispatch:
+    inputs:
+      force_reset:
+        description: "Drop ALL tables before pushing (clean slate). Destroys existing data."
+        type: boolean
+        default: true
+      seed:
+        description: "Seed the 5 demo accounts (password Testwe123) after pushing."
+        type: boolean
+        default: true
+
+jobs:
+  setup:
+    name: Push schema & seed
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Guard — DATABASE_URL must be set
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "::error::Repository secret DATABASE_URL is not set."
+            exit 1
+          fi
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Push Prisma schema
+        run: npx prisma db push ${{ inputs.force_reset && '--force-reset --accept-data-loss' || '' }}
+
+      - name: Seed demo accounts
+        if: ${{ inputs.seed }}
+        run: npm run db:seed
