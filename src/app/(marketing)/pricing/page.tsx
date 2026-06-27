@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getActiveFaqs } from "@/features/content/dal";
 
 const PLANS = [
   {
@@ -65,7 +66,11 @@ const FAQS = [
   },
 ];
 
-export default function PricingPage() {
+export default async function PricingPage() {
+  // Admin-managed FAQs take precedence; fall back to the built-in list when none
+  // are configured (or the DB is unreachable). See src/features/content/dal.ts.
+  const dbFaqs = await getActiveFaqs();
+  const faqs = dbFaqs.length > 0 ? dbFaqs.map((f) => ({ q: f.question, a: f.answer })) : FAQS;
   return (
     <div className="min-h-screen bg-[#f7f7f7]">
       {/* Hero */}
@@ -122,7 +127,7 @@ export default function PricingPage() {
         <div className="mx-auto max-w-3xl">
           <h2 className="mb-8 text-3xl font-black tracking-[-0.04em] text-[#111111]">Нийтлэг асуулт</h2>
           <div className="space-y-4">
-            {FAQS.map((faq) => (
+            {faqs.map((faq) => (
               <div key={faq.q} className="rounded-2xl border border-[#e5e5e5] bg-white p-6">
                 <h3 className="text-base font-black text-[#111111]">{faq.q}</h3>
                 <p className="mt-2 text-sm leading-6 text-[#666666]">{faq.a}</p>

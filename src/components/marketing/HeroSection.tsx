@@ -10,6 +10,27 @@ import {
   type MotionValue,
 } from "motion/react";
 import TrackingSearch from "./TrackingSearch";
+import { SITE_CONTENT_DEFAULTS } from "@/features/content/site-content";
+
+export interface HeroContent {
+  badge: string;
+  titleLine1: string;
+  titleHighlight: string;
+  titleLine3: string;
+  description: string;
+  ctaPrimary: string;
+  ctaSecondary: string;
+}
+
+const DEFAULT_HERO: HeroContent = {
+  badge: SITE_CONTENT_DEFAULTS["home.hero.badge"],
+  titleLine1: SITE_CONTENT_DEFAULTS["home.hero.titleLine1"],
+  titleHighlight: SITE_CONTENT_DEFAULTS["home.hero.titleHighlight"],
+  titleLine3: SITE_CONTENT_DEFAULTS["home.hero.titleLine3"],
+  description: SITE_CONTENT_DEFAULTS["home.hero.description"],
+  ctaPrimary: SITE_CONTENT_DEFAULTS["home.hero.ctaPrimary"],
+  ctaSecondary: SITE_CONTENT_DEFAULTS["home.hero.ctaSecondary"],
+};
 
 /* ─── Parallax background layer ───────────────────────────────────────────── */
 function BgLayer({ yPct }: { yPct: MotionValue<string> }) {
@@ -184,7 +205,7 @@ function DarkTrackingCard({
 }
 
 /* ─── Main hero ────────────────────────────────────────────────────────────── */
-export default function HeroSection() {
+export default function HeroSection({ content = DEFAULT_HERO }: { content?: HeroContent }) {
   const heroRef = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
 
@@ -227,7 +248,7 @@ export default function HeroSection() {
             >
               <span className="h-1.5 w-1.5 rounded-full bg-[#06bbb4]" />
               <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#06bbb4]">
-                Монголын ухаалаг карго
+                {content.badge}
               </span>
             </motion.div>
 
@@ -238,11 +259,11 @@ export default function HeroSection() {
               transition={{ duration: 0.85, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
               className="mb-5 text-[2.55rem] font-black leading-[0.95] tracking-[-0.04em] text-white sm:text-6xl lg:text-[4.8rem] xl:text-[5.6rem]"
             >
-              Эрээнээс
+              {content.titleLine1}
               <br />
-              <span className="text-[#06bbb4]">Улаанбаатар</span>
+              <span className="text-[#06bbb4]">{content.titleHighlight}</span>
               <br />
-              хүртэл тодорхой.
+              {content.titleLine3}
             </motion.h1>
 
             {/* Description */}
@@ -252,8 +273,7 @@ export default function HeroSection() {
               transition={{ duration: 0.85, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
               className="mb-7 max-w-md text-base leading-relaxed text-white/52 sm:text-lg"
             >
-              Ачаагаа агуулахад хүлээн авахаас эхлээд гэрт хүргэх хүртэл
-              нэг цонхоор хяна.
+              {content.description}
             </motion.p>
 
             {/* Tracking search – white card on dark bg (readable + high contrast) */}
@@ -277,13 +297,13 @@ export default function HeroSection() {
                 href="/link-order"
                 className="inline-flex min-h-[48px] items-center rounded-xl border border-white/15 bg-white/8 px-6 text-sm font-black text-white transition-all hover:border-[#06bbb4]/50 hover:bg-[#06bbb4]/12 hover:text-[#06bbb4] focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30"
               >
-                Линк захиалга өгөх
+                {content.ctaPrimary}
               </Link>
               <Link
                 href="/cooperation"
                 className="inline-flex min-h-[48px] items-center rounded-xl border border-white/10 bg-transparent px-6 text-sm font-black text-white/50 transition-all hover:border-white/25 hover:text-white focus:outline-none focus:ring-2 focus:ring-white/15"
               >
-                Хамтран ажиллах
+                {content.ctaSecondary}
               </Link>
             </motion.div>
           </div>

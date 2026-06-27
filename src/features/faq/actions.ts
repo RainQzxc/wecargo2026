@@ -1,11 +1,12 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { db } from "@/server/db";
 import { writeAuditLog } from "@/lib/audit";
 import { requirePermission } from "@/features/auth";
 import { PERMISSIONS } from "@/features/auth/permissions";
+import { CONTENT_CACHE_TAGS } from "@/features/content/dal";
 import { AUDIT_ACTIONS } from "@/constants/audit-actions";
 
 const BASE = "/dashboard/super-admin/faq";
@@ -42,6 +43,7 @@ export async function createFaq(formData: FormData): Promise<void> {
   });
 
   revalidatePath(BASE);
+  revalidateTag(CONTENT_CACHE_TAGS.faqs, "max"); // refresh the public pricing FAQ
   redirect(BASE);
 }
 
@@ -64,6 +66,7 @@ export async function updateFaq(id: string, formData: FormData): Promise<void> {
   });
 
   revalidatePath(BASE);
+  revalidateTag(CONTENT_CACHE_TAGS.faqs, "max"); // refresh the public pricing FAQ
   redirect(BASE);
 }
 
@@ -82,5 +85,6 @@ export async function deleteFaq(id: string): Promise<void> {
   });
 
   revalidatePath(BASE);
+  revalidateTag(CONTENT_CACHE_TAGS.faqs, "max"); // refresh the public pricing FAQ
   redirect(BASE);
 }

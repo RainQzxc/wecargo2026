@@ -712,6 +712,21 @@ model Testimonial {
   @@index([sortOrder])
 }
 
+// Editable marketing copy as a simple key -> value store. Keys are defined in
+// src/features/content/site-content.ts; the public pages merge these over
+// built-in defaults, and the super-admin "Контент" editor writes them.
+model SiteContent {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  valueMn     String
+  valueEn     String?
+  updatedById String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([key])
+}
+
 model Lead {
   id                 String   @id @default(cuid())
   type               LeadType

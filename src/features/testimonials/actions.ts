@@ -1,11 +1,12 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { db } from "@/server/db";
 import { writeAuditLog } from "@/lib/audit";
 import { requirePermission } from "@/features/auth";
 import { PERMISSIONS } from "@/features/auth/permissions";
+import { CONTENT_CACHE_TAGS } from "@/features/content/dal";
 import { AUDIT_ACTIONS } from "@/constants/audit-actions";
 
 const BASE = "/dashboard/super-admin/testimonials";
@@ -45,6 +46,7 @@ export async function createTestimonial(formData: FormData): Promise<void> {
   });
 
   revalidatePath(BASE);
+  revalidateTag(CONTENT_CACHE_TAGS.testimonials, "max"); // refresh the public landing page
   redirect(BASE);
 }
 
@@ -67,6 +69,7 @@ export async function updateTestimonial(id: string, formData: FormData): Promise
   });
 
   revalidatePath(BASE);
+  revalidateTag(CONTENT_CACHE_TAGS.testimonials, "max"); // refresh the public landing page
   redirect(BASE);
 }
 
@@ -85,5 +88,6 @@ export async function deleteTestimonial(id: string): Promise<void> {
   });
 
   revalidatePath(BASE);
+  revalidateTag(CONTENT_CACHE_TAGS.testimonials, "max"); // refresh the public landing page
   redirect(BASE);
 }

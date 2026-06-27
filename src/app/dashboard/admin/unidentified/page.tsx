@@ -54,7 +54,7 @@ export default async function Page({
           <input type="text" name="q" defaultValue={q} placeholder="Трак код, нэр, утас…" className="border border-neutral-200 rounded-lg px-3 py-2 text-sm text-ink placeholder:text-ink-3/50 focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand" />
         </div>
         <button type="submit" className="px-4 py-2 rounded-lg bg-brand text-white text-sm font-semibold hover:bg-brand/90 transition-colors">Хайх</button>
-        {q && <a href="/dashboard/admin/unidentified" className="px-4 py-2 rounded-lg border border-neutral-200 text-ink-3 text-sm font-semibold hover:bg-neutral-50 transition-colors">Цэвэрлэх</a>}
+        {q && <Link href="/dashboard/admin/unidentified" className="px-4 py-2 rounded-lg border border-neutral-200 text-ink-3 text-sm font-semibold hover:bg-neutral-50 transition-colors">Цэвэрлэх</Link>}
       </form>
 
       <div className="bg-white border border-neutral-200 rounded-xl overflow-hidden">
