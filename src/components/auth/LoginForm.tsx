@@ -111,16 +111,16 @@ export function LoginForm({
   const [showPassword, setShowPassword] = useState(false);
   const dark = tone === "dark";
 
-  const labelClass = dark ? "text-white" : "text-[#101828]";
-  const iconClass = dark ? "text-[#9ca3af]" : "text-[#667085]";
+  const labelClass = dark ? "text-white" : "text-[#1d1d1f]";
+  const iconClass = dark ? "text-[#9ca3af]" : "text-[#6e6e73]";
   const inputClass = dark
     ? "border-[#303030] bg-[#171717] text-white placeholder:text-[#7c7c7c] hover:border-[#454545] focus:border-[#06bbb4] focus:ring-[#06bbb4]/20"
-    : "border-[#d0d5dd] bg-white text-[#101828] placeholder:text-[#98a2b3] hover:border-[#aebccc] focus:border-[#06bbb4] focus:ring-[#06bbb4]/15";
+    : "border-[#d2d2d7] bg-white text-[#1d1d1f] placeholder:text-[#98a2b3] hover:border-[#c0c0c6] focus:border-[#06bbb4] focus:ring-[#06bbb4]/15";
 
   return (
     <form action={action} className="grid gap-5">
       <div className="grid gap-2">
-        <label htmlFor="identifier" className={`text-sm font-bold ${labelClass}`}>
+        <label htmlFor="identifier" className={`text-sm font-medium ${labelClass}`}>
           Имэйл хаяг
         </label>
         <div className="relative">
@@ -142,12 +142,12 @@ export function LoginForm({
 
       <div className="grid gap-2">
         <div className="flex items-center justify-between gap-4">
-          <label htmlFor="password" className={`text-sm font-bold ${labelClass}`}>
+          <label htmlFor="password" className={`text-sm font-medium ${labelClass}`}>
             Нууц үг
           </label>
           <Link
             href="/auth/forgot-password"
-            className={`inline-flex min-h-11 items-center text-sm font-bold transition-colors hover:opacity-80 focus:outline-none focus:ring-4 ${accentTextClass} ${focusRingClass}`}
+            className={`inline-flex min-h-11 items-center text-sm font-medium transition-colors hover:opacity-80 focus:outline-none focus:ring-4 ${accentTextClass} ${focusRingClass}`}
           >
             Нууц үгээ мартсан уу?
           </Link>
@@ -172,7 +172,7 @@ export function LoginForm({
             aria-label={showPassword ? "Нууц үг нуух" : "Нууц үг харах"}
             onClick={() => setShowPassword((value) => !value)}
             className={`absolute right-0 top-1/2 grid size-11 -translate-y-1/2 cursor-pointer place-items-center rounded-lg transition-colors focus:outline-none focus:ring-4 ${focusRingClass} ${
-              dark ? "text-[#8b8b8b] hover:text-white" : "text-[#667085] hover:text-[#101828]"
+              dark ? "text-[#8b8b8b] hover:text-white" : "text-[#6e6e73] hover:text-[#1d1d1f]"
             }`}
           >
             <EyeIcon hidden={!showPassword} />
@@ -183,7 +183,7 @@ export function LoginForm({
       {state?.error ? (
         <p
           className={`rounded-lg border border-[#fe0000]/25 bg-[#fe0000]/10 px-4 py-3 text-sm font-semibold ${
-            dark ? "text-white" : "text-[#101828]"
+            dark ? "text-white" : "text-[#1d1d1f]"
           }`}
         >
           {state.error}
@@ -193,7 +193,7 @@ export function LoginForm({
       <button
         type="submit"
         disabled={pending}
-        className={`mt-3 inline-flex min-h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-lg px-5 text-sm font-black text-white transition-colors focus:outline-none focus:ring-4 disabled:cursor-not-allowed disabled:bg-[#98a2b3] ${submitClassName}`}
+        className={`mt-3 inline-flex min-h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-full px-5 text-sm font-semibold text-white transition-colors focus:outline-none focus:ring-4 disabled:cursor-not-allowed disabled:bg-[#98a2b3] ${submitClassName}`}
       >
         <LoginIcon />
         {pending ? "Нэвтэрч байна..." : "Нэвтрэх"}

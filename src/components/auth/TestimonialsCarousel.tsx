@@ -67,19 +67,19 @@ export function TestimonialsCarousel() {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_16%,rgba(6,187,180,0.22),transparent_34%),radial-gradient(circle_at_90%_90%,rgba(255,255,255,0.08),transparent_30%)]" />
 
       <div className="relative mx-auto w-full max-w-[560px]">
-        <div className="text-[92px] font-black leading-none text-white/10 sm:text-[128px]">
+        <div className="text-[92px] font-semibold leading-none text-white/10 sm:text-[128px]">
           “
         </div>
-        <p className="-mt-10 text-3xl font-black leading-tight tracking-[-0.045em] text-white sm:text-4xl">
+        <p className="-mt-10 text-3xl font-semibold leading-tight tracking-[-0.045em] text-white sm:text-4xl">
           {testimonial.quote}
         </p>
 
         <div className="mt-8 flex items-center gap-4">
-          <div className="grid size-12 place-items-center rounded-full bg-[#06bbb4] text-sm font-black text-[#071414]">
+          <div className="grid size-12 place-items-center rounded-full bg-[#06bbb4] text-sm font-semibold text-[#071414]">
             {testimonial.initials}
           </div>
           <div>
-            <h3 className="font-black tracking-[-0.02em]">{testimonial.name}</h3>
+            <h3 className="font-semibold tracking-[-0.02em]">{testimonial.name}</h3>
             <p className="mt-1 text-sm font-semibold text-white/55">
               {testimonial.role}
             </p>
@@ -101,7 +101,7 @@ export function TestimonialsCarousel() {
               />
             ))}
           </div>
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/35">
+          <p className="text-xs font-semibold text-white/35">
             Drag
           </p>
         </div>
