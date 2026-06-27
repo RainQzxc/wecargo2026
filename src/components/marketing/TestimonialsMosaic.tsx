@@ -1,6 +1,16 @@
 import Link from "next/link";
 
-const testimonials = [
+export interface TestimonialItem {
+  quote: string;
+  name: string;
+  role: string;
+  initials: string;
+}
+
+// Built-in copy shown when no active testimonials are configured in the DB
+// (or it is unreachable). Admin-managed rows take precedence — see
+// src/features/content/dal.ts.
+const FALLBACK_TESTIMONIALS: TestimonialItem[] = [
   {
     quote: "Захиалгын дугаар, ирсэн ачаа, төлбөрөө нэг дор харахад маш амар болсон.",
     name: "Б. Энхжин",
@@ -40,7 +50,8 @@ const testimonials = [
   },
 ];
 
-export default function TestimonialsMosaic() {
+export default function TestimonialsMosaic({ items }: { items?: TestimonialItem[] }) {
+  const testimonials = items && items.length > 0 ? items : FALLBACK_TESTIMONIALS;
   return (
     <section className="relative overflow-hidden bg-white py-20 sm:py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

@@ -17,8 +17,10 @@ import FinalCTA from "@/components/marketing/FinalCTA";
 import MotionReveal from "@/components/marketing/MotionReveal";
 import ScrollToTop from "@/components/marketing/ScrollToTop";
 import ClickPopEffect from "@/components/marketing/ClickPopEffect";
+import { getActiveTestimonials } from "@/features/content/dal";
 
-export default function LandingPage() {
+export default async function LandingPage() {
+  const testimonials = await getActiveTestimonials();
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -56,7 +58,7 @@ export default function LandingPage() {
           <PricingTeaser />
         </MotionReveal>
         <MotionReveal>
-          <TestimonialsMosaic />
+          <TestimonialsMosaic items={testimonials} />
         </MotionReveal>
         <MotionReveal>
           <ContactSection />
