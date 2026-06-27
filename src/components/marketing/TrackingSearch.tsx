@@ -30,10 +30,10 @@ export default function TrackingSearch({ className = "" }: Props) {
         <button
           type="button"
           onClick={() => setType("trackcode")}
-          className={`min-h-11 rounded-xl px-3 text-sm font-black transition-colors focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 focus:ring-offset-2 ${
+          className={`min-h-11 rounded-xl px-3 text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 focus:ring-offset-2 ${
             type === "trackcode"
-              ? "bg-white text-[#111111] shadow-sm"
-              : "text-[#666666] hover:text-[#111111]"
+              ? "bg-white text-[#1d1d1f] shadow-sm"
+              : "text-[#6e6e73] hover:text-[#1d1d1f]"
           }`}
         >
           Трак кодоор
@@ -41,10 +41,10 @@ export default function TrackingSearch({ className = "" }: Props) {
         <button
           type="button"
           onClick={() => setType("phone")}
-          className={`min-h-11 rounded-xl px-3 text-sm font-black transition-colors focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 focus:ring-offset-2 ${
+          className={`min-h-11 rounded-xl px-3 text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 focus:ring-offset-2 ${
             type === "phone"
-              ? "bg-white text-[#111111] shadow-sm"
-              : "text-[#666666] hover:text-[#111111]"
+              ? "bg-white text-[#1d1d1f] shadow-sm"
+              : "text-[#6e6e73] hover:text-[#1d1d1f]"
           }`}
         >
           Утасны дугаараар
@@ -53,7 +53,7 @@ export default function TrackingSearch({ className = "" }: Props) {
 
       <div className="mt-3 grid gap-2 sm:grid-cols-[1fr_auto]">
         <label
-          className="text-sm font-black text-[#333333] sm:col-span-2"
+          className="text-sm font-semibold text-[#333333] sm:col-span-2"
           htmlFor="tracking-query"
         >
           {type === "trackcode" ? "Трак код" : "Утасны дугаар"}
@@ -66,17 +66,17 @@ export default function TrackingSearch({ className = "" }: Props) {
           placeholder={
             type === "trackcode" ? "Жишээ: DPK364813798571" : "Жишээ: 99110000"
           }
-          className="min-h-13 w-full rounded-xl border border-[#e5e5e5] bg-white px-4 text-base font-semibold text-[#111111] placeholder:text-[#666666] transition-colors focus:border-[#06bbb4] focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/20"
+          className="min-h-13 w-full rounded-xl border border-[#e5e5e5] bg-white px-4 text-base font-semibold text-[#1d1d1f] placeholder:text-[#6e6e73] transition-colors focus:border-[#06bbb4] focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/20"
         />
         <button
           type="submit"
-          className="min-h-13 rounded-xl bg-[#06bbb4] px-7 text-sm font-black text-white transition-colors hover:bg-[#06bbb4]/90 focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 focus:ring-offset-2"
+          className="min-h-13 rounded-xl bg-[#06bbb4] px-7 text-sm font-semibold text-white transition-colors hover:bg-[#06bbb4]/90 focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/30 focus:ring-offset-2"
         >
           Шалгах
         </button>
       </div>
 
-      <p className="mt-2.5 text-sm leading-6 text-[#666666]">
+      <p className="mt-2.5 text-sm leading-6 text-[#6e6e73]">
         Ачааны байршил, төлөв, сүүлийн шинэчлэлтийг 24/7 шалгана.
       </p>
     </form>

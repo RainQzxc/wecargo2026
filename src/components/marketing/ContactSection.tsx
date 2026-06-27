@@ -107,13 +107,13 @@ function ValueWrap({
   children: ReactNode;
 }) {
   if (!href) {
-    return <p className="text-base font-bold leading-7 text-[#111111]">{children}</p>;
+    return <p className="text-base font-bold leading-7 text-[#1d1d1f]">{children}</p>;
   }
 
   return (
     <a
       href={href}
-      className="text-base font-black leading-7 text-[#111111] transition-colors hover:text-[#06bbb4] focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/25 focus:ring-offset-2"
+      className="text-base font-semibold leading-7 text-[#1d1d1f] transition-colors hover:text-[#06bbb4] focus:outline-none focus:ring-2 focus:ring-[#06bbb4]/25 focus:ring-offset-2"
     >
       {children}
     </a>
@@ -130,14 +130,14 @@ export default function ContactSection() {
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-10 max-w-3xl lg:mb-14">
-          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#06bbb4]/15 bg-white/85 px-3.5 py-1.5 text-xs font-black uppercase tracking-[0.14em] text-[#06bbb4] shadow-sm">
+          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#06bbb4]/15 bg-white/85 px-3.5 py-1.5 text-xs font-semibold text-[#06bbb4] shadow-sm">
             <span className="h-1.5 w-1.5 rounded-full bg-[#06bbb4]" />
             Холбоо барих
           </span>
-          <h2 className="text-4xl font-black tracking-[-0.04em] text-[#111111] sm:text-5xl">
+          <h2 className="text-4xl font-semibold tracking-[-0.04em] text-[#1d1d1f] sm:text-5xl">
             Бидэнтэй холбогдоорой
           </h2>
-          <p className="mt-4 max-w-2xl text-base leading-7 text-[#666666] sm:text-lg">
+          <p className="mt-4 max-w-2xl text-base leading-7 text-[#6e6e73] sm:text-lg">
             Улаанбаатар болон Эрээн дэх салбарын утас, имэйл, хаягийн мэдээлэл.
           </p>
         </div>
@@ -156,13 +156,13 @@ export default function ContactSection() {
               <div className="mb-7 flex items-start justify-between gap-4">
                 <div>
                   <p
-                    className={`text-xs font-black uppercase tracking-[0.16em] ${
+                    className={`text-xs font-semibold ${
                       location.accent === "red" ? "text-[#fe0000]" : "text-[#06bbb4]"
                     }`}
                   >
                     {location.eyebrow}
                   </p>
-                  <h3 className="mt-2 text-3xl font-black tracking-[-0.04em] text-[#111111]">
+                  <h3 className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-[#1d1d1f]">
                     {location.city}
                   </h3>
                 </div>
@@ -193,7 +193,7 @@ export default function ContactSection() {
                       <ContactIcon type={item.icon} />
                     </div>
                     <div className="min-w-0">
-                      <p className="mb-1 text-xs font-black uppercase tracking-[0.14em] text-[#666666]">
+                      <p className="mb-1 text-xs font-semibold text-[#6e6e73]">
                         {item.label}
                       </p>
                       <div className="break-words [overflow-wrap:anywhere]">

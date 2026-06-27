@@ -17,11 +17,11 @@ export default function PricingTeaser() {
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
           <div>
-            <span className="mb-4 inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-xs font-black uppercase tracking-[0.14em] text-[#06bbb4] shadow-sm">
+            <span className="mb-4 inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-xs font-semibold text-[#06bbb4] shadow-sm">
               <span className="h-1.5 w-1.5 rounded-full bg-[#06bbb4]" />
               Тариф
             </span>
-            <h2 className="text-4xl font-black tracking-[-0.05em] text-[#111111] sm:text-5xl">
+            <h2 className="text-4xl font-semibold tracking-[-0.05em] text-[#1d1d1f] sm:text-5xl">
               Үнэ ойлгомжтой, урьдчилан тооцоолох боломжтой.
             </h2>
             <p className="mt-4 max-w-xl text-base leading-7 text-[#333333] sm:text-lg">
@@ -36,23 +36,23 @@ export default function PricingTeaser() {
                   key={title}
                   className="rounded-[22px] border border-[#e5e5e5] bg-white p-5"
                 >
-                  <p className="text-2xl font-black tracking-[-0.04em] text-[#111111]">
+                  <p className="text-2xl font-semibold tracking-[-0.04em] text-[#1d1d1f]">
                     {title}
                   </p>
-                  <p className="mt-2 text-sm font-semibold leading-6 text-[#666666]">
+                  <p className="mt-2 text-sm font-semibold leading-6 text-[#6e6e73]">
                     {desc}
                   </p>
                 </div>
               ))}
             </div>
-            <div className="mt-3 rounded-[22px] bg-[#111111] p-5 text-white sm:flex sm:items-center sm:justify-between sm:gap-6">
+            <div className="mt-3 rounded-[22px] bg-[#1d1d1f] p-5 text-white sm:flex sm:items-center sm:justify-between sm:gap-6">
               <p className="text-sm font-semibold leading-6 text-white/70">
                 Яаралтай болон онцлог ачааны үнэ тухайн ачааны жин, овор,
                 төрлөөс хамаарч тооцогдоно.
               </p>
               <Link
                 href="/pricing"
-                className="mt-5 inline-flex min-h-12 items-center justify-center rounded-xl bg-[#fe0000] px-6 text-sm font-black text-white transition-colors hover:bg-[#fe0000]/90 focus:outline-none focus:ring-2 focus:ring-[#fe0000]/30 sm:mt-0 sm:shrink-0"
+                className="mt-5 inline-flex min-h-12 items-center justify-center rounded-xl bg-[#fe0000] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#fe0000]/90 focus:outline-none focus:ring-2 focus:ring-[#fe0000]/30 sm:mt-0 sm:shrink-0"
               >
                 Тариф харах
               </Link>

@@ -33,11 +33,11 @@ export default function LinkOrderSection() {
             <div className="inline-flex items-center gap-2 bg-[#06bbb4]/10 text-[#06bbb4] text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
               Линк захиалга
             </div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#111111] tracking-tight mb-4">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#1d1d1f] tracking-tight mb-4">
               Линкээ илгээгээд захиалгаа{" "}
               <span className="text-[#06bbb4]">хялбар хийлгэ.</span>
             </h2>
-            <p className="text-[#666666] text-lg leading-relaxed mb-8">
+            <p className="text-[#6e6e73] text-lg leading-relaxed mb-8">
               Барааны линкээ илгээхэд захиалгын мэдээлэл шалгагдаж, худалдан
               авалтаас тээвэрлэлт хүртэлх явц хялбар болно.
             </p>
@@ -63,10 +63,10 @@ export default function LinkOrderSection() {
                   {step.num}
                 </div>
                 <div>
-                  <h3 className="font-semibold text-[#111111] mb-1">
+                  <h3 className="font-semibold text-[#1d1d1f] mb-1">
                     {step.title}
                   </h3>
-                  <p className="text-[#666666] text-sm leading-relaxed">
+                  <p className="text-[#6e6e73] text-sm leading-relaxed">
                     {step.desc}
                   </p>
                 </div>
