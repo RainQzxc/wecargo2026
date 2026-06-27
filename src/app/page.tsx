@@ -16,7 +16,6 @@ import ContactSection from "@/components/marketing/ContactSection";
 import FinalCTA from "@/components/marketing/FinalCTA";
 import MotionReveal from "@/components/marketing/MotionReveal";
 import ScrollToTop from "@/components/marketing/ScrollToTop";
-import ClickPopEffect from "@/components/marketing/ClickPopEffect";
 import { getActiveTestimonials, getSiteContent } from "@/features/content/dal";
 import { resolveSiteContent } from "@/features/content/site-content";
 
@@ -81,7 +80,6 @@ export default async function LandingPage() {
       </main>
       <Footer />
       <ScrollToTop />
-      <ClickPopEffect />
     </div>
   );
 }

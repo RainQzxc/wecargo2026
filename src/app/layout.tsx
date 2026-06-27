@@ -4,7 +4,10 @@ import "./globals.css";
 
 const geist = Geist({
   variable: "--font-geist-sans",
-  subsets: ["latin"],
+  // The site is Mongolian (Cyrillic); without this subset every word falls back
+  // to Arial. `swap` avoids invisible text while the font loads.
+  subsets: ["latin", "cyrillic"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
