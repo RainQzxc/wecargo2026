@@ -46,7 +46,7 @@ export async function createTestimonial(formData: FormData): Promise<void> {
   });
 
   revalidatePath(BASE);
-  revalidateTag(CONTENT_CACHE_TAGS.testimonials); // refresh the public landing page
+  revalidateTag(CONTENT_CACHE_TAGS.testimonials, "max"); // refresh the public landing page
   redirect(BASE);
 }
 
@@ -69,7 +69,7 @@ export async function updateTestimonial(id: string, formData: FormData): Promise
   });
 
   revalidatePath(BASE);
-  revalidateTag(CONTENT_CACHE_TAGS.testimonials); // refresh the public landing page
+  revalidateTag(CONTENT_CACHE_TAGS.testimonials, "max"); // refresh the public landing page
   redirect(BASE);
 }
 
@@ -88,6 +88,6 @@ export async function deleteTestimonial(id: string): Promise<void> {
   });
 
   revalidatePath(BASE);
-  revalidateTag(CONTENT_CACHE_TAGS.testimonials); // refresh the public landing page
+  revalidateTag(CONTENT_CACHE_TAGS.testimonials, "max"); // refresh the public landing page
   redirect(BASE);
 }

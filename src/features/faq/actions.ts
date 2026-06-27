@@ -43,7 +43,7 @@ export async function createFaq(formData: FormData): Promise<void> {
   });
 
   revalidatePath(BASE);
-  revalidateTag(CONTENT_CACHE_TAGS.faqs); // refresh the public pricing FAQ
+  revalidateTag(CONTENT_CACHE_TAGS.faqs, "max"); // refresh the public pricing FAQ
   redirect(BASE);
 }
 
@@ -66,7 +66,7 @@ export async function updateFaq(id: string, formData: FormData): Promise<void> {
   });
 
   revalidatePath(BASE);
-  revalidateTag(CONTENT_CACHE_TAGS.faqs); // refresh the public pricing FAQ
+  revalidateTag(CONTENT_CACHE_TAGS.faqs, "max"); // refresh the public pricing FAQ
   redirect(BASE);
 }
 
@@ -85,6 +85,6 @@ export async function deleteFaq(id: string): Promise<void> {
   });
 
   revalidatePath(BASE);
-  revalidateTag(CONTENT_CACHE_TAGS.faqs); // refresh the public pricing FAQ
+  revalidateTag(CONTENT_CACHE_TAGS.faqs, "max"); // refresh the public pricing FAQ
   redirect(BASE);
 }
