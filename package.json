@@ -13,6 +13,7 @@
     "test:coverage": "vitest run --coverage",
     "db:push": "prisma db push",
     "db:seed": "prisma db seed",
+    "db:reset-passwords": "tsx prisma/reset-passwords.ts",
     "postinstall": "prisma generate"
   },
   "dependencies": {
