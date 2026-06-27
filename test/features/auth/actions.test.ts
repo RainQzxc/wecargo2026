@@ -21,6 +21,7 @@ vi.mock("next/navigation", () => ({ redirect, forbidden: vi.fn() }));
 
 import { login } from "@/features/auth/actions";
 import { hashPassword } from "@/features/auth/password";
+import { loginRateLimiter } from "@/features/auth/rate-limit";
 import { AUDIT_ACTIONS } from "@/constants/audit-actions";
 import { ROUTES } from "@/constants/routes";
 import { ROLES } from "@/constants/roles";
@@ -34,6 +35,8 @@ function formData(fields: Record<string, string>): FormData {
 const PASSWORD = "correct-password";
 
 beforeEach(() => {
+  // The login limiter is module-level shared state; reset it for isolation.
+  loginRateLimiter.clear();
   dbMock.user.update.mockResolvedValue({});
   dbMock.auditLog.create.mockResolvedValue({});
 });
@@ -143,5 +146,45 @@ describe("login — success", () => {
 
     expect(res.error).toBeTruthy();
     expect(createSession).not.toHaveBeenCalled();
+  });
+});
+
+describe("login — brute-force throttling", () => {
+  it("blocks further attempts after repeated failures and stops querying the DB", async () => {
+    dbMock.user.findFirst.mockResolvedValue(null); // every attempt fails
+
+    const fd = () => formData({ identifier: "victim@x.com", password: "guess" });
+    // 5 attempts are permitted (max), the 6th is throttled.
+    for (let i = 0; i < 5; i++) await login({}, fd());
+    const callsBefore = dbMock.user.findFirst.mock.calls.length;
+
+    const res = await login({}, fd());
+
+    expect(res.error).toBeTruthy();
+    // Throttled attempt must short-circuit before touching the DB.
+    expect(dbMock.user.findFirst.mock.calls.length).toBe(callsBefore);
+  });
+
+  it("clears the throttle once a login succeeds", async () => {
+    const fd = () => formData({ identifier: "user@x.com", password: PASSWORD });
+
+    // Two failed attempts...
+    dbMock.user.findFirst.mockResolvedValue(null);
+    await login({}, fd());
+    await login({}, fd());
+
+    // ...then a success should reset the counter.
+    dbMock.user.findFirst.mockResolvedValue({
+      id: "u9",
+      role: ROLES.ADMIN,
+      status: "ACTIVE",
+      passwordHash: hashPassword(PASSWORD),
+    });
+    await captureRedirect(() => login({}, fd()));
+
+    // Subsequent failures start from a clean window (not already locked out).
+    dbMock.user.findFirst.mockResolvedValue(null);
+    const res = await login({}, fd());
+    expect(res.error).toBe("Нэвтрэх нэр эсвэл нууц үг буруу байна."); // bad creds, NOT throttle msg
   });
 });

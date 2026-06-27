@@ -3,6 +3,7 @@ import "server-only";
 import { cache } from "react";
 import { forbidden, redirect } from "next/navigation";
 import { db } from "@/server/db";
+import { logger } from "@/lib/logger";
 import { ROUTES } from "@/constants/routes";
 import type { Role } from "@/constants/roles";
 import { readSession } from "./session";
@@ -54,7 +55,7 @@ export const getCurrentUser = cache(async (): Promise<CurrentUser | null> => {
     if (!user || user.status === "DISABLED") return null;
     return user as CurrentUser;
   } catch (err) {
-    console.error("[getCurrentUser] DB error:", err);
+    logger.captureException("getCurrentUser", err);
     return null;
   }
 });

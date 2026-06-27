@@ -79,7 +79,7 @@ export default async function Page({
           </select>
         </div>
         <button type="submit" className="px-4 py-2 rounded-lg bg-brand text-white text-sm font-semibold hover:bg-brand/90 transition-colors">Хайх</button>
-        {(q || status) && <a href="/dashboard/admin/link-orders" className="px-4 py-2 rounded-lg border border-neutral-200 text-ink-3 text-sm font-semibold hover:bg-neutral-50 transition-colors">Цэвэрлэх</a>}
+        {(q || status) && <Link href="/dashboard/admin/link-orders" className="px-4 py-2 rounded-lg border border-neutral-200 text-ink-3 text-sm font-semibold hover:bg-neutral-50 transition-colors">Цэвэрлэх</Link>}
       </form>
 
       <div className="bg-white border border-neutral-200 rounded-xl overflow-hidden">

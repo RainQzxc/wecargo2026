@@ -1,4 +1,5 @@
 import { db } from "@/server/db";
+import { logger } from "@/lib/logger";
 
 interface AuditParams {
   actorId?: string;
@@ -30,6 +31,6 @@ export async function writeAuditLog(params: AuditParams): Promise<void> {
       },
     });
   } catch (err) {
-    console.error("[audit] Failed to write log:", params.action, err);
+    logger.captureException("audit", err, { action: params.action });
   }
 }

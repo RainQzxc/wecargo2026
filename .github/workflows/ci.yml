@@ -30,5 +30,17 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      - name: Typecheck
+        run: npm run typecheck
+
       - name: Test
         run: npm run test
+
+      # A production build is the strongest single gate: it typechecks and
+      # compiles every route. DATABASE_URL is a dummy — the build does not
+      # connect, but Prisma's config reads the variable.
+      - name: Build
+        run: npm run build
+        env:
+          DATABASE_URL: postgresql://user:pass@localhost:5432/db
+          SESSION_SECRET: ci-build-only-not-a-real-secret

@@ -20,6 +20,30 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Environment variables
+
+Copy `.env.example` to `.env` and fill it in. Required:
+
+- `DATABASE_URL` — Postgres connection string (runtime + Prisma CLI).
+- `SESSION_SECRET` — HMAC key for the signed session cookie. **The app throws in
+  production if this is unset.** Generate one with
+  `node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))"`.
+
+## Testing & checks
+
+```bash
+npm run test           # run the Vitest unit/action suite
+npm run test:watch     # watch mode
+npm run test:coverage   # coverage report (text + html)
+npm run lint           # ESLint
+npm run typecheck      # tsc --noEmit
+```
+
+Tests live under `test/` and cover the pure libraries, the auth/session/permission
+layer, the DAL guards, and server actions (with a mocked Prisma client — no DB
+required). CI (`.github/workflows/ci.yml`) runs lint, typecheck, test, and a
+production build on every PR.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

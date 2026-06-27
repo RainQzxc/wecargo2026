@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { requirePermission } from "@/features/auth";
 import { db } from "@/server/db";
 import { Pagination } from "@/components/dashboard/Pagination";
@@ -70,7 +71,7 @@ export default async function Page({
           </select>
         </div>
         <button type="submit" className="px-4 py-2 rounded-lg bg-brand text-white text-sm font-semibold hover:bg-brand/90 transition-colors">Хайх</button>
-        {(channel || status || search) && <a href="/dashboard/admin/notifications" className="px-4 py-2 rounded-lg border border-neutral-200 text-ink-3 text-sm font-semibold hover:bg-neutral-50 transition-colors">Цэвэрлэх</a>}
+        {(channel || status || search) && <Link href="/dashboard/admin/notifications" className="px-4 py-2 rounded-lg border border-neutral-200 text-ink-3 text-sm font-semibold hover:bg-neutral-50 transition-colors">Цэвэрлэх</Link>}
       </form>
 
       <div className="bg-white border border-neutral-200 rounded-xl overflow-hidden">

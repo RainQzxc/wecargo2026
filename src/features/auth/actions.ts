@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { db } from "@/server/db";
 import { writeAuditLog } from "@/lib/audit";
+import { logger } from "@/lib/logger";
 import { normalizePhone } from "@/lib/phone";
 import { AUDIT_ACTIONS } from "@/constants/audit-actions";
 import { ROUTES } from "@/constants/routes";
@@ -10,6 +11,7 @@ import type { Role } from "@/constants/roles";
 import { createSession, destroySession } from "./session";
 import { getCurrentUser } from "./dal";
 import { verifyPassword } from "./password";
+import { loginRateLimiter } from "./rate-limit";
 
 export interface LoginState {
   error?: string;
@@ -21,6 +23,12 @@ export async function login(_state: LoginState, formData: FormData): Promise<Log
 
   if (!identifier || !password) {
     return { error: "Нэвтрэх нэр болон нууц үг шаардлагатай." };
+  }
+
+  // Brute-force defense: throttle attempts per identifier before any DB work.
+  const rateKey = identifier.toLowerCase();
+  if (!loginRateLimiter.check(rateKey).allowed) {
+    return { error: "Хэт олон удаа оролдлоо. Түр хүлээгээд дахин оролдоно уу." };
   }
 
   try {
@@ -48,6 +56,7 @@ export async function login(_state: LoginState, formData: FormData): Promise<Log
     }
 
     await createSession(user.id, user.role as Role);
+    loginRateLimiter.reset(rateKey); // clear throttle on a successful login
 
     // Non-critical updates — don't block login if they fail
     Promise.all([
@@ -58,9 +67,9 @@ export async function login(_state: LoginState, formData: FormData): Promise<Log
         entityType: "User",
         entityId: user.id,
       }),
-    ]).catch((err) => console.error("[login] post-login tasks failed:", err));
+    ]).catch((err) => logger.error("login", "post-login tasks failed", { err }));
   } catch (err) {
-    console.error("[login] Unexpected error:", err);
+    logger.captureException("login", err);
     return { error: "Системийн алдаа гарлаа. Дахин оролдоно уу." };
   }
 
@@ -79,7 +88,7 @@ export async function logout(): Promise<void> {
       });
     }
   } catch (err) {
-    console.error("[logout] Failed to write audit log:", err);
+    logger.captureException("logout", err);
   } finally {
     await destroySession();
   }
