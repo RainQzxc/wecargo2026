@@ -1,0 +1,63 @@
+/* Scoped animations for the showcase page. Sharp, restrained, reduced-motion aware. */
+
+.rise {
+  opacity: 0;
+  transform: translateY(22px);
+  animation: wcRise 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.d1 {
+  animation-delay: 0.1s;
+}
+.d2 {
+  animation-delay: 0.2s;
+}
+.d3 {
+  animation-delay: 0.3s;
+}
+.d4 {
+  animation-delay: 0.4s;
+}
+
+@keyframes wcRise {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Continuous freight ticker */
+.marquee {
+  overflow: hidden;
+}
+.marqueeTrack {
+  display: inline-flex;
+  width: max-content;
+  animation: wcMarquee 38s linear infinite;
+}
+@keyframes wcMarquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Slow pan on the hero grid backdrop */
+.gridPan {
+  animation: wcPan 28s linear infinite alternate;
+}
+@keyframes wcPan {
+  to {
+    transform: translate(-40px, -24px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise,
+  .marqueeTrack,
+  .gridPan {
+    animation: none;
+  }
+  .rise {
+    opacity: 1;
+    transform: none;
+  }
+}
