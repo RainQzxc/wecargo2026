@@ -8,6 +8,7 @@ import ServicesSection from "@/components/marketing/ServicesSection";
 import WhyChooseSection from "@/components/marketing/WhyChooseSection";
 import TrackingExperienceSection from "@/components/marketing/TrackingExperienceSection";
 import LinkOrderSection from "@/components/marketing/LinkOrderSection";
+import EreenAddressSection from "@/components/marketing/EreenAddressSection";
 import BusinessSection from "@/components/marketing/BusinessSection";
 import ProcessSection from "@/components/marketing/ProcessSection";
 import PricingTeaser from "@/components/marketing/PricingTeaser";
@@ -66,6 +67,9 @@ export default async function LandingPage() {
         </MotionReveal>
         <MotionReveal>
           <LinkOrderSection />
+        </MotionReveal>
+        <MotionReveal>
+          <EreenAddressSection />
         </MotionReveal>
         <MotionReveal>
           <BusinessSection />
