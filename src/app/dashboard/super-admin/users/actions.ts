@@ -4,6 +4,7 @@ import { db } from "@/server/db";
 import { requirePermission } from "@/features/auth";
 import { revalidatePath } from "next/cache";
 import { hashPassword } from "@/features/auth/password";
+import { logger } from "@/lib/logger";
 import type { Role } from "@/constants/roles";
 
 const VALID_ROLES = [
@@ -50,7 +51,7 @@ export async function resetUserPassword(
     await requirePermission("users.resetPassword");
 
     if (newPassword.length < 8) {
-      return { error: "Password must be at least 8 characters long." };
+      return { error: "Нууц үг доод тал нь 8 тэмдэгттэй байх ёстой." };
     }
 
     const passwordHash = await hashPassword(newPassword);
@@ -58,8 +59,9 @@ export async function resetUserPassword(
 
     return {};
   } catch (err) {
-    const message =
-      err instanceof Error ? err.message : "Failed to reset password.";
-    return { error: message };
+    // Never surface the raw error to the UI — it may be an internal/DB
+    // message. Log it for diagnosis and return a safe, understandable message.
+    logger.captureException("resetUserPassword", err, { userId });
+    return { error: "Нууц үг шинэчлэхэд алдаа гарлаа. Дахин оролдоно уу." };
   }
 }

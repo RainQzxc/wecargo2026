@@ -16,7 +16,9 @@ export function TestimonialForm({
   return (
     <form action={action} style={{ display: "flex", flexDirection: "column", gap: 12 }}>
       {error === "required" ? (
-        <p style={{ color: "#c5221f", fontSize: 13 }}>Author name and quote (MN) are required.</p>
+        <p style={{ color: "#c5221f", fontSize: 13 }}>
+          Зохиогчийн нэр болон сэтгэгдлийн эх бичвэрийг (MN) заавал бөглөнө үү.
+        </p>
       ) : null}
 
       <div style={{ display: "flex", gap: 12 }}>

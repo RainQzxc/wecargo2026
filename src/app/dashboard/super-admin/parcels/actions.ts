@@ -4,6 +4,7 @@ import { db } from "@/server/db";
 import { requirePermission } from "@/features/auth";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { logger } from "@/lib/logger";
 import type { ParcelStatus } from "@prisma/client";
 
 const VALID_PARCEL_STATUSES: ParcelStatus[] = [
@@ -85,9 +86,8 @@ export async function createParcel(
     ) {
       throw err;
     }
-    const message =
-      err instanceof Error ? err.message : "Failed to create parcel.";
-    return { error: message };
+    logger.captureException("createParcel", err);
+    return { error: "Бараа бүртгэхэд алдаа гарлаа. Мэдээллээ шалгаад дахин оролдоно уу." };
   }
 }
 

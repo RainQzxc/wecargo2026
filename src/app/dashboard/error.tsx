@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
 
 export default function DashboardError({
@@ -9,6 +10,12 @@ export default function DashboardError({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  // Next.js redacts the real message in production, so `error.message` is
+  // never shown to the user here — only the digest is a safe, stable reference.
+  useEffect(() => {
+    console.error("[dashboard-error]", error.digest, error);
+  }, [error]);
+
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] p-8 text-center">
       <div className="w-14 h-14 rounded-full bg-red-100 flex items-center justify-center mb-4">
@@ -21,14 +28,18 @@ export default function DashboardError({
           />
         </svg>
       </div>
-      <h2 className="text-xl font-bold text-ink mb-2">Алдаа гарлаа</h2>
-      <p className="text-ink-3 text-sm mb-1 max-w-sm">
-        {error.message || "Хуудас ачаалахад алдаа гарлаа."}
+      <h2 className="text-xl font-bold text-ink mb-2">Энэ хэсгийг ачаалж чадсангүй</h2>
+      <p className="text-ink-3 text-sm mb-1 max-w-sm leading-6">
+        Мэдээлэл татахад алдаа гарлаа. Ихэвчлэн сүлжээ тогтворгүй үед тохиолддог тул
+        дахин оролдоно уу. Дахин давтагдвал системийн админд алдааны кодыг мэдэгдээрэй.
       </p>
       {error.digest && (
-        <p className="text-xs text-ink-3 mb-4 font-mono bg-neutral-100 px-2 py-1 rounded">
-          {error.digest}
-        </p>
+        <div className="mt-3 mb-1 rounded-lg bg-neutral-100 px-3 py-2 text-left">
+          <p className="text-[10px] font-semibold text-ink-3 uppercase tracking-wide">
+            Алдааны код
+          </p>
+          <p className="mt-0.5 font-mono text-xs text-ink-2 break-all">{error.digest}</p>
+        </div>
       )}
       <div className="flex items-center gap-3 mt-4">
         <button

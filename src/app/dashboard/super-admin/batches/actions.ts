@@ -4,6 +4,7 @@ import { db } from "@/server/db";
 import { requirePermission } from "@/features/auth";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { logger } from "@/lib/logger";
 
 export async function createBatch(
   formData: FormData
@@ -22,7 +23,7 @@ export async function createBatch(
     const notes = String(formData.get("notes") ?? "").trim() || null;
 
     if (!originWarehouseId) {
-      return { error: "Origin warehouse is required." };
+      return { error: "Гарал үүсэх агуулахыг заавал сонгоно уу." };
     }
 
     const batch = await db.shipmentBatch.create({
@@ -47,9 +48,8 @@ export async function createBatch(
     ) {
       throw err;
     }
-    const message =
-      err instanceof Error ? err.message : "Failed to create batch.";
-    return { error: message };
+    logger.captureException("createBatch", err);
+    return { error: "Ачилтын багц үүсгэхэд алдаа гарлаа. Дахин оролдоно уу." };
   }
 }
 
@@ -92,7 +92,7 @@ export async function addParcelToBatch(
     });
 
     if (!parcel) {
-      return { error: "Parcel not found." };
+      return { error: "Энэ трак/код-той бараа олдсонгүй." };
     }
 
     const existing = await db.shipmentBatchItem.findUnique({
@@ -101,7 +101,7 @@ export async function addParcelToBatch(
     });
 
     if (existing) {
-      return { error: "Parcel is already in this batch." };
+      return { error: "Энэ бараа уг ачилтын багцад аль хэдийн орсон байна." };
     }
 
     await db.shipmentBatchItem.create({
@@ -116,9 +116,8 @@ export async function addParcelToBatch(
 
     return {};
   } catch (err) {
-    const message =
-      err instanceof Error ? err.message : "Failed to add parcel to batch.";
-    return { error: message };
+    logger.captureException("addParcelToBatch", err, { batchId, parcelPublicCode });
+    return { error: "Бараа нэмэхэд алдаа гарлаа. Дахин оролдоно уу." };
   }
 }
 

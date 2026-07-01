@@ -16,7 +16,9 @@ export function FaqForm({
   return (
     <form action={action} style={{ display: "flex", flexDirection: "column", gap: 12 }}>
       {error === "required" ? (
-        <p style={{ color: "#c5221f", fontSize: 13 }}>Question (MN) and Answer (MN) are required.</p>
+        <p style={{ color: "#c5221f", fontSize: 13 }}>
+          Асуулт (MN) болон хариултыг (MN) заавал бөглөнө үү.
+        </p>
       ) : null}
 
       <label style={FIELD}>

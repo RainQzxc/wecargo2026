@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+
 export default function GlobalError({
   error,
   reset,
@@ -7,6 +9,12 @@ export default function GlobalError({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  // Next.js redacts the real message in production, so `error.message` is
+  // never shown to the user here — only the digest is a safe, stable reference.
+  useEffect(() => {
+    console.error("[global-error]", error.digest, error);
+  }, [error]);
+
   return (
     <html lang="mn">
       <body style={{ margin: 0, fontFamily: "Arial, sans-serif", background: "#f7f7f7" }}>
@@ -36,15 +44,37 @@ export default function GlobalError({
               !
             </div>
             <h1 style={{ fontSize: 22, fontWeight: 700, color: "#111", margin: "0 0 8px" }}>
-              Системийн алдаа
+              Аппликейшн ачаалж чадсангүй
             </h1>
-            <p style={{ color: "#666", fontSize: 14, margin: "0 0 24px" }}>
-              {error.message || "Системд алдаа гарлаа. Хуудсыг дахин ачааллана уу."}
+            <p style={{ color: "#666", fontSize: 14, margin: "0 0 16px", lineHeight: 1.6 }}>
+              Уучлаарай, ноцтой алдаа гарсан тул хуудсыг харуулж чадсангүй. Доорх товчоор
+              дахин оролдоно уу, эсвэл хуудсаа сэргээнэ үү.
             </p>
             {error.digest && (
-              <p style={{ fontSize: 11, color: "#999", marginBottom: 16, fontFamily: "monospace" }}>
-                {error.digest}
-              </p>
+              <div
+                style={{
+                  background: "#f0f0f0",
+                  borderRadius: 8,
+                  padding: "8px 12px",
+                  marginBottom: 16,
+                  textAlign: "left",
+                }}
+              >
+                <p style={{ fontSize: 10, color: "#999", margin: 0, textTransform: "uppercase" }}>
+                  Алдааны код
+                </p>
+                <p
+                  style={{
+                    fontSize: 12,
+                    color: "#333",
+                    marginTop: 2,
+                    fontFamily: "monospace",
+                    wordBreak: "break-all",
+                  }}
+                >
+                  {error.digest}
+                </p>
+              </div>
             )}
             <button
               onClick={reset}

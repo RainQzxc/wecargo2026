@@ -3,6 +3,7 @@
 import { db } from "@/server/db";
 import { requirePermission } from "@/features/auth";
 import { revalidatePath } from "next/cache";
+import { logger } from "@/lib/logger";
 
 export async function assignCourier(
   deliveryId: string,
@@ -17,7 +18,7 @@ export async function assignCourier(
     });
 
     if (!courier || courier.role !== "COURIER") {
-      return { error: "The selected user is not a courier." };
+      return { error: "Сонгосон хэрэглэгч курьер эрхтэй биш байна." };
     }
 
     await db.deliveryRequest.update({
@@ -42,9 +43,8 @@ export async function assignCourier(
 
     return {};
   } catch (err) {
-    const message =
-      err instanceof Error ? err.message : "Failed to assign courier.";
-    return { error: message };
+    logger.captureException("assignCourier", err, { deliveryId, courierId });
+    return { error: "Курьер томилоход алдаа гарлаа. Дахин оролдоно уу." };
   }
 }
 

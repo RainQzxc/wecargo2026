@@ -4,6 +4,7 @@ import { db } from "@/server/db";
 import { requirePermission } from "@/features/auth";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { logger } from "@/lib/logger";
 
 export async function createTariff(
   formData: FormData
@@ -52,9 +53,8 @@ export async function createTariff(
     ) {
       throw err;
     }
-    const message =
-      err instanceof Error ? err.message : "Failed to create tariff.";
-    return { error: message };
+    logger.captureException("createTariff", err);
+    return { error: "Тариф үүсгэхэд алдаа гарлаа. Мэдээллээ шалгаад дахин оролдоно уу." };
   }
 }
 
