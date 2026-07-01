@@ -15,8 +15,8 @@ const locations = [
       },
       {
         label: "Имэйл",
-        value: "info@wecargo.mn",
-        href: "mailto:info@wecargo.mn",
+        value: "info@cargoo.mn",
+        href: "mailto:info@cargoo.mn",
         icon: "mail",
       },
       {
