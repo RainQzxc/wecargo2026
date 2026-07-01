@@ -52,10 +52,10 @@ export default function Footer() {
               <p>
                 <span className="text-white/35">Имэйл:</span>{" "}
                 <a
-                  href="mailto:info@cargoo.mn"
+                  href="mailto:info@wecargo.mn"
                   className="hover:text-white transition-colors"
                 >
-                  info@cargoo.mn
+                  info@wecargo.mn
                 </a>
               </p>
               <p>

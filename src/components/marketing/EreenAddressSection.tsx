@@ -1,12 +1,7 @@
 "use client";
 
 import { useState } from "react";
-
-const EREEN = {
-  recipientHint: "WECARGO + таны утас/код",
-  addressCn: "内蒙古锡林郭勒盟二连浩特市环宇商贸城五号楼125号业顺额尔敦商贸有限公司",
-  phone: "15148615407",
-};
+import { EREEN_WAREHOUSE as EREEN } from "@/constants/ereen-warehouse";
 
 async function copyText(text: string): Promise<boolean> {
   try {
