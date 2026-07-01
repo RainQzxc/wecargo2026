@@ -33,7 +33,7 @@ export default function LinkOrderSection() {
             <div className="inline-flex items-center gap-2 bg-[#06bbb4]/10 text-[#06bbb4] text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
               Линк захиалга
             </div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#1d1d1f] tracking-tight mb-4">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-[#1d1d1f] tracking-tight mb-4">
               Линкээ илгээгээд захиалгаа{" "}
               <span className="text-[#06bbb4]">хялбар хийлгэ.</span>
             </h2>
@@ -59,7 +59,7 @@ export default function LinkOrderSection() {
                 key={step.num}
                 className="flex gap-5 p-5 rounded-2xl bg-white border border-[#e5e5e5] hover:border-[#06bbb4]/40 hover:shadow-md transition-all"
               >
-                <div className="text-2xl font-bold text-[#06bbb4] shrink-0 leading-none pt-0.5">
+                <div className="text-2xl font-semibold text-[#06bbb4] shrink-0 leading-none pt-0.5">
                   {step.num}
                 </div>
                 <div>

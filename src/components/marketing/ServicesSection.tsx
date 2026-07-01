@@ -7,7 +7,7 @@ function MiniTimeline() {
     <div className="rounded-[22px] bg-white p-5 shadow-[0_18px_45px_rgba(17,17,17,0.10)]">
       <div className="mb-5 flex items-center justify-between">
         <p className="text-xs font-semibold text-[#6e6e73]">
-          YT7547233338116
+          CB4821067753MN
         </p>
         <span className="rounded-full bg-[#06bbb4]/10 px-2.5 py-1 text-[10px] font-semibold text-[#06bbb4]">
           Замд
