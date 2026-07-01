@@ -19,7 +19,7 @@ export function WarehouseForm({
   return (
     <form action={action} style={{ display: "flex", flexDirection: "column", gap: 12 }}>
       {error === "name" ? (
-        <p style={{ color: "#c5221f", fontSize: 13 }}>Name is required.</p>
+        <p style={{ color: "#c5221f", fontSize: 13 }}>Агуулахын нэрийг заавал бөглөнө үү.</p>
       ) : null}
 
       <label style={FIELD}>

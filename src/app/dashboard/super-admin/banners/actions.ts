@@ -4,6 +4,7 @@ import { db } from "@/server/db";
 import { requirePermission } from "@/features/auth";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { logger } from "@/lib/logger";
 import type { BannerPlacement } from "@prisma/client";
 
 export async function createBanner(
@@ -45,9 +46,8 @@ export async function createBanner(
 
     revalidatePath("/dashboard/super-admin/banners");
   } catch (err) {
-    const message =
-      err instanceof Error ? err.message : "Failed to create banner.";
-    return { error: message };
+    logger.captureException("createBanner", err);
+    return { error: "Баннер үүсгэхэд алдаа гарлаа. Мэдээллээ шалгаад дахин оролдоно уу." };
   }
 
   redirect("/dashboard/super-admin/banners");
