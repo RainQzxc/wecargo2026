@@ -8,6 +8,7 @@ import {
   toggleUserStatus,
   changeUserRole,
   resetUserPassword,
+  assignUserWarehouse,
 } from "../actions";
 
 const ROLE_LABELS: Record<string, string> = {
@@ -103,6 +104,15 @@ export default async function Page({
   });
 
   if (!user) notFound();
+
+  const isStaffRole = user.role === "ADMIN" || user.role === "WAREHOUSE_STAFF";
+  const warehouses = isStaffRole
+    ? await db.warehouse.findMany({
+        where: { isActive: true },
+        orderBy: { name: "asc" },
+        select: { id: true, name: true },
+      })
+    : [];
 
   const [recentParcels, recentAuditLogs] = await Promise.all([
     user.customerProfile
@@ -250,19 +260,70 @@ export default async function Page({
       )}
 
       {/* ── Staff profile card ─────────────────────────────────── */}
-      {user.staffProfile && (
+      {(user.staffProfile || isStaffRole) && (
         <SectionCard title="Ажилтны профайл">
           <dl>
             <InfoRow
               label="Ажилтны код"
-              value={user.staffProfile.employeeCode}
+              value={user.staffProfile?.employeeCode}
             />
-            <InfoRow
-              label="Агуулах"
-              value={user.staffProfile.warehouse?.name}
-            />
-            <InfoRow label="Салбар" value={user.staffProfile.branch?.name} />
+            <InfoRow label="Салбар" value={user.staffProfile?.branch?.name} />
           </dl>
+
+          {/* One admin ↔ one warehouse. Assign, or prompt to add if none. */}
+          <div className="pt-4 mt-2 border-t border-neutral-100">
+            <div className="flex items-center justify-between gap-3 mb-2">
+              <span className="text-[11px] font-semibold text-ink-3 uppercase tracking-widest">
+                Агуулах
+              </span>
+              {user.staffProfile?.warehouse ? (
+                <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-brand">
+                  <span className="size-1.5 rounded-full bg-brand" />
+                  {user.staffProfile.warehouse.name}
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-600">
+                  <span className="size-1.5 rounded-full bg-amber-500" />
+                  Оноогоогүй
+                </span>
+              )}
+            </div>
+
+            <form
+              action={assignUserWarehouse.bind(null, user.id)}
+              className="flex flex-col gap-2 sm:flex-row"
+            >
+              <select
+                name="warehouseId"
+                defaultValue={user.staffProfile?.warehouseId ?? ""}
+                className="flex-1 border border-neutral-200 rounded-lg px-3 py-2 text-sm text-ink bg-white focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"
+              >
+                <option value="">— Агуулах сонгох —</option>
+                {warehouses.map((w) => (
+                  <option key={w.id} value={w.id}>
+                    {w.name}
+                  </option>
+                ))}
+              </select>
+              <button
+                type="submit"
+                className="px-4 py-2 rounded-lg bg-brand text-white text-sm font-semibold hover:bg-brand/90 transition-colors shrink-0"
+              >
+                {user.staffProfile?.warehouseId ? "Шинэчлэх" : "Агуулах нэмэх"}
+              </button>
+            </form>
+            {warehouses.length === 0 && (
+              <p className="mt-2 text-xs text-ink-3">
+                Идэвхтэй агуулах алга.{" "}
+                <Link
+                  href="/dashboard/super-admin/warehouses/new"
+                  className="text-brand font-semibold hover:underline"
+                >
+                  Агуулах үүсгэх →
+                </Link>
+              </p>
+            )}
+          </div>
         </SectionCard>
       )}
 

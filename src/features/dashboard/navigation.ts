@@ -18,11 +18,34 @@ export interface NavItem {
   readPermission: Permission | null;
 }
 
+/** Mongolian nav labels — the dashboard navbar is Mongolian. */
+const NAV_LABELS_MN: Record<SectionKey, string> = {
+  overview: "Хянах самбар",
+  users: "Хэрэглэгчид",
+  customers: "Харилцагч",
+  parcels: "Илгээмж",
+  unidentified: "Тодорхойгүй ачаа",
+  batches: "Ачилтын багц",
+  "link-orders": "Линк захиалга",
+  deliveries: "Хүргэлт",
+  tariffs: "Тариф",
+  banners: "Баннер",
+  content: "Контент",
+  notifications: "Мэдэгдэл",
+  reports: "Тайлан",
+  "audit-logs": "Аудит лог",
+  settings: "Тохиргоо",
+  warehouses: "Агуулах",
+  branches: "Салбар",
+  faq: "Асуулт & хариулт",
+  testimonials: "Сэтгэгдэл",
+};
+
 function item(sectionKey: SectionKey, basePath: string, label?: string): NavItem {
   const section = DASHBOARD_SECTIONS[sectionKey];
   return {
     sectionKey,
-    label: label ?? section.title,
+    label: label ?? NAV_LABELS_MN[sectionKey] ?? section.title,
     href: sectionKey === "overview" ? basePath : `${basePath}/${sectionKey}`,
     readPermission: section.readPermission,
   };
@@ -61,8 +84,8 @@ export const ADMIN_NAV: NavItem[] = [
   item("link-orders", ADMIN_BASE),
   item("deliveries", ADMIN_BASE),
   item("customers", ADMIN_BASE),
-  item("branches", ADMIN_BASE, "Branches View"),
-  item("tariffs", ADMIN_BASE, "Tariffs View"),
+  item("branches", ADMIN_BASE, "Салбар (харах)"),
+  item("tariffs", ADMIN_BASE, "Тариф (харах)"),
   item("notifications", ADMIN_BASE),
   item("reports", ADMIN_BASE),
 ];

@@ -7,7 +7,7 @@ import { DashboardShell } from "@/components/dashboard/DashboardShell";
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const user = await requireRole(ROLES.ADMIN, ROLES.SUPER_ADMIN);
   return (
-    <DashboardShell user={user} nav={ADMIN_NAV} areaLabel="Admin">
+    <DashboardShell user={user} nav={ADMIN_NAV} areaLabel="Админ">
       {children}
     </DashboardShell>
   );

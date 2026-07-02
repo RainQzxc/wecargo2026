@@ -42,6 +42,26 @@ export async function changeUserRole(
   revalidatePath(`/dashboard/super-admin/users/${userId}`);
 }
 
+/**
+ * Assign (or clear) a staff member's single warehouse. Upserts the staff
+ * profile so it also works for a staff/admin user that has none yet.
+ */
+export async function assignUserWarehouse(
+  userId: string,
+  formData: FormData
+): Promise<void> {
+  await requirePermission("users.assignWarehouse");
+  const raw = String(formData.get("warehouseId") ?? "").trim();
+  const warehouseId = raw.length > 0 ? raw : null;
+  await db.staffProfile.upsert({
+    where: { userId },
+    create: { userId, warehouseId },
+    update: { warehouseId },
+  });
+  revalidatePath(`/dashboard/super-admin/users/${userId}`);
+  revalidatePath("/dashboard/super-admin/users");
+}
+
 export async function resetUserPassword(
   userId: string,
   newPassword: string
