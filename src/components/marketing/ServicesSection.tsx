@@ -1,4 +1,5 @@
 import Link from "next/link";
+import TiltCard from "./TiltCard";
 
 function MiniTimeline() {
   const steps = ["Эрээн", "Бүртгэл", "Ачилт", "Зам", "УБ"];
@@ -117,7 +118,7 @@ export default function ServicesSection() {
         </div>
 
         <div className="grid gap-5 lg:grid-cols-2">
-          <article className="rounded-[26px] bg-[#f1f1f1] p-6 shadow-sm lg:min-h-[330px]">
+          <TiltCard className="rounded-[26px] bg-[#f1f1f1] p-6 shadow-sm lg:min-h-[330px]">
             <h3 className="text-lg font-semibold text-[#1d1d1f]">Ачааны явц нэг харахад</h3>
             <p className="mt-2 max-w-sm text-sm font-semibold leading-6 text-[#6e6e73]">
               Track code эсвэл утасны дугаараар явц, төлөв, сүүлийн шинэчлэлтийг шалгана.
@@ -125,9 +126,9 @@ export default function ServicesSection() {
             <div className="mt-8">
               <MiniTimeline />
             </div>
-          </article>
+          </TiltCard>
 
-          <article className="rounded-[26px] bg-[radial-gradient(circle_at_70%_20%,rgba(6,187,180,0.22),transparent_32%),#0b1815] p-6 text-white shadow-sm lg:min-h-[330px]">
+          <TiltCard className="rounded-[26px] bg-[radial-gradient(circle_at_70%_20%,rgba(6,187,180,0.22),transparent_32%),#0b1815] p-6 text-white shadow-sm lg:min-h-[330px]">
             <h3 className="text-lg font-semibold">Линк захиалга төлөвлөгөөтэй</h3>
             <p className="mt-2 max-w-sm text-sm font-semibold leading-6 text-white/65">
               Барааны линк, хэмжээ, өнгө, тоо ширхэгийг илгээж захиалгаа хурдан үүсгэнэ.
@@ -135,7 +136,7 @@ export default function ServicesSection() {
             <div className="mt-7">
               <LinkOrderPlanner />
             </div>
-          </article>
+          </TiltCard>
 
           <article className="relative min-h-[360px] overflow-hidden rounded-[26px] bg-[#101515] p-6 text-white shadow-sm lg:col-span-2">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_14%_16%,rgba(6,187,180,0.26),transparent_26%),linear-gradient(90deg,rgba(255,255,255,0.04),transparent)]" />
@@ -157,7 +158,7 @@ export default function ServicesSection() {
             <PhoneCards />
           </article>
 
-          <article className="rounded-[26px] bg-[#171717] p-6 text-white shadow-sm">
+          <TiltCard className="rounded-[26px] bg-[#171717] p-6 text-white shadow-sm">
             <h3 className="text-lg font-semibold">Үнэ урьдчилан ойлгомжтой</h3>
             <p className="mt-2 text-sm font-semibold leading-6 text-white/60">
               Жин, хэмжээ, төрөл, чиглэлээс хамаарч тооцоолно. Онцлог ачаанд тусгай нөхцөлтэй.
@@ -169,9 +170,9 @@ export default function ServicesSection() {
                 </div>
               ))}
             </div>
-          </article>
+          </TiltCard>
 
-          <article className="rounded-[26px] bg-[#1d1d1f] p-6 text-white shadow-sm">
+          <TiltCard className="rounded-[26px] bg-[#1d1d1f] p-6 text-white shadow-sm">
             <h3 className="text-lg font-semibold">Бизнесийн ачаанд тохиромжтой</h3>
             <p className="mt-2 text-sm font-semibold leading-6 text-white/60">
               Онлайн дэлгүүр, reseller, байгууллагын тогтмол ачаанд хамтын ажиллагааны нөхцөл.
@@ -182,7 +183,7 @@ export default function ServicesSection() {
             >
               Хамтран ажиллах
             </Link>
-          </article>
+          </TiltCard>
         </div>
       </div>
     </section>

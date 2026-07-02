@@ -1,9 +1,8 @@
 import Header from "@/components/marketing/Header";
 import Footer from "@/components/marketing/Footer";
-import HeroSection from "@/components/marketing/HeroSection";
+import CinematicHero from "@/components/marketing/CinematicHero";
 import TrustBar from "@/components/marketing/TrustBar";
-import RouteMotionSection from "@/components/marketing/RouteMotionSection";
-import StorySection from "@/components/marketing/StorySection";
+import JourneyCinema from "@/components/marketing/JourneyCinema";
 import ServicesSection from "@/components/marketing/ServicesSection";
 import WhyChooseSection from "@/components/marketing/WhyChooseSection";
 import TrackingExperienceSection from "@/components/marketing/TrackingExperienceSection";
@@ -44,17 +43,14 @@ export default async function LandingPage() {
       </a>
       <Header />
       <main id="main" className="flex-1">
-        <HeroSection content={hero} />
+        <CinematicHero content={hero} />
         {/* gradient bridge: dark hero → light sections */}
         <div
           className="h-16 bg-gradient-to-b from-[#060e0e] to-[#f7f7f7]"
           aria-hidden="true"
         />
         <TrustBar />
-        <MotionReveal>
-          <RouteMotionSection />
-        </MotionReveal>
-        <StorySection />
+        <JourneyCinema />
         <MotionReveal>
           <ServicesSection />
         </MotionReveal>
