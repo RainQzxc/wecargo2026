@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { EREEN_WAREHOUSE } from "@/constants/ereen-warehouse";
 
 const locations = [
   {
@@ -32,14 +33,13 @@ const locations = [
     items: [
       {
         label: "Утас",
-        value: "15148615407",
-        href: "tel:15148615407",
+        value: EREEN_WAREHOUSE.phone,
+        href: `tel:${EREEN_WAREHOUSE.phone}`,
         icon: "phone",
       },
       {
         label: "Хаяг",
-        value:
-          "内蒙古锡林郭勒盟二连浩特市环宇商贸城五号楼125号 业顺额尔敦商贸有限公司",
+        value: EREEN_WAREHOUSE.addressCn,
         icon: "pin",
       },
     ],
@@ -107,7 +107,7 @@ function ValueWrap({
   children: ReactNode;
 }) {
   if (!href) {
-    return <p className="text-base font-bold leading-7 text-[#1d1d1f]">{children}</p>;
+    return <p className="text-base font-semibold leading-7 text-[#1d1d1f]">{children}</p>;
   }
 
   return (

@@ -47,7 +47,7 @@ export default function BusinessSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Left */}
           <div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight mb-4">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-white tracking-tight mb-4">
               Бөөн ачаа, онлайн дэлгүүр, reseller-д тохиромжтой.
             </h2>
             <p className="text-white/80 text-lg leading-relaxed mb-8">

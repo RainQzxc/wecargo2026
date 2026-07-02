@@ -13,7 +13,7 @@ export default function WhyChooseSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Left */}
           <div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#1d1d1f] tracking-tight mb-4">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-[#1d1d1f] tracking-tight mb-4">
               Карго илүү ойлгомжтой,
               <br />
               илүү <span className="text-[#06bbb4]">амар</span> байх ёстой.
